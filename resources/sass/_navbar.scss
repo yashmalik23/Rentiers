@@ -7,10 +7,13 @@ $break-large: 1120px;
 body{
     font-family: 'Source Sans Pro';
     color: $font;
+    margin: 0;
+    padding: 0;
 }
 .desktop-nav{
     display: flex;
     line-height: 20px;
+    padding: 10px 0px;
     flex-direction: row;
     @media screen and (max-width: $break-large) {
         display: none;
@@ -40,13 +43,18 @@ body{
             text-decoration: none;
             color: $font;
         }
+        ul{
+            list-style-type: none;
+            display: block;
+            position: relative;
+            display: none;
+        }
     }
 }
 
 // -------------------Mobile nav
 .mobile-nav{
     display: none;
-    line-height: 50px;
     @media screen and (max-width: $break-large) {
         display: flex;
     }
@@ -59,25 +67,33 @@ body{
     width: 170px;
     padding-left: 10px;
 }
-.side-menu{
+.mobile-nav-links{
     width: 250px;
     height: 100vh;
     display: inline-block;
     position: fixed;
-    background-color: #1A2226;
+    background-color: #3a6ec9;
     color: white;
     font-size: 1rem;
     display: none;
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-}
-.mobile-nav-links{
-    display: none;
+    margin: 0;
+    padding: 20px 0px 0px 0px;
     list-style-type: none;
     li{
-        padding: 10px;
+        padding: 15px 30px;
         a{
             text-decoration: none;
-            color: #424b5a;
+            color: white;
+        }
+        &:nth-child(6){
+            padding-top: 50px;
+            text-align: center;
+        }
+        div{
+            color: #3a6ec9;
+            background-color: white;
+            padding: 10px 0px;
         }
     }
 }
+

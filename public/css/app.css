@@ -1,11 +1,14 @@
 body {
   font-family: "Source Sans Pro";
   color: #424b5a;
+  margin: 0;
+  padding: 0;
 }
 
 .desktop-nav {
   display: flex;
   line-height: 20px;
+  padding: 10px 0px;
   flex-direction: row;
 }
 
@@ -45,9 +48,15 @@ body {
   color: #424b5a;
 }
 
+.nav-links li ul {
+  list-style-type: none;
+  display: block;
+  position: relative;
+  display: none;
+}
+
 .mobile-nav {
   display: none;
-  line-height: 50px;
 }
 
 @media screen and (max-width: 1120px) {
@@ -67,16 +76,36 @@ body {
 }
 
 .mobile-nav-links {
+  width: 250px;
+  height: 100vh;
+  display: inline-block;
+  position: fixed;
+  background-color: #3a6ec9;
+  color: white;
+  font-size: 1rem;
   display: none;
+  margin: 0;
+  padding: 20px 0px 0px 0px;
   list-style-type: none;
 }
 
 .mobile-nav-links li {
-  padding: 10px;
+  padding: 15px 30px;
 }
 
 .mobile-nav-links li a {
   text-decoration: none;
-  color: #424b5a;
+  color: white;
+}
+
+.mobile-nav-links li:nth-child(6) {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.mobile-nav-links li div {
+  color: #3a6ec9;
+  background-color: white;
+  padding: 10px 0px;
 }
 
