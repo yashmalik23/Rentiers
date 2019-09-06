@@ -31,7 +31,7 @@
         <li><a href="#">About Us</a></li>
         <li><a href="#">Contact Us</a></li>
         <li><a href="#">List your property</a></li>
-        <li>+91 9414573503&nbsp;&nbsp;<img class="icons" src="{{asset('images/whitedownarrow.svg')}}"/></li>
+        <li>+91 9414573503&nbsp;&nbsp;<img class="icons" src="{{asset('images/white-down-arrow.svg')}}"/></li>
         <li><div class="mobile-login">Login/SignUp</div></li>
     </ul>
 </nav>

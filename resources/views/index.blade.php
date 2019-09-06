@@ -10,5 +10,6 @@
 </head>
 <body>
     @include('includes.navbar')
+    @include('includes/home')
 </body>
 </html>
