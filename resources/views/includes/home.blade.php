@@ -202,3 +202,21 @@
     </div>
     <div class="go-forward" onclick="scrollRecent(event)">></div>
 </div>
+
+{{-------------- About Us -------------------------}}
+<div class="home-about">
+    <img src="{{asset('images/home/aboutus.svg')}}" class="desktop">
+    <img src="{{asset('images/home/mobileabout.svg')}}" class="mobile">
+</div>
+
+{{-------------- Testimonials ---------------------}}
+<div class="testimonials">
+    <div class="left-section">
+        <img src="{{asset('images/home/quotation-marks.svg')}}">
+        <div class="left-inner-section">
+            <div class="test-heading">People love what we do</div>
+            <div class="test-line">The customers come at first place for us. Here is what they say</div>
+        </div>
+        <img src="{{asset('images/home/test-main.svg')}}">
+    </div>
+</div>

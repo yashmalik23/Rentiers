@@ -161,7 +161,7 @@
 
 // ----------Recent properties slider
 .content-slider{
-    max-width: 78vw;
+    max-width: 75vw;
     margin: 50px auto 10px;
     height: 370px;
     overflow: hidden;
@@ -294,3 +294,31 @@ button.next{
     }
 }
   
+
+//---------- About Us
+.home-about{
+    .desktop{
+        width: 98vw;
+        margin: 100px auto;
+    }
+    .mobile{
+        display: none;
+    }
+    @media screen and (max-width :800px){
+        width: 25vw;
+        margin: 50px auto;
+        .desktop{
+            display: none;
+        }
+        .mobile{
+            display: block;
+            max-width: 100%;
+        }
+    }
+    @media screen and (max-width :600px){
+        width: 35vw;
+    }
+    @media screen and (max-width :600px){
+        width: 50vw;
+    }
+}

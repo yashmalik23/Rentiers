@@ -321,7 +321,7 @@ body {
 }
 
 .content-slider {
-  max-width: 78vw;
+  max-width: 75vw;
   margin: 50px auto 10px;
   height: 370px;
   overflow: hidden;
@@ -470,5 +470,42 @@ button.next {
 .card-amenities div {
   color: #3a6ec9;
   padding: 0px 5px;
+}
+
+.home-about .desktop {
+  width: 98vw;
+  margin: 100px auto;
+}
+
+.home-about .mobile {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .home-about {
+    width: 25vw;
+    margin: 50px auto;
+  }
+
+  .home-about .desktop {
+    display: none;
+  }
+
+  .home-about .mobile {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-about {
+    width: 35vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-about {
+    width: 50vw;
+  }
 }
 
