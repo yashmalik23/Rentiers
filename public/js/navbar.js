@@ -11,7 +11,7 @@ function handleMenu() {
                 duration: 200,
                 iterations: 1
             });
-        main.style.marginLeft = "250px";
+        main.style.marginLeft = "200px";
         menu.style.display = "inline-block";
     } else {
         main.style.marginLeft = "0px";

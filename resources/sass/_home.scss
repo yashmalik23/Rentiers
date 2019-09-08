@@ -1,10 +1,46 @@
+// ----------------Title
+
+.title-container{
+    text-align: center;
+    width: 400px;
+    margin: 80px auto 0px;
+    @media screen and (max-width: $break-large) {
+        margin: 150px auto 0px;
+        width: 86vw;
+    }
+}
+.main-heading{
+    font-size: 2.3rem;
+    font-weight: bold;
+    padding: 10px;
+}
+.main-line,.second-line{
+    color: #717377;
+}
+
+// ---------------Search bar
+.search-container{
+    margin: -40px auto 0px;
+    width: 600px;
+    display: flex;
+    align-items: flex-end;
+    @media screen and (max-width: $break-large) {
+        width: 400px;
+        margin-top: 20px;
+    }
+}
 .search-bar{
     display: flex;
     background-color: white;
     padding: 10px;
     width: 500px;
-    margin: 100px auto 100px;
+    height: 40px;
+    margin-left: -20px;
     box-shadow: 0px 0px 60px rgb(80, 67, 112, 0.1);
+    @media screen and (max-width: $break-large) {
+        width: 380px;
+        margin: 10px auto 0px;
+    }
 }
 .drop-down-btn{
     display: flex;
@@ -12,13 +48,13 @@
     color: #5043ac;
 }
 .drop-down-title{
-    padding: 5px 20px;
+    padding: 0px 20px;
 }
 .drop-down-options{
     display: none;
-    position: fixed;
+    position: absolute;
     list-style-type: none;
-    margin: 40px 0px 0px;
+    margin: 30px 0px 0px;
     padding: 0;
     li{
         margin: 0px 0px 0px -10px;
@@ -32,9 +68,9 @@
 }
 .drop-down-options-2{
     display: none;
-    position: fixed;
+    position: absolute;
     list-style-type: none;
-    margin: 40px 0px 0px;
+    margin: 30px 0px 0px;
     padding: 0;
     li{
         margin: 0px 0px 0px 10px;
@@ -57,4 +93,204 @@
     width: 20px;
     cursor: pointer;
 }
+.dot-background{
+    width: 100px;
+    @media screen and (max-width: $break-large) {
+        width: 0px;
+    }
+}
 
+// -------------Home image
+.main-image{
+    display: flex;
+    width: 400px;
+    margin: 50px auto 0px;
+    @media screen and (max-width: $break-large) {
+        width: 65vw;
+        margin: 150px auto 0px;
+    }
+}
+
+// --------------------Recent properties
+.recent-properties{
+    display:inline-flex;
+    @media screen and (max-width: $break-large){
+        display: block;
+    }
+}
+.recent-title{
+    margin-top: 50px;
+    padding: 50px;
+    @media screen and (max-width: $break-large){
+        padding: 20px;
+        margin-top: 160px;
+    }
+}
+.recent-head{
+    width: 50px;
+}
+.recent-heading{
+    font-size: 2.5rem;
+    font-weight: bold;
+    width: 150px;
+    padding: 16px 0px;
+    @media screen and (max-width: $break-large){
+        width: 85vw;
+    }
+}
+.recent-line{
+    color: #717377;
+    padding: 5px auto 0px;
+    width: 180px;
+    font-size: 1.2rem;
+    @media screen and (max-width: $break-large){
+        width: 85vw;
+    }
+}
+.see-all{
+    padding: 10px 20px;
+    border: 1px solid $main;
+    color: $main;
+    text-align: center;
+    margin-top: 40px;
+    cursor: pointer;
+    @media screen and (max-width: $break-large){
+        display: none;
+    }
+}
+
+// ----------Recent properties slider
+.content-slider{
+    max-width: 78vw;
+    margin: 50px auto 10px;
+    height: 370px;
+    overflow: hidden;
+    transition: all 0.6s ease;
+    scroll-behavior: smooth;
+    @media screen and (max-width: $break-large){
+        max-width: 95vw;
+        overflow: scroll;
+        margin-top: 10px;
+    }
+}
+.go-forward{
+    background-color: rgb(58, 110, 201, 0.6);
+    color: white;
+    height: 350px;
+    line-height: 320px;
+    padding: 10px;
+    font-size: 4rem;
+    margin-top: 50px;
+    right: 0px;
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    @media screen and (max-width: $break-large){
+        display: none;
+    }
+}
+.card-container{
+    width: 1900px;
+}
+.card{
+    height: 330px;
+    width: 350px;
+    margin: 10px;
+    display: inline-block;
+    box-shadow: 3px 5px 40px #f0f0f2;
+}
+
+//----------- card image slider 
+.slider{
+    position: relative;
+    width: 350px;
+    height: 250px;
+    overflow: hidden;
+}
+.slide {
+    width: 350px;
+    height: 250px;
+    position: absolute;
+    
+    // Add transition
+    transition: 0.6s ease;
+    
+    // Move slides off to the left  by default
+    transform: translate(-100%, 0);
+    
+    // Set active slide to be in the viewport
+    &.active {
+        transform: translate(0, 0);
+      
+        // Use sibling selector to position all slides after the active slide to the right
+        & ~ .slide {
+            transform: translate(100%, 0);
+        }
+    }
+    img{
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+button {
+    border: none;
+    outline: none;
+    border-radius: 0;
+    color: white;
+    font-size: 2rem;
+    background-color: rgb(58, 110, 201, 0.7);
+    padding: 0px 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 105px;
+}
+button.next{
+    margin-left: 330px;
+}
+.price-tag{
+    position: absolute;
+    background-color: rgb(58, 110, 201, 0.7);
+    color: white;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+}
+.circles{
+    position: absolute;
+    bottom: 10px;
+    left: 150px;
+    display: inline-flex;
+    .circle{
+        width: 10px;
+        height: 10px;
+        background-color: #3a6ec9;
+        border-radius: 5px;
+        margin: 0px 2.5px;
+        &.active{
+            background-color: white;
+        }
+    }
+}
+.card-property-name{
+    margin-left: 10px;
+    font-size: 1.5rem;
+    color: $font;
+}
+.card-property-location{
+    margin-left: 10px;
+    font-size: 1.1rem;
+    color: #717377;
+}
+.card-amenities{
+    margin: 10px 0px 5px 10px;
+    display: flex;
+    line-height: 15px;
+    img{
+        width: 14px;
+    }
+    div{
+        color: #3a6ec9;
+        padding: 0px 5px;
+    }
+}
+  
