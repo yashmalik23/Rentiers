@@ -70,7 +70,7 @@ body {
 }
 
 .mobile-menu {
-  width: 20px;
+  width: 45px;
   padding: 10px;
   cursor: pointer;
 }
@@ -87,7 +87,7 @@ body {
   position: fixed;
   background-color: #3a6ec9;
   color: white;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   display: none;
   margin: 0;
   padding: 20px 0px 0px 0px;
@@ -574,7 +574,7 @@ button.next {
 }
 
 .testimonials .right-section .test-cards-container .test-card {
-  width: 80%;
+  width: 88%;
   height: 140px;
   margin: 20px 30px;
   box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.16);
@@ -700,7 +700,7 @@ button.next {
 .form-line {
   grid-area: form-line;
   font-size: 1.3rem;
-  margin: 5px auto 5px 40px;
+  margin: 5px 40px 5px;
   color: #717377;
 }
 
@@ -758,6 +758,98 @@ button.next {
   .confuse-form {
     grid-template-rows: 1fr 1fr 4fr 1fr;
     grid-template-areas: "form-heading" "form-line" "input-field" "submit";
+  }
+}
+
+.footer-link-columns {
+  list-style-type: none;
+  padding: 30px 30px;
+}
+
+.footer-link-columns :nth-child(1) {
+  grid-area: links-1;
+}
+
+.footer-link-columns :nth-child(2) {
+  grid-area: links-2;
+}
+
+.footer-link-columns :nth-child(3) {
+  grid-area: links-3;
+}
+
+.footer-link-columns li {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.footer-link-columns li:nth-child(1) {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+@media screen and (max-width: 500px) {
+  .footer-link-columns {
+    margin: 0px auto;
+    padding: 10px;
+  }
+}
+
+.footer-left {
+  grid-area: footer-left;
+  width: 150px;
+  margin: auto auto 0px 0px;
+  padding-top: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  .footer-left {
+    display: none;
+  }
+}
+
+.footer-right {
+  grid-area: footer-right;
+  width: 150px;
+  padding-top: 30px;
+  margin: auto 0px 0px auto;
+}
+
+@media screen and (max-width: 800px) {
+  .footer-right {
+    display: none;
+  }
+}
+
+.copyright {
+  grid-area: copyright;
+  color: white;
+  font-size: 1.2rem;
+  margin: auto auto 0px;
+}
+
+footer {
+  margin-top: 50px;
+  background-color: #3a6ec9;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr 0.1fr;
+  grid-template-areas: "footer-left links-1 links-2 links-3 footer-right" "footer-left copyright copyright copyright footer-right";
+}
+
+@media screen and (max-width: 800px) {
+  footer {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 0.1fr;
+    grid-template-areas: "links-1 links-2 links-3" "copyright copyright copyright";
+  }
+}
+
+@media screen and (max-width: 500px) {
+  footer {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.1fr;
+    grid-template-areas: "links-1 links-2" "links-3 links-3" "copyright copyright";
   }
 }
 
