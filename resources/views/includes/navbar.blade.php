@@ -3,9 +3,9 @@
     {{-- Desktop Nav bar --}}
     <img class="logo" src="{{asset('images/navbar/logo.svg')}}">
     <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="aboutus">About Us</a></li>
+        <li><a href="contactus">Contact Us</a></li>
         <li><a href="#">List your property</a></li>
         <li>|</li>
         <li>+91 9414573503</li>

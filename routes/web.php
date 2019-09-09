@@ -12,5 +12,11 @@
 */
 
 Route::get('/', array('as'=>'home',function () {
-    return view('index');
+    return view('includes/home');
+}));
+Route::get('aboutus', array('as'=>'aboutus',function () {
+    return view('includes/about');
+}));
+Route::get('contactus', array('as'=>'contactus',function () {
+    return view('includes/contact');
 }));

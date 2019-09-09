@@ -14,7 +14,7 @@
 </head>
 <body>
     @include('includes.navbar')
-    @include('includes/home')
+    @yield('views')
     @include('includes/footer')
 </body>
 </html>

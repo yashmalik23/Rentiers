@@ -1,0 +1,35 @@
+.about-heading{
+    font-size:3.5rem;
+    color:$font;
+    padding-left: 100px;
+    font-weight: bold;
+    @media screen and (max-width: $break-large) {
+        padding-left: 60px;
+    }
+}
+.about-us-image{
+    grid-area: imag;
+    width: 60%;
+    margin: 100px auto 50px;
+    @media screen and (max-width: $break-large) {
+        width: 80%;
+        margin: 130px auto 50px;
+    }
+}
+.about-text{
+    grid-area: about-text;
+    width: 60%;
+    font-size: 2rem;
+    margin: 50px auto;
+    text-align: justify;
+    @media screen and (max-width: $break-large) {
+        width: 80%;
+    }
+}
+.about-us-div{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    'imag'
+    'about-text';
+}
