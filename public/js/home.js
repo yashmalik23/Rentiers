@@ -57,3 +57,14 @@ function scrollRecent(e){
         e.target.textContent = ">"
     }
 }
+
+function scrollDown(e){
+    let slider = e.target.previousElementSibling;
+    console.log(slider);
+    slider.scrollTop = 600;
+}
+
+function scrollUp(e){
+    let slider = e.target.nextElementSibling;
+    slider.scrollTop = 0;
+}

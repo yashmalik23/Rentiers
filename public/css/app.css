@@ -117,7 +117,7 @@ body {
 .title-container {
   text-align: center;
   width: 400px;
-  margin: 80px auto 0px;
+  margin: 100px auto 0px;
 }
 
 @media screen and (max-width: 1120px) {
@@ -128,7 +128,7 @@ body {
 }
 
 .main-heading {
-  font-size: 2.3rem;
+  font-size: 3.5rem;
   font-weight: bold;
   padding: 10px;
 }
@@ -243,7 +243,7 @@ body {
 .main-image {
   display: flex;
   width: 400px;
-  margin: 50px auto 0px;
+  margin: 100px auto 0px;
 }
 
 @media screen and (max-width: 1120px) {
@@ -280,7 +280,7 @@ body {
 }
 
 .recent-heading {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: bold;
   width: 150px;
   padding: 16px 0px;
@@ -321,12 +321,18 @@ body {
 }
 
 .content-slider {
-  max-width: 75vw;
+  max-width: 78vw;
   margin: 50px auto 10px;
   height: 370px;
   overflow: hidden;
   transition: all 0.6s ease;
   scroll-behavior: smooth;
+}
+
+@media screen and (max-width: 1400px) {
+  .content-slider {
+    max-width: 78vw;
+  }
 }
 
 @media screen and (max-width: 1120px) {
@@ -506,6 +512,252 @@ button.next {
 @media screen and (max-width: 600px) {
   .home-about {
     width: 50vw;
+  }
+}
+
+.testimonials {
+  display: flex;
+}
+
+.testimonials .left-section {
+  width: 50%;
+}
+
+.testimonials .left-section .left-title-section {
+  display: flex;
+  width: 100%;
+}
+
+.testimonials .left-section .left-title-section img {
+  width: 45px;
+  margin: 5px 0px 5px 100px;
+}
+
+.testimonials .left-section .left-title-section .left-inner-section {
+  margin: 10px auto;
+}
+
+.testimonials .left-section .left-title-section .left-inner-section .test-heading {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #424b5a;
+}
+
+.testimonials .left-section .left-title-section .left-inner-section .test-line {
+  font-size: 1.5rem;
+  color: #717377;
+}
+
+.testimonials .left-section img {
+  max-width: 80%;
+  margin-left: 100px;
+  margin-top: 70px;
+}
+
+.testimonials .right-section {
+  width: 50%;
+}
+
+.testimonials .right-section img {
+  margin: 5px 40%;
+  cursor: pointer;
+  width: 20px;
+}
+
+.testimonials .right-section .test-cards-container {
+  width: 80%;
+  height: 500px;
+  margin: 10px auto;
+  overflow: hidden;
+  transition: all 2s ease;
+  scroll-behavior: smooth;
+}
+
+.testimonials .right-section .test-cards-container .test-card {
+  width: 80%;
+  height: 140px;
+  margin: 20px 30px;
+  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.16);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.testimonials .right-section .test-cards-container .test-card .test-text {
+  font-size: 1.3rem;
+  color: #717377;
+  padding: 10px 20px;
+}
+
+.testimonials .right-section .test-cards-container .test-card .test-text .testimonial {
+  height: 100px;
+}
+
+.testimonials .right-section .test-cards-container .test-card .test-text .name {
+  font-size: 1.5rem;
+  color: #fe6b68;
+}
+
+.testimonials .right-section .test-cards-container .test-card img {
+  width: auto;
+  max-height: 90px;
+  margin: auto;
+}
+
+@media screen and (max-width: 1120px) {
+  .testimonials {
+    display: block;
+  }
+
+  .testimonials .left-section {
+    width: 90%;
+  }
+
+  .testimonials .left-section .left-title-section img {
+    margin-left: 60px;
+  }
+
+  .testimonials .left-section .left-title-section .left-inner-section {
+    margin-left: 40px;
+    margin-top: 20px;
+  }
+
+  .testimonials .left-section img {
+    margin-left: 160px;
+  }
+
+  .testimonials .right-section {
+    width: 100%;
+  }
+
+  .testimonials .right-section img {
+    margin: 40px 48%;
+  }
+
+  .testimonials .right-section .test-cards-container {
+    width: 95%;
+    margin: 20px 5%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .testimonials .left-section .left-title-section img {
+    margin-left: 30px;
+  }
+
+  .testimonials .left-section .left-title-section .left-inner-section {
+    margin-top: 40px;
+  }
+
+  .testimonials .left-section img {
+    margin-left: 100px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .testimonials .left-section .left-title-section .left-inner-section {
+    margin-top: 60px;
+  }
+
+  .testimonials .left-section img {
+    margin-left: 70px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .testimonials .left-section .left-title-section .left-inner-section {
+    margin-top: 70px;
+  }
+
+  .testimonials .left-section img {
+    margin-left: 60px;
+  }
+}
+
+.input-field :nth-child(1) {
+  grid-area: input-field-1;
+}
+
+.input-field :nth-child(2) {
+  grid-area: input-field-2;
+}
+
+.input-field :nth-child(3) {
+  grid-area: input-field-3;
+}
+
+.input-field :nth-child(4) {
+  grid-area: input-field-4;
+}
+
+.form-heading {
+  grid-area: form-heading;
+  font-size: 3.5rem;
+  color: #424b5a;
+  margin: 15px auto 15px 40px;
+  font-weight: bold;
+}
+
+.form-line {
+  grid-area: form-line;
+  font-size: 1.3rem;
+  margin: 5px auto 5px 40px;
+  color: #717377;
+}
+
+.form-fields {
+  grid-area: input-field;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "input-field-1 input-field-2" "input-field-3 input-field-4";
+}
+
+@media screen and (max-width: 600px) {
+  .form-fields {
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+    grid-template-areas: "input-field-1" "input-field-2" "input-field-3" "input-field-4";
+  }
+}
+
+.input-field {
+  margin: 5px auto;
+  width: 75%;
+}
+
+.input-field input {
+  padding: 3px;
+  width: 100%;
+}
+
+.submit-confuse-form {
+  grid-area: submit;
+  border: 1px solid #3a6ec9;
+  color: #3a6ec9;
+  padding: 8px 30px;
+  margin: auto auto;
+}
+
+.confuse-form {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.8fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "form-heading input-field  submit" "form-line input-field  submit";
+}
+
+@media screen and (max-width: 1120px) {
+  .confuse-form {
+    grid-template-rows: 1fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "form-heading" "form-line" "input-field" "submit";
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .confuse-form {
+    grid-template-rows: 1fr 1fr 4fr 1fr;
+    grid-template-areas: "form-heading" "form-line" "input-field" "submit";
   }
 }
 

@@ -212,11 +212,98 @@
 {{-------------- Testimonials ---------------------}}
 <div class="testimonials">
     <div class="left-section">
-        <img src="{{asset('images/home/quotation-marks.svg')}}">
-        <div class="left-inner-section">
-            <div class="test-heading">People love what we do</div>
-            <div class="test-line">The customers come at first place for us. Here is what they say</div>
+        <div class="left-title-section">
+            <img src="{{asset('images/home/quotation-marks.svg')}}">
+            <div class="left-inner-section">
+                <div class="test-heading">People love what we do</div>
+                <div class="test-line">The customers come at first place for us. Here is what they say</div>
+            </div>
         </div>
         <img src="{{asset('images/home/test-main.svg')}}">
     </div>
+    <div class="right-section">
+        <img src="{{asset('images/home/test-up-arrow.svg')}}" onclick='scrollUp(event)' />
+        <div class="test-cards-container">
+            <div class="test-card">
+                <div class="test-text">
+                    <div class="testimonial">
+                        Thank you very much for the help.It has been a pleasant experience talking with you.  
+                    </div>
+                    <div class="name">John Doe, Businessman</div>
+                </div>
+                <img src="{{asset('images/home/man2.svg')}}">
+            </div>
+            <div class="test-card">
+                <div class="test-text">
+                    <div class="testimonial">
+                        Thank you very much for the help.It has been a pleasant experience talking with you.  
+                    </div>
+                    <div class="name">Sophie Turner, Lawyer</div>
+                </div>
+                <img src="{{asset('images/home/girl1.svg')}}">
+            </div>
+            <div class="test-card">
+                <div class="test-text">
+                    <div class="testimonial">
+                        Thank you very much for the help.It has been a pleasant experience talking with you.  
+                    </div>
+                    <div class="name">Alex Williams, Trader</div>
+                </div>
+                <img src="{{asset('images/home/man1.svg')}}">
+            </div>
+            <div class="test-card">
+                <div class="test-text">
+                    <div class="testimonial">
+                        Thank you very much for the help.It has been a pleasant experience talking with you.  
+                    </div>
+                    <div class="name">John Doe, Businessman</div>
+                </div>
+                <img src="{{asset('images/home/man2.svg')}}">
+            </div>
+            <div class="test-card">
+                <div class="test-text">
+                    <div class="testimonial">
+                        Thank you very much for the help.It has been a pleasant experience talking with you.  
+                    </div>
+                    <div class="name">Alex Williams, Trader</div>
+                </div>
+                <img src="{{asset('images/home/man1.svg')}}">
+            </div>
+            <div class="test-card">
+                <div class="test-text">
+                    <div class="testimonial">
+                        Thank you very much for the help.It has been a pleasant experience talking with you.  
+                    </div>
+                    <div class="name">Sophie Turner, Lawyer</div>
+                </div>
+                <img src="{{asset('images/home/girl1.svg')}}">
+            </div>
+        </div>
+        <img src="{{asset('images/home/test-down-arrow.svg')}}" onclick="scrollDown(event)" />
+    </div>
 </div>
+
+{{------------- Confused form --------------}}
+<div class="confuse-form">
+    <div class="form-heading">Confused?</div>
+    <div class="form-line">Submit a query and we will reply in 24 hours. You are the first priority for us.</div>
+    <div class="form-fields">
+        <div class="input-field">
+            <div class="input-label">Full name *</div>
+            <input type="text" required />
+        </div>
+        <div class="input-field">
+            <div class="input-label">Contact number *</div>
+            <input type="text" required />
+        </div>
+        <div class="input-field">
+            <div class="input-label">Email Address *</div>
+            <input type="text" required />
+        </div>
+        <div class="input-field">
+            <div class="input-label">What are you looking for?</div>
+            <input type="text" required />
+        </div>
+    </div>
+    <div class="submit-confuse-form">Submit</div>
+</div> 

@@ -3,14 +3,14 @@
 .title-container{
     text-align: center;
     width: 400px;
-    margin: 80px auto 0px;
+    margin: 100px auto 0px;
     @media screen and (max-width: $break-large) {
         margin: 150px auto 0px;
         width: 86vw;
     }
 }
 .main-heading{
-    font-size: 2.3rem;
+    font-size: 3.5rem;
     font-weight: bold;
     padding: 10px;
 }
@@ -104,7 +104,7 @@
 .main-image{
     display: flex;
     width: 400px;
-    margin: 50px auto 0px;
+    margin: 100px auto 0px;
     @media screen and (max-width: $break-large) {
         width: 65vw;
         margin: 150px auto 0px;
@@ -130,7 +130,7 @@
     width: 50px;
 }
 .recent-heading{
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: bold;
     width: 150px;
     padding: 16px 0px;
@@ -161,12 +161,15 @@
 
 // ----------Recent properties slider
 .content-slider{
-    max-width: 75vw;
+    max-width: 78vw;
     margin: 50px auto 10px;
     height: 370px;
     overflow: hidden;
     transition: all 0.6s ease;
     scroll-behavior: smooth;
+    @media screen and (max-width: 1400px){
+        max-width: 78vw;
+    }
     @media screen and (max-width: $break-large){
         max-width: 95vw;
         overflow: scroll;
@@ -320,5 +323,233 @@ button.next{
     }
     @media screen and (max-width :600px){
         width: 50vw;
+    }
+}
+
+//----------- Testimonials
+.testimonials{
+    display: flex;
+    .left-section{
+        width: 50%;
+        .left-title-section{
+            display: flex;
+            width: 100%;
+            img{
+                width: 45px;
+                margin: 5px 0px 5px 100px;
+            }
+            .left-inner-section{
+                margin: 10px auto;
+                .test-heading{
+                    font-size: 3.5rem;
+                    font-weight: bold;
+                    color: $font;
+                }
+                .test-line{
+                    font-size: 1.5rem;
+                    color: #717377;
+                }
+            }
+        }
+        img{
+            max-width: 80%;
+            margin-left:100px;
+            margin-top: 70px;
+        }
+    }
+    .right-section{
+        width: 50%;
+        img{
+            margin: 5px 40%;
+            cursor: pointer;
+            width: 20px;
+        }
+        .test-cards-container{
+            width: 80%;
+            height: 500px;
+            margin: 10px auto;
+            overflow: hidden;
+            transition: all 2s ease;
+            scroll-behavior: smooth;
+            .test-card{
+                width: 80%;
+                height: 140px;
+                margin: 20px 30px;
+                box-shadow: 0px 2px 30px rgb(0,0,0,0.16);
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                .test-text{
+                   font-size: 1.3rem;
+                   color: #717377;
+                   padding: 10px 20px;
+                   .testimonial{
+                       height: 100px;
+                   }
+                   .name{
+                       font-size: 1.5rem;
+                       color: #fe6b68;
+                   }
+                }
+                img{
+                    width: auto;
+                    max-height: 90px;
+                    margin: auto;
+                }
+            }
+        }
+    }
+    @media screen and (max-width : $break-large){
+        display: block;
+        .left-section{
+            width: 90%;
+            .left-title-section{
+                img{
+                    margin-left: 60px;   
+                }
+                .left-inner-section{
+                    margin-left: 40px;
+                    margin-top: 20px;
+                }
+            }
+            img{
+                margin-left: 160px;
+            }
+        }
+        .right-section{
+            width: 100%;
+            img{
+                margin: 40px 48%;
+            }
+            .test-cards-container{
+                width: 95%;
+                margin: 20px 5%;
+            }
+        }
+    }
+    @media screen and (max-width : 800px){
+        .left-section{
+            .left-title-section{
+                img{
+                    margin-left: 30px;   
+                }
+                .left-inner-section{
+                    margin-top: 40px
+                }
+            }
+            img{
+                margin-left: 100px;
+            }
+        }
+    }
+    @media screen and (max-width : 550px){
+        .left-section{
+            .left-title-section{
+                .left-inner-section{
+                    margin-top: 60px;
+                }
+            }
+            img{
+                margin-left: 70px;
+            }
+        }
+    }
+    @media screen and (max-width : 380px){
+        .left-section{
+            .left-title-section{
+                .left-inner-section{
+                    margin-top: 70px;
+                }
+            }
+            img{
+                margin-left: 60px;
+            }
+        }
+    }
+}
+
+//----------- Confuse form
+.input-field{
+    :nth-child(1){
+        grid-area: input-field-1;
+    }
+    :nth-child(2){
+        grid-area: input-field-2;
+    }:nth-child(3){
+        grid-area: input-field-3;
+    }:nth-child(4){
+        grid-area: input-field-4;
+    }
+}
+.form-heading{
+    grid-area: form-heading;
+    font-size: 3.5rem;
+    color: $font;
+    margin: 15px auto 15px 40px;
+    font-weight: bold;
+}
+.form-line{
+    grid-area: form-line;
+    font-size: 1.3rem;
+    margin: 5px auto 5px 40px;
+    color: #717377;
+}
+.form-fields{
+    grid-area: input-field;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    'input-field-1 input-field-2'
+    'input-field-3 input-field-4';
+    @media screen and (max-width: 600px){
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        'input-field-1'
+        'input-field-2'
+        'input-field-3'
+        'input-field-4'; 
+    }
+}
+.input-field{
+    margin: 5px auto;
+    width: 75%;
+    input{
+        padding: 3px;
+        width: 100%;
+    }
+}
+.submit-confuse-form{
+    grid-area: submit;
+    border: 1px solid #3a6ec9;
+    color: #3a6ec9;
+    padding: 8px 30px;
+    margin: auto auto;
+
+}
+.confuse-form{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.8fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    'form-heading input-field  submit'
+    'form-line input-field  submit';
+    @media screen and (max-width: $break-large){
+        grid-template-rows: 1fr 1fr 2fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        'form-heading'
+        'form-line'
+        'input-field'
+        'submit'; 
+    }
+    @media screen and (max-width: 600px){
+        grid-template-rows: 1fr 1fr 4fr 1fr;
+        grid-template-areas: 
+        'form-heading'
+        'form-line'
+        'input-field'
+        'submit'; 
     }
 }
