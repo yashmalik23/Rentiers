@@ -1,0 +1,178 @@
+.list-heading{
+    font-size:3rem;
+    color:$font;
+    padding-left: 100px;
+    font-weight: bold;
+    @media screen and (max-width: $break-large) {
+        padding-left: 53px;
+    }
+    grid-area:list-heading;
+}
+
+// --------------Side menu
+.list-menu-div{
+    display: flex;
+    grid-area: list-menu;
+    .list-side-menu{
+        list-style-type: none;
+        margin: 60px auto 40px 60px;
+        li{
+            padding: 5px 0px;
+            display: flex;
+            .list-number-button{
+                width: 40px;
+                height: 40px;
+                padding: 0px 10px;
+                border-radius: 20px;
+                border: 1px solid $font;
+                div{
+                    padding: 9px 6px;
+                }
+            }
+            .list-number-title{
+                line-height: 40px;
+                margin: auto 20px;
+            }
+            &:nth-child(even){
+                padding: 5px 20px;
+            }
+        }
+        #list-first-option{
+            .list-number-button{
+                color: white;
+                background-color: $main;
+                border: none;
+                div{
+                    padding: 9px 7px;
+                }
+            }
+            .list-number-title{
+                color: $main;
+            }
+        }
+    }
+    @media screen and (max-width: 1200px){
+        display: none;
+    }
+}
+.list-side-menu-line{
+    height: 400px;
+    margin: auto 0px;
+    @media screen and (max-width: 1200px){
+        display: none;
+    }
+}
+// ----------------Form 
+.list-property-form{
+    grid-area: form-area;
+    margin: 50px auto 0px 50px;
+    #form-1{
+        .list-form-heading{
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .radio-option-label{
+            padding: 15px 0px 5px;
+        }
+        .field-inputs{
+            width: 100%;
+        }
+        .radio-options{
+            display: grid;
+            width: 100%;
+            grid-auto-flow: column;
+            div{
+                display: inline-flex;
+                padding: 0px 10px;
+                img{
+                    cursor: pointer;
+                    pointer-events: none;
+                }
+                .radio-field-name{
+                    pointer-events: none;
+                    cursor: pointer;
+                }
+            } 
+        }
+        .line-3,.line-4{
+            display: grid;
+            grid-auto-flow: column;
+            width: 100%;
+        }
+        .form-drop-down-options{
+            width: 180px;
+            .drop-down-label{
+                padding: 10px 0px;
+            }
+            .drop-down-heading{
+                border: 1px solid $font;
+                padding: 5px 20px;
+                display: inline-flex;
+                width: 150px;
+                cursor: pointer;
+                user-select: none;      
+            }
+            img{
+                margin-left: -40px;
+            }
+            .drop-down-list{
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+                display: none;
+                position: absolute;
+                li{
+                    padding: 5px 20px;
+                    width: 150px;
+                    background-color: white;
+                    &:hover{
+                        background-color: $main;
+                        color: white;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+//-----------------Help Section
+.help-section{
+    grid-area: help-section;
+    .help-heading{
+        font-size: 2rem;
+        padding: 40px 0px 20px;
+        font-weight: bold;
+    }
+    .help-line{
+        width: 95%;
+        max-width: 300px;
+        color: #717377;
+        padding: 10px 0px;
+    }
+    margin: 0px auto;
+}
+
+//--------------- Main grid
+.list-properties{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 0.1fr 1fr;
+    grid-template-areas: 
+    'list-heading list-heading list-heading'
+    'list-menu form-area help-section';
+    @media screen and (max-width: 1200px){
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 0.1fr 1fr;
+        grid-template-areas: 
+        'list-heading list-heading'
+        'form-area help-section';
+    }
+    @media screen and (max-width: 700px){
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.1fr 1fr 1fr;
+        grid-template-areas: 
+        'list-heading'
+        'form-area' 
+        'help-section';
+    }
+}

@@ -4,7 +4,7 @@
     padding-left: 100px;
     font-weight: bold;
     @media screen and (max-width: $break-large) {
-        padding-left: 60px;
+        padding-left: 53px;
     }
 }
 .about-us-image{
@@ -28,7 +28,7 @@
 }
 .about-us-div{
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr;
     grid-template-areas: 
     'imag'
     'about-text';

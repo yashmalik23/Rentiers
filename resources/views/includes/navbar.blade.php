@@ -27,10 +27,10 @@
         <img class="mobile-logo" src="{{asset('images/navbar/logo.svg')}}">
     </div>
     <ul class="mobile-nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="#">List your property</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="aboutus">About Us</a></li>
+        <li><a href="contactus">Contact Us</a></li>
+        <li><a href="listproperties">List your property</a></li>
         <li>+91 9414573503&nbsp;&nbsp;<img class="icons" src="{{asset('images/navbar/white-down-arrow.svg')}}"/></li>
         <li><div class="mobile-login">Login/SignUp</div></li>
     </ul>

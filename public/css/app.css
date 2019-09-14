@@ -862,7 +862,7 @@ footer {
 
 @media screen and (max-width: 1120px) {
   .about-heading {
-    padding-left: 60px;
+    padding-left: 53px;
   }
 }
 
@@ -895,7 +895,7 @@ footer {
 
 .about-us-div {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 0.1fr 1fr;
   grid-template-areas: "imag" "about-text";
 }
 
@@ -908,7 +908,7 @@ footer {
 
 @media screen and (max-width: 800px) {
   .contact-heading {
-    padding-left: 60px;
+    padding-left: 53px;
   }
 }
 
@@ -971,5 +971,217 @@ footer {
   padding: 0px 20px;
   width: 95%;
   max-width: 440px;
+}
+
+.list-heading {
+  font-size: 3rem;
+  color: #424b5a;
+  padding-left: 100px;
+  font-weight: bold;
+  grid-area: list-heading;
+}
+
+@media screen and (max-width: 1120px) {
+  .list-heading {
+    padding-left: 53px;
+  }
+}
+
+.list-menu-div {
+  display: flex;
+  grid-area: list-menu;
+}
+
+.list-menu-div .list-side-menu {
+  list-style-type: none;
+  margin: 60px auto 40px 60px;
+}
+
+.list-menu-div .list-side-menu li {
+  padding: 5px 0px;
+  display: flex;
+}
+
+.list-menu-div .list-side-menu li .list-number-button {
+  width: 40px;
+  height: 40px;
+  padding: 0px 10px;
+  border-radius: 20px;
+  border: 1px solid #424b5a;
+}
+
+.list-menu-div .list-side-menu li .list-number-button div {
+  padding: 9px 6px;
+}
+
+.list-menu-div .list-side-menu li .list-number-title {
+  line-height: 40px;
+  margin: auto 20px;
+}
+
+.list-menu-div .list-side-menu li:nth-child(even) {
+  padding: 5px 20px;
+}
+
+.list-menu-div .list-side-menu #list-first-option .list-number-button {
+  color: white;
+  background-color: #3a6ec9;
+  border: none;
+}
+
+.list-menu-div .list-side-menu #list-first-option .list-number-button div {
+  padding: 9px 7px;
+}
+
+.list-menu-div .list-side-menu #list-first-option .list-number-title {
+  color: #3a6ec9;
+}
+
+@media screen and (max-width: 1200px) {
+  .list-menu-div {
+    display: none;
+  }
+}
+
+.list-side-menu-line {
+  height: 400px;
+  margin: auto 0px;
+}
+
+@media screen and (max-width: 1200px) {
+  .list-side-menu-line {
+    display: none;
+  }
+}
+
+.list-property-form {
+  grid-area: form-area;
+  margin: 50px auto 0px 50px;
+}
+
+.list-property-form #form-1 .list-form-heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.list-property-form #form-1 .radio-option-label {
+  padding: 15px 0px 5px;
+}
+
+.list-property-form #form-1 .field-inputs {
+  width: 100%;
+}
+
+.list-property-form #form-1 .radio-options {
+  display: grid;
+  width: 100%;
+  grid-auto-flow: column;
+}
+
+.list-property-form #form-1 .radio-options div {
+  display: inline-flex;
+  padding: 0px 10px;
+}
+
+.list-property-form #form-1 .radio-options div img {
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.list-property-form #form-1 .radio-options div .radio-field-name {
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.list-property-form #form-1 .line-3,
+.list-property-form #form-1 .line-4 {
+  display: grid;
+  grid-auto-flow: column;
+  width: 100%;
+}
+
+.list-property-form #form-1 .form-drop-down-options {
+  width: 180px;
+}
+
+.list-property-form #form-1 .form-drop-down-options .drop-down-label {
+  padding: 10px 0px;
+}
+
+.list-property-form #form-1 .form-drop-down-options .drop-down-heading {
+  border: 1px solid #424b5a;
+  padding: 5px 20px;
+  display: inline-flex;
+  width: 150px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.list-property-form #form-1 .form-drop-down-options img {
+  margin-left: -40px;
+}
+
+.list-property-form #form-1 .form-drop-down-options .drop-down-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: none;
+  position: absolute;
+}
+
+.list-property-form #form-1 .form-drop-down-options .drop-down-list li {
+  padding: 5px 20px;
+  width: 150px;
+  background-color: white;
+}
+
+.list-property-form #form-1 .form-drop-down-options .drop-down-list li:hover {
+  background-color: #3a6ec9;
+  color: white;
+  cursor: pointer;
+}
+
+.help-section {
+  grid-area: help-section;
+  margin: 0px auto;
+}
+
+.help-section .help-heading {
+  font-size: 2rem;
+  padding: 40px 0px 20px;
+  font-weight: bold;
+}
+
+.help-section .help-line {
+  width: 95%;
+  max-width: 300px;
+  color: #717377;
+  padding: 10px 0px;
+}
+
+.list-properties {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 0.1fr 1fr;
+  grid-template-areas: "list-heading list-heading list-heading" "list-menu form-area help-section";
+}
+
+@media screen and (max-width: 1200px) {
+  .list-properties {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 0.1fr 1fr;
+    grid-template-areas: "list-heading list-heading" "form-area help-section";
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .list-properties {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+    grid-template-areas: "list-heading" "form-area" "help-section";
+  }
 }
 
