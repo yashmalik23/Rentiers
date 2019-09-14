@@ -20,3 +20,6 @@ Route::get('aboutus', array('as'=>'aboutus',function () {
 Route::get('contactus', array('as'=>'contactus',function () {
     return view('includes/contact');
 }));
+Route::get('listproperties', array('as'=>'listproperties',function () {
+    return view('includes/list');
+}));

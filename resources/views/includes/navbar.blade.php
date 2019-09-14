@@ -6,7 +6,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="aboutus">About Us</a></li>
         <li><a href="contactus">Contact Us</a></li>
-        <li><a href="#">List your property</a></li>
+        <li><a href="listproperties">List your property</a></li>
         <li>|</li>
         <li>+91 9414573503</li>
         <li>
