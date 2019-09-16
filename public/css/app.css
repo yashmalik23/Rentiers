@@ -114,6 +114,28 @@ body {
   padding: 10px 0px;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #3a6ec9;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .title-container {
   text-align: center;
   width: 400px;
@@ -1023,17 +1045,17 @@ footer {
   padding: 5px 20px;
 }
 
-.list-menu-div .list-side-menu #list-first-option .list-number-button {
+.list-menu-div .list-side-menu .active-list-menu .list-number-button {
   color: white;
   background-color: #3a6ec9;
   border: none;
 }
 
-.list-menu-div .list-side-menu #list-first-option .list-number-button div {
+.list-menu-div .list-side-menu .active-list-menu .list-number-button div {
   padding: 9px 7px;
 }
 
-.list-menu-div .list-side-menu #list-first-option .list-number-title {
+.list-menu-div .list-side-menu .active-list-menu .list-number-title {
   color: #3a6ec9;
 }
 
@@ -1056,59 +1078,76 @@ footer {
 
 .list-property-form {
   grid-area: form-area;
-  margin: 50px auto 0px 50px;
+  margin: 50px auto 50px 50px;
 }
 
-.list-property-form #form-1 .list-form-heading {
+.list-property-form #form-1,
+.list-property-form #form-2 {
+  transition: all 2s ease-in-out;
+}
+
+.list-property-form #form-1 .list-form-heading,
+.list-property-form #form-2 .list-form-heading {
   font-size: 2rem;
   font-weight: bold;
 }
 
-.list-property-form #form-1 .radio-option-label {
+.list-property-form #form-1 .radio-option-label,
+.list-property-form #form-2 .radio-option-label {
   padding: 15px 0px 5px;
 }
 
-.list-property-form #form-1 .field-inputs {
+.list-property-form #form-1 .field-inputs,
+.list-property-form #form-2 .field-inputs {
   width: 100%;
 }
 
-.list-property-form #form-1 .radio-options {
+.list-property-form #form-1 .radio-options,
+.list-property-form #form-2 .radio-options {
   display: grid;
   width: 100%;
   grid-auto-flow: column;
 }
 
-.list-property-form #form-1 .radio-options div {
+.list-property-form #form-1 .radio-options div,
+.list-property-form #form-2 .radio-options div {
   display: inline-flex;
   padding: 0px 10px;
 }
 
-.list-property-form #form-1 .radio-options div img {
+.list-property-form #form-1 .radio-options div img,
+.list-property-form #form-2 .radio-options div img {
   cursor: pointer;
   pointer-events: none;
 }
 
-.list-property-form #form-1 .radio-options div .radio-field-name {
+.list-property-form #form-1 .radio-options div .radio-field-name,
+.list-property-form #form-2 .radio-options div .radio-field-name {
   pointer-events: none;
   cursor: pointer;
 }
 
 .list-property-form #form-1 .line-3,
-.list-property-form #form-1 .line-4 {
+.list-property-form #form-1 #line-4,
+.list-property-form #form-2 .line-3,
+.list-property-form #form-2 #line-4 {
   display: grid;
   grid-auto-flow: column;
   width: 100%;
 }
 
-.list-property-form #form-1 .form-drop-down-options {
+.list-property-form #form-1 .form-drop-down-options,
+.list-property-form #form-2 .form-drop-down-options {
   width: 180px;
 }
 
-.list-property-form #form-1 .form-drop-down-options .drop-down-label {
+.list-property-form #form-1 .form-drop-down-options .drop-down-label,
+.list-property-form #form-2 .form-drop-down-options .drop-down-label {
   padding: 10px 0px;
 }
 
-.list-property-form #form-1 .form-drop-down-options .drop-down-heading {
+.list-property-form #form-1 .form-drop-down-options .drop-down-heading,
+.list-property-form #form-2 .form-drop-down-options .drop-down-heading {
   border: 1px solid #424b5a;
   padding: 5px 20px;
   display: inline-flex;
@@ -1118,48 +1157,154 @@ footer {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  white-space: nowrap;
 }
 
-.list-property-form #form-1 .form-drop-down-options img {
+.list-property-form #form-1 .form-drop-down-options img,
+.list-property-form #form-2 .form-drop-down-options img {
   margin-left: -40px;
 }
 
-.list-property-form #form-1 .form-drop-down-options .drop-down-list {
+.list-property-form #form-1 .form-drop-down-options .drop-down-list,
+.list-property-form #form-2 .form-drop-down-options .drop-down-list {
   padding: 0;
   margin: 0;
   list-style-type: none;
   display: none;
   position: absolute;
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-shadow: 3px 5px 40px #f0f0f2;
 }
 
-.list-property-form #form-1 .form-drop-down-options .drop-down-list li {
+.list-property-form #form-1 .form-drop-down-options .drop-down-list li,
+.list-property-form #form-2 .form-drop-down-options .drop-down-list li {
   padding: 5px 20px;
-  width: 150px;
+  width: 145px;
   background-color: white;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.list-property-form #form-1 .form-drop-down-options .drop-down-list li:hover {
+.list-property-form #form-1 .form-drop-down-options .drop-down-list li:hover,
+.list-property-form #form-2 .form-drop-down-options .drop-down-list li:hover {
   background-color: #3a6ec9;
   color: white;
   cursor: pointer;
 }
 
+.list-property-form #form-1 #res-options,
+.list-property-form #form-2 #res-options {
+  width: 280px;
+}
+
+.list-property-form #form-1 #res-options .drop-down-heading,
+.list-property-form #form-2 #res-options .drop-down-heading {
+  width: 250px;
+}
+
+.list-property-form #form-1 #res-options .drop-down-list,
+.list-property-form #form-2 #res-options .drop-down-list {
+  width: 250px;
+}
+
+.list-property-form #form-1 #res-options .drop-down-list li,
+.list-property-form #form-2 #res-options .drop-down-list li {
+  width: 245px;
+}
+
+.list-property-form #form-1 #more-options,
+.list-property-form #form-2 #more-options {
+  display: none;
+  width: 280px;
+}
+
+.list-property-form #form-1 #more-options .drop-down-heading,
+.list-property-form #form-2 #more-options .drop-down-heading {
+  width: 250px;
+}
+
+.list-property-form #form-1 #more-options .drop-down-list,
+.list-property-form #form-2 #more-options .drop-down-list {
+  width: 250px;
+}
+
+.list-property-form #form-1 #more-options .drop-down-list li,
+.list-property-form #form-2 #more-options .drop-down-list li {
+  width: 245px;
+}
+
+.list-property-form #form-1 #multiple-units,
+.list-property-form #form-2 #multiple-units {
+  display: none;
+}
+
+.list-property-form #form-1 .list-input-field,
+.list-property-form #form-2 .list-input-field {
+  display: block;
+  padding: 15px 0px 0px;
+}
+
+.list-property-form #form-2 {
+  display: none;
+}
+
 .help-section {
   grid-area: help-section;
+  text-align: justify;
+  display: grid;
+  margin-top: 40px;
   margin: 0px auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.1fr 1fr 1fr 0.1fr;
+  grid-template-areas: "help-heading" "help-line-1" "help-line-2" "continue";
 }
 
 .help-section .help-heading {
   font-size: 2rem;
   padding: 40px 0px 20px;
   font-weight: bold;
+  grid-area: help-heading;
 }
 
-.help-section .help-line {
+.help-section .help-line-1 {
   width: 95%;
   max-width: 300px;
   color: #717377;
   padding: 10px 0px;
+  grid-area: help-line-1;
+}
+
+.help-section .help-line-2 {
+  width: 95%;
+  max-width: 300px;
+  color: #717377;
+  padding: 10px 0px;
+  grid-area: help-line-2;
+}
+
+.help-section .continue-list-button {
+  color: white;
+  background-color: #3a6ec9;
+  padding: 5px 23px;
+  width: 100px;
+  margin-left: 5px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  grid-area: continue;
+}
+
+@media screen and (max-width: 700px) {
+  .help-section {
+    grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
+    grid-template-areas: "continue" "help-heading" "help-line-1" "help-line-2";
+  }
 }
 
 .list-properties {

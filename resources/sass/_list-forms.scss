@@ -37,7 +37,7 @@
                 padding: 5px 20px;
             }
         }
-        #list-first-option{
+        .active-list-menu{
             .list-number-button{
                 color: white;
                 background-color: $main;
@@ -65,8 +65,9 @@
 // ----------------Form 
 .list-property-form{
     grid-area: form-area;
-    margin: 50px auto 0px 50px;
-    #form-1{
+    margin: 50px auto 50px 50px;
+    #form-1,#form-2{
+        transition: all 2s ease-in-out;
         .list-form-heading{
             font-size: 2rem;
             font-weight: bold;
@@ -94,7 +95,7 @@
                 }
             } 
         }
-        .line-3,.line-4{
+        .line-3,#line-4{
             display: grid;
             grid-auto-flow: column;
             width: 100%;
@@ -110,7 +111,8 @@
                 display: inline-flex;
                 width: 150px;
                 cursor: pointer;
-                user-select: none;      
+                user-select: none;  
+                white-space: nowrap;    
             }
             img{
                 margin-left: -40px;
@@ -121,10 +123,15 @@
                 list-style-type: none;
                 display: none;
                 position: absolute;
+                max-height: 150px;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                box-shadow: 3px 5px 40px #f0f0f2;
                 li{
                     padding: 5px 20px;
-                    width: 150px;
+                    width: 145px;
                     background-color: white;
+                    user-select: none;
                     &:hover{
                         background-color: $main;
                         color: white;
@@ -133,23 +140,95 @@
                 }
             }
         }
+        #res-options{
+            width: 280px;
+            .drop-down-heading{
+                width: 250px;  
+            }
+            .drop-down-list{
+                width: 250px;
+                li{
+                    width: 245px;
+                }
+            }
+        }
+        #more-options{
+            display: none;
+            width: 280px;
+            .drop-down-heading{
+                width: 250px;  
+            }
+            .drop-down-list{
+                width: 250px;
+                li{
+                    width: 245px;
+                }
+            }
+        }
+        #multiple-units{
+            display: none;
+        }
+        .list-input-field{
+            display: block;
+            padding: 15px 0px 0px;
+        }
+    }
+    #form-2{
+        display: none;
     }
 }
 //-----------------Help Section
 .help-section{
     grid-area: help-section;
+    text-align: justify;
+    display: grid;
+    margin-top: 40px;
     .help-heading{
         font-size: 2rem;
         padding: 40px 0px 20px;
         font-weight: bold;
+        grid-area: help-heading;
     }
-    .help-line{
+    .help-line-1{
         width: 95%;
         max-width: 300px;
         color: #717377;
         padding: 10px 0px;
+        grid-area: help-line-1;
+    }
+    .help-line-2{
+        width: 95%;
+        max-width: 300px;
+        color: #717377;
+        padding: 10px 0px;
+        grid-area: help-line-2;
+    }
+    .continue-list-button{
+        color: white;
+        background-color: $main;
+        padding: 5px 23px;
+        width: 100px;
+        margin-left: 5px;
+        cursor: pointer;
+        user-select: none;
+        grid-area: continue;
     }
     margin: 0px auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr 0.1fr;
+    grid-template-areas: 
+        'help-heading'
+        'help-line-1'
+        'help-line-2'
+        'continue';
+    @media screen and (max-width: 700px){
+        grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
+        grid-template-areas:
+        'continue' 
+        'help-heading'
+        'help-line-1'
+        'help-line-2';
+    }
 }
 
 //--------------- Main grid

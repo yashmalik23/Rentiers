@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <script type="text/javascript" src="{{asset('js/navbar.js') }}"></script>
-    <title>Rentiers-Home</title>
+    <title>Rentiers.in</title>
 </head>
 <body>
     @include('includes.navbar')
