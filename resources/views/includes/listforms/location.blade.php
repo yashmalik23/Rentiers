@@ -5,7 +5,7 @@
         <div class="line-4">
             <div class="form-drop-down-options">
                 <div class="drop-down-label">City * </div>
-                <div class="drop-down-heading" onclick="showdrop(event)" id="listedFor">Select</div>
+                <div class="drop-down-heading" onclick="showdrop(event)" id="city">Select</div>
                 <img src="{{asset('images/navbar/down-arrow.svg')}}" />
                 <ul class="drop-down-list">
                     <li onclick="changeoption(event)">Gurugram</li>
@@ -18,6 +18,21 @@
                 <label for="houseNo">House/Flat Number *</label>
                 <input id="houseNo" class="list-form-input" placeholder="None" required>
             </div>
+            <div class="list-input-field">
+                <label for="streetName">Street Name</label>
+                <input id="streetName" class="list-form-input" placeholder="Street I">
+            </div>
         </div>
+        <div class="line-4">
+            <div class="list-input-field">
+                <label for="nearByArea">Landmark </label>
+                <input id="nearByArea" class="list-form-input" placeholder="Huda Market" >
+            </div>
+            <div class="list-input-field">
+                <label for="locality">Locality *</label>
+                <input id="locality" class="list-form-input" placeholder="Sec-4" required>
+            </div>
+        </div>
+        <div class="list-previous-button" onclick="previousForm()">Previous</div>
     </div>
 </div>

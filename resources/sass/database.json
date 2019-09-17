@@ -51,10 +51,7 @@
             "areaUnits":["sq.ft.","sq.m.","sq.yards","acres","hectares"],
             "washRooms":"number",
             "balconies":"number",
-            "availabilty":["Under Construction","Ready to move", "Launching"],
-            "possesionByConstruction": "years",
-            "readytoMoveage":"years",
-            "offices":"number"
+            "availabilty":["Under Construction","Ready to move", "Launching"]
         },
         "Pricing":{
             "contract":["Lease","Any"],

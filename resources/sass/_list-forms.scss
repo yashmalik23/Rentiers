@@ -66,7 +66,7 @@
 .list-property-form{
     grid-area: form-area;
     margin: 50px auto 50px 50px;
-    #form-1,#form-2{
+    #form-1,#form-2,#form-3,#form-4,#form-5{
         transition: all 2s ease-in-out;
         .list-form-heading{
             font-size: 2rem;
@@ -164,17 +164,87 @@
                     width: 245px;
                 }
             }
+        }#contract{
+            width: 280px;
+            .drop-down-heading{
+                width: 250px;  
+            }
+            .drop-down-list{
+                width: 250px;
+                li{
+                    width: 245px;
+                }
+            }
         }
         #multiple-units{
             display: none;
         }
         .list-input-field{
+            display: inline-block;
+            padding: 15px 45px 0px 0px;
+            label{
+                display: block;
+                font-weight: 400;
+            }
+            input{
+                outline: none;
+                border: 1px solid $font;
+                padding: 2px 4px;
+                width: 150px;
+                height: 32px;
+            }
+        }
+        .list-area-field{
+            display: inline-block;
+            padding: 15px 45px 0px 0px;
+            width: 100%;
+            label{
+                display: block;
+                font-weight: 400;
+            }
+            textarea{
+                outline: none;
+                border: 1px solid $font;
+                padding: 2px 4px;
+                width: 95%;
+                max-width: 250px;
+                height: 100px;
+            }
+        }
+        .list-previous-button{
+            color: $main;
+            border: 1px solid $main;
+            padding: 5px 23px;
+            width: 100px;
+            margin: 30px 0px;
+            cursor: pointer;
+        }
+        .list-form-check-field{
             display: block;
-            padding: 15px 0px 0px;
+            width: 95%;
+            max-width: 600px;
+            .check-field-label{
+                padding: 10px 0px 5px;
+            }
+            .check-option{
+                display: inline-flex;
+                padding-right: 10px;
+                width: 180px;
+                img{
+                    margin-right: 10px;
+                    width: 15px;
+                    cursor: pointer;
+                }
+            }
         }
     }
-    #form-2{
+    #form-2,#form-3,#form-4,#form-5{
         display: none;
+    }
+    #form-3{
+        .residential-options,.commercial-options{
+            display: none;
+        }
     }
 }
 //-----------------Help Section
@@ -208,6 +278,7 @@
         background-color: $main;
         padding: 5px 23px;
         width: 100px;
+        height: 32px;
         margin-left: 5px;
         cursor: pointer;
         user-select: none;

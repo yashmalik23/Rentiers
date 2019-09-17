@@ -1082,47 +1082,71 @@ footer {
 }
 
 .list-property-form #form-1,
-.list-property-form #form-2 {
+.list-property-form #form-2,
+.list-property-form #form-3,
+.list-property-form #form-4,
+.list-property-form #form-5 {
   transition: all 2s ease-in-out;
 }
 
 .list-property-form #form-1 .list-form-heading,
-.list-property-form #form-2 .list-form-heading {
+.list-property-form #form-2 .list-form-heading,
+.list-property-form #form-3 .list-form-heading,
+.list-property-form #form-4 .list-form-heading,
+.list-property-form #form-5 .list-form-heading {
   font-size: 2rem;
   font-weight: bold;
 }
 
 .list-property-form #form-1 .radio-option-label,
-.list-property-form #form-2 .radio-option-label {
+.list-property-form #form-2 .radio-option-label,
+.list-property-form #form-3 .radio-option-label,
+.list-property-form #form-4 .radio-option-label,
+.list-property-form #form-5 .radio-option-label {
   padding: 15px 0px 5px;
 }
 
 .list-property-form #form-1 .field-inputs,
-.list-property-form #form-2 .field-inputs {
+.list-property-form #form-2 .field-inputs,
+.list-property-form #form-3 .field-inputs,
+.list-property-form #form-4 .field-inputs,
+.list-property-form #form-5 .field-inputs {
   width: 100%;
 }
 
 .list-property-form #form-1 .radio-options,
-.list-property-form #form-2 .radio-options {
+.list-property-form #form-2 .radio-options,
+.list-property-form #form-3 .radio-options,
+.list-property-form #form-4 .radio-options,
+.list-property-form #form-5 .radio-options {
   display: grid;
   width: 100%;
   grid-auto-flow: column;
 }
 
 .list-property-form #form-1 .radio-options div,
-.list-property-form #form-2 .radio-options div {
+.list-property-form #form-2 .radio-options div,
+.list-property-form #form-3 .radio-options div,
+.list-property-form #form-4 .radio-options div,
+.list-property-form #form-5 .radio-options div {
   display: inline-flex;
   padding: 0px 10px;
 }
 
 .list-property-form #form-1 .radio-options div img,
-.list-property-form #form-2 .radio-options div img {
+.list-property-form #form-2 .radio-options div img,
+.list-property-form #form-3 .radio-options div img,
+.list-property-form #form-4 .radio-options div img,
+.list-property-form #form-5 .radio-options div img {
   cursor: pointer;
   pointer-events: none;
 }
 
 .list-property-form #form-1 .radio-options div .radio-field-name,
-.list-property-form #form-2 .radio-options div .radio-field-name {
+.list-property-form #form-2 .radio-options div .radio-field-name,
+.list-property-form #form-3 .radio-options div .radio-field-name,
+.list-property-form #form-4 .radio-options div .radio-field-name,
+.list-property-form #form-5 .radio-options div .radio-field-name {
   pointer-events: none;
   cursor: pointer;
 }
@@ -1130,24 +1154,39 @@ footer {
 .list-property-form #form-1 .line-3,
 .list-property-form #form-1 #line-4,
 .list-property-form #form-2 .line-3,
-.list-property-form #form-2 #line-4 {
+.list-property-form #form-2 #line-4,
+.list-property-form #form-3 .line-3,
+.list-property-form #form-3 #line-4,
+.list-property-form #form-4 .line-3,
+.list-property-form #form-4 #line-4,
+.list-property-form #form-5 .line-3,
+.list-property-form #form-5 #line-4 {
   display: grid;
   grid-auto-flow: column;
   width: 100%;
 }
 
 .list-property-form #form-1 .form-drop-down-options,
-.list-property-form #form-2 .form-drop-down-options {
+.list-property-form #form-2 .form-drop-down-options,
+.list-property-form #form-3 .form-drop-down-options,
+.list-property-form #form-4 .form-drop-down-options,
+.list-property-form #form-5 .form-drop-down-options {
   width: 180px;
 }
 
 .list-property-form #form-1 .form-drop-down-options .drop-down-label,
-.list-property-form #form-2 .form-drop-down-options .drop-down-label {
+.list-property-form #form-2 .form-drop-down-options .drop-down-label,
+.list-property-form #form-3 .form-drop-down-options .drop-down-label,
+.list-property-form #form-4 .form-drop-down-options .drop-down-label,
+.list-property-form #form-5 .form-drop-down-options .drop-down-label {
   padding: 10px 0px;
 }
 
 .list-property-form #form-1 .form-drop-down-options .drop-down-heading,
-.list-property-form #form-2 .form-drop-down-options .drop-down-heading {
+.list-property-form #form-2 .form-drop-down-options .drop-down-heading,
+.list-property-form #form-3 .form-drop-down-options .drop-down-heading,
+.list-property-form #form-4 .form-drop-down-options .drop-down-heading,
+.list-property-form #form-5 .form-drop-down-options .drop-down-heading {
   border: 1px solid #424b5a;
   padding: 5px 20px;
   display: inline-flex;
@@ -1161,12 +1200,18 @@ footer {
 }
 
 .list-property-form #form-1 .form-drop-down-options img,
-.list-property-form #form-2 .form-drop-down-options img {
+.list-property-form #form-2 .form-drop-down-options img,
+.list-property-form #form-3 .form-drop-down-options img,
+.list-property-form #form-4 .form-drop-down-options img,
+.list-property-form #form-5 .form-drop-down-options img {
   margin-left: -40px;
 }
 
 .list-property-form #form-1 .form-drop-down-options .drop-down-list,
-.list-property-form #form-2 .form-drop-down-options .drop-down-list {
+.list-property-form #form-2 .form-drop-down-options .drop-down-list,
+.list-property-form #form-3 .form-drop-down-options .drop-down-list,
+.list-property-form #form-4 .form-drop-down-options .drop-down-list,
+.list-property-form #form-5 .form-drop-down-options .drop-down-list {
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -1179,7 +1224,10 @@ footer {
 }
 
 .list-property-form #form-1 .form-drop-down-options .drop-down-list li,
-.list-property-form #form-2 .form-drop-down-options .drop-down-list li {
+.list-property-form #form-2 .form-drop-down-options .drop-down-list li,
+.list-property-form #form-3 .form-drop-down-options .drop-down-list li,
+.list-property-form #form-4 .form-drop-down-options .drop-down-list li,
+.list-property-form #form-5 .form-drop-down-options .drop-down-list li {
   padding: 5px 20px;
   width: 145px;
   background-color: white;
@@ -1190,65 +1238,242 @@ footer {
 }
 
 .list-property-form #form-1 .form-drop-down-options .drop-down-list li:hover,
-.list-property-form #form-2 .form-drop-down-options .drop-down-list li:hover {
+.list-property-form #form-2 .form-drop-down-options .drop-down-list li:hover,
+.list-property-form #form-3 .form-drop-down-options .drop-down-list li:hover,
+.list-property-form #form-4 .form-drop-down-options .drop-down-list li:hover,
+.list-property-form #form-5 .form-drop-down-options .drop-down-list li:hover {
   background-color: #3a6ec9;
   color: white;
   cursor: pointer;
 }
 
 .list-property-form #form-1 #res-options,
-.list-property-form #form-2 #res-options {
+.list-property-form #form-2 #res-options,
+.list-property-form #form-3 #res-options,
+.list-property-form #form-4 #res-options,
+.list-property-form #form-5 #res-options {
   width: 280px;
 }
 
 .list-property-form #form-1 #res-options .drop-down-heading,
-.list-property-form #form-2 #res-options .drop-down-heading {
+.list-property-form #form-2 #res-options .drop-down-heading,
+.list-property-form #form-3 #res-options .drop-down-heading,
+.list-property-form #form-4 #res-options .drop-down-heading,
+.list-property-form #form-5 #res-options .drop-down-heading {
   width: 250px;
 }
 
 .list-property-form #form-1 #res-options .drop-down-list,
-.list-property-form #form-2 #res-options .drop-down-list {
+.list-property-form #form-2 #res-options .drop-down-list,
+.list-property-form #form-3 #res-options .drop-down-list,
+.list-property-form #form-4 #res-options .drop-down-list,
+.list-property-form #form-5 #res-options .drop-down-list {
   width: 250px;
 }
 
 .list-property-form #form-1 #res-options .drop-down-list li,
-.list-property-form #form-2 #res-options .drop-down-list li {
+.list-property-form #form-2 #res-options .drop-down-list li,
+.list-property-form #form-3 #res-options .drop-down-list li,
+.list-property-form #form-4 #res-options .drop-down-list li,
+.list-property-form #form-5 #res-options .drop-down-list li {
   width: 245px;
 }
 
 .list-property-form #form-1 #more-options,
-.list-property-form #form-2 #more-options {
+.list-property-form #form-2 #more-options,
+.list-property-form #form-3 #more-options,
+.list-property-form #form-4 #more-options,
+.list-property-form #form-5 #more-options {
   display: none;
   width: 280px;
 }
 
 .list-property-form #form-1 #more-options .drop-down-heading,
-.list-property-form #form-2 #more-options .drop-down-heading {
+.list-property-form #form-2 #more-options .drop-down-heading,
+.list-property-form #form-3 #more-options .drop-down-heading,
+.list-property-form #form-4 #more-options .drop-down-heading,
+.list-property-form #form-5 #more-options .drop-down-heading {
   width: 250px;
 }
 
 .list-property-form #form-1 #more-options .drop-down-list,
-.list-property-form #form-2 #more-options .drop-down-list {
+.list-property-form #form-2 #more-options .drop-down-list,
+.list-property-form #form-3 #more-options .drop-down-list,
+.list-property-form #form-4 #more-options .drop-down-list,
+.list-property-form #form-5 #more-options .drop-down-list {
   width: 250px;
 }
 
 .list-property-form #form-1 #more-options .drop-down-list li,
-.list-property-form #form-2 #more-options .drop-down-list li {
+.list-property-form #form-2 #more-options .drop-down-list li,
+.list-property-form #form-3 #more-options .drop-down-list li,
+.list-property-form #form-4 #more-options .drop-down-list li,
+.list-property-form #form-5 #more-options .drop-down-list li {
+  width: 245px;
+}
+
+.list-property-form #form-1 #contract,
+.list-property-form #form-2 #contract,
+.list-property-form #form-3 #contract,
+.list-property-form #form-4 #contract,
+.list-property-form #form-5 #contract {
+  width: 280px;
+}
+
+.list-property-form #form-1 #contract .drop-down-heading,
+.list-property-form #form-2 #contract .drop-down-heading,
+.list-property-form #form-3 #contract .drop-down-heading,
+.list-property-form #form-4 #contract .drop-down-heading,
+.list-property-form #form-5 #contract .drop-down-heading {
+  width: 250px;
+}
+
+.list-property-form #form-1 #contract .drop-down-list,
+.list-property-form #form-2 #contract .drop-down-list,
+.list-property-form #form-3 #contract .drop-down-list,
+.list-property-form #form-4 #contract .drop-down-list,
+.list-property-form #form-5 #contract .drop-down-list {
+  width: 250px;
+}
+
+.list-property-form #form-1 #contract .drop-down-list li,
+.list-property-form #form-2 #contract .drop-down-list li,
+.list-property-form #form-3 #contract .drop-down-list li,
+.list-property-form #form-4 #contract .drop-down-list li,
+.list-property-form #form-5 #contract .drop-down-list li {
   width: 245px;
 }
 
 .list-property-form #form-1 #multiple-units,
-.list-property-form #form-2 #multiple-units {
+.list-property-form #form-2 #multiple-units,
+.list-property-form #form-3 #multiple-units,
+.list-property-form #form-4 #multiple-units,
+.list-property-form #form-5 #multiple-units {
   display: none;
 }
 
 .list-property-form #form-1 .list-input-field,
-.list-property-form #form-2 .list-input-field {
-  display: block;
-  padding: 15px 0px 0px;
+.list-property-form #form-2 .list-input-field,
+.list-property-form #form-3 .list-input-field,
+.list-property-form #form-4 .list-input-field,
+.list-property-form #form-5 .list-input-field {
+  display: inline-block;
+  padding: 15px 45px 0px 0px;
 }
 
-.list-property-form #form-2 {
+.list-property-form #form-1 .list-input-field label,
+.list-property-form #form-2 .list-input-field label,
+.list-property-form #form-3 .list-input-field label,
+.list-property-form #form-4 .list-input-field label,
+.list-property-form #form-5 .list-input-field label {
+  display: block;
+  font-weight: 400;
+}
+
+.list-property-form #form-1 .list-input-field input,
+.list-property-form #form-2 .list-input-field input,
+.list-property-form #form-3 .list-input-field input,
+.list-property-form #form-4 .list-input-field input,
+.list-property-form #form-5 .list-input-field input {
+  outline: none;
+  border: 1px solid #424b5a;
+  padding: 2px 4px;
+  width: 150px;
+  height: 32px;
+}
+
+.list-property-form #form-1 .list-area-field,
+.list-property-form #form-2 .list-area-field,
+.list-property-form #form-3 .list-area-field,
+.list-property-form #form-4 .list-area-field,
+.list-property-form #form-5 .list-area-field {
+  display: inline-block;
+  padding: 15px 45px 0px 0px;
+  width: 100%;
+}
+
+.list-property-form #form-1 .list-area-field label,
+.list-property-form #form-2 .list-area-field label,
+.list-property-form #form-3 .list-area-field label,
+.list-property-form #form-4 .list-area-field label,
+.list-property-form #form-5 .list-area-field label {
+  display: block;
+  font-weight: 400;
+}
+
+.list-property-form #form-1 .list-area-field textarea,
+.list-property-form #form-2 .list-area-field textarea,
+.list-property-form #form-3 .list-area-field textarea,
+.list-property-form #form-4 .list-area-field textarea,
+.list-property-form #form-5 .list-area-field textarea {
+  outline: none;
+  border: 1px solid #424b5a;
+  padding: 2px 4px;
+  width: 95%;
+  max-width: 250px;
+  height: 100px;
+}
+
+.list-property-form #form-1 .list-previous-button,
+.list-property-form #form-2 .list-previous-button,
+.list-property-form #form-3 .list-previous-button,
+.list-property-form #form-4 .list-previous-button,
+.list-property-form #form-5 .list-previous-button {
+  color: #3a6ec9;
+  border: 1px solid #3a6ec9;
+  padding: 5px 23px;
+  width: 100px;
+  margin: 30px 0px;
+  cursor: pointer;
+}
+
+.list-property-form #form-1 .list-form-check-field,
+.list-property-form #form-2 .list-form-check-field,
+.list-property-form #form-3 .list-form-check-field,
+.list-property-form #form-4 .list-form-check-field,
+.list-property-form #form-5 .list-form-check-field {
+  display: block;
+  width: 95%;
+  max-width: 600px;
+}
+
+.list-property-form #form-1 .list-form-check-field .check-field-label,
+.list-property-form #form-2 .list-form-check-field .check-field-label,
+.list-property-form #form-3 .list-form-check-field .check-field-label,
+.list-property-form #form-4 .list-form-check-field .check-field-label,
+.list-property-form #form-5 .list-form-check-field .check-field-label {
+  padding: 10px 0px 5px;
+}
+
+.list-property-form #form-1 .list-form-check-field .check-option,
+.list-property-form #form-2 .list-form-check-field .check-option,
+.list-property-form #form-3 .list-form-check-field .check-option,
+.list-property-form #form-4 .list-form-check-field .check-option,
+.list-property-form #form-5 .list-form-check-field .check-option {
+  display: inline-flex;
+  padding-right: 10px;
+  width: 180px;
+}
+
+.list-property-form #form-1 .list-form-check-field .check-option img,
+.list-property-form #form-2 .list-form-check-field .check-option img,
+.list-property-form #form-3 .list-form-check-field .check-option img,
+.list-property-form #form-4 .list-form-check-field .check-option img,
+.list-property-form #form-5 .list-form-check-field .check-option img {
+  margin-right: 10px;
+  width: 15px;
+  cursor: pointer;
+}
+
+.list-property-form #form-2,
+.list-property-form #form-3,
+.list-property-form #form-4,
+.list-property-form #form-5 {
+  display: none;
+}
+
+.list-property-form #form-3 .residential-options,
+.list-property-form #form-3 .commercial-options {
   display: none;
 }
 
@@ -1291,6 +1516,7 @@ footer {
   background-color: #3a6ec9;
   padding: 5px 23px;
   width: 100px;
+  height: 32px;
   margin-left: 5px;
   cursor: pointer;
   -webkit-user-select: none;

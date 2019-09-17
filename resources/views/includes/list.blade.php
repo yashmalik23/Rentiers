@@ -45,6 +45,9 @@
         <div class="list-property-form">
             @include('includes/listforms/basicDetails')
             @include('includes/listforms/location')
+            @include('includes/listforms/moreDetails')
+            @include('includes/listforms/pricing')
+            @include('includes/listforms/features')
         </div>
         <div class="help-section">
             <div class="help-heading">Help</div>
