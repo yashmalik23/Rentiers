@@ -2,6 +2,7 @@
     font-size:3rem;
     color:$font;
     padding-left: 100px;
+    margin-right: 10px;
     font-weight: bold;
     @media screen and (max-width: $break-large) {
         padding-left: 53px;
@@ -65,7 +66,10 @@
 // ----------------Form 
 .list-property-form{
     grid-area: form-area;
-    margin: 50px auto 50px 50px;
+    margin: 50px 107px 50px 50px;
+    @media screen and (max-width: 700px){
+        margin: 50px auto 50px 50px;
+    }
     #form-1,#form-2,#form-3,#form-4,#form-5{
         transition: all 2s ease-in-out;
         .list-form-heading{
@@ -96,12 +100,12 @@
             } 
         }
         .line-3,#line-4{
-            display: grid;
-            grid-auto-flow: column;
+            display: inline-flex;
             width: 100%;
         }
         .form-drop-down-options{
             width: 180px;
+            margin-right: 16px;
             .drop-down-label{
                 padding: 10px 0px;
             }
@@ -164,7 +168,7 @@
                     width: 245px;
                 }
             }
-        }#contract{
+        }#list-contract{
             width: 280px;
             .drop-down-heading{
                 width: 250px;  
@@ -293,7 +297,7 @@
         'help-line-2'
         'continue';
     @media screen and (max-width: 700px){
-        grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
+        grid-template-rows: 0.1fr 0.3fr 0.3fr 0.1fr;
         grid-template-areas:
         'continue' 
         'help-heading'

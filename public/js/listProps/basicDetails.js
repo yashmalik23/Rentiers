@@ -9,7 +9,6 @@ function showdrop(e){
 }
 
 function changeoption(e){
-
     let target = e.target.parentElement.previousElementSibling.previousElementSibling;
     target.textContent = e.target.textContent;
 

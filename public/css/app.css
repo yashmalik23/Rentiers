@@ -852,6 +852,7 @@ button.next {
 
 footer {
   margin-top: 50px;
+  width: 100%;
   background-color: #3a6ec9;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -999,6 +1000,7 @@ footer {
   font-size: 3rem;
   color: #424b5a;
   padding-left: 100px;
+  margin-right: 10px;
   font-weight: bold;
   grid-area: list-heading;
 }
@@ -1078,7 +1080,13 @@ footer {
 
 .list-property-form {
   grid-area: form-area;
-  margin: 50px auto 50px 50px;
+  margin: 50px 107px 50px 50px;
+}
+
+@media screen and (max-width: 700px) {
+  .list-property-form {
+    margin: 50px auto 50px 50px;
+  }
 }
 
 .list-property-form #form-1,
@@ -1161,8 +1169,7 @@ footer {
 .list-property-form #form-4 #line-4,
 .list-property-form #form-5 .line-3,
 .list-property-form #form-5 #line-4 {
-  display: grid;
-  grid-auto-flow: column;
+  display: inline-flex;
   width: 100%;
 }
 
@@ -1172,6 +1179,7 @@ footer {
 .list-property-form #form-4 .form-drop-down-options,
 .list-property-form #form-5 .form-drop-down-options {
   width: 180px;
+  margin-right: 16px;
 }
 
 .list-property-form #form-1 .form-drop-down-options .drop-down-label,
@@ -1312,35 +1320,35 @@ footer {
   width: 245px;
 }
 
-.list-property-form #form-1 #contract,
-.list-property-form #form-2 #contract,
-.list-property-form #form-3 #contract,
-.list-property-form #form-4 #contract,
-.list-property-form #form-5 #contract {
+.list-property-form #form-1 #list-contract,
+.list-property-form #form-2 #list-contract,
+.list-property-form #form-3 #list-contract,
+.list-property-form #form-4 #list-contract,
+.list-property-form #form-5 #list-contract {
   width: 280px;
 }
 
-.list-property-form #form-1 #contract .drop-down-heading,
-.list-property-form #form-2 #contract .drop-down-heading,
-.list-property-form #form-3 #contract .drop-down-heading,
-.list-property-form #form-4 #contract .drop-down-heading,
-.list-property-form #form-5 #contract .drop-down-heading {
+.list-property-form #form-1 #list-contract .drop-down-heading,
+.list-property-form #form-2 #list-contract .drop-down-heading,
+.list-property-form #form-3 #list-contract .drop-down-heading,
+.list-property-form #form-4 #list-contract .drop-down-heading,
+.list-property-form #form-5 #list-contract .drop-down-heading {
   width: 250px;
 }
 
-.list-property-form #form-1 #contract .drop-down-list,
-.list-property-form #form-2 #contract .drop-down-list,
-.list-property-form #form-3 #contract .drop-down-list,
-.list-property-form #form-4 #contract .drop-down-list,
-.list-property-form #form-5 #contract .drop-down-list {
+.list-property-form #form-1 #list-contract .drop-down-list,
+.list-property-form #form-2 #list-contract .drop-down-list,
+.list-property-form #form-3 #list-contract .drop-down-list,
+.list-property-form #form-4 #list-contract .drop-down-list,
+.list-property-form #form-5 #list-contract .drop-down-list {
   width: 250px;
 }
 
-.list-property-form #form-1 #contract .drop-down-list li,
-.list-property-form #form-2 #contract .drop-down-list li,
-.list-property-form #form-3 #contract .drop-down-list li,
-.list-property-form #form-4 #contract .drop-down-list li,
-.list-property-form #form-5 #contract .drop-down-list li {
+.list-property-form #form-1 #list-contract .drop-down-list li,
+.list-property-form #form-2 #list-contract .drop-down-list li,
+.list-property-form #form-3 #list-contract .drop-down-list li,
+.list-property-form #form-4 #list-contract .drop-down-list li,
+.list-property-form #form-5 #list-contract .drop-down-list li {
   width: 245px;
 }
 
@@ -1528,7 +1536,7 @@ footer {
 
 @media screen and (max-width: 700px) {
   .help-section {
-    grid-template-rows: 0.1fr 0.5fr 0.5fr 0.1fr;
+    grid-template-rows: 0.1fr 0.3fr 0.3fr 0.1fr;
     grid-template-areas: "continue" "help-heading" "help-line-1" "help-line-2";
   }
 }

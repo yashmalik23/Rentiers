@@ -3,7 +3,7 @@
     <div class="list-form-heading">What are your expectations?</div>
     <div class="field-inputs">
         <div class="line-3">
-            <div class="form-drop-down-options" id="contract">
+            <div class="form-drop-down-options" id="list-contract">
                 <div class="drop-down-label">Contract * </div>
                 <div class="drop-down-heading" onclick="showdrop(event)" id="contract">Select</div>
                 <img src="{{asset('images/navbar/down-arrow.svg')}}" />
@@ -33,7 +33,7 @@
         <div class="line-4">
             <div class="list-area-field">
                 <label for="otherCharges">Other charges *</label>
-                <textarea id="otherCharges" class="list-form-input" placeholder="5000 Maintenance"></textarea>
+                <textarea id="otherCharges" maxlength="191" class="list-form-input" placeholder="5000 Maintenance"></textarea>
             </div>
         </div> 
     </div>

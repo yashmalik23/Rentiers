@@ -33,31 +33,31 @@
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="superArea">Area (Super Area) *</label>
-                    <input id="superArea" class="list-form-input" placeholder="1900">
+                    <input type="number" id="superArea" class="list-form-input" placeholder="1900">
                 </div>
                 <div class="list-input-field">
                     <label for="carpetArea">Area (Carpet Area) *</label>
-                    <input id="streetName" class="list-form-input" placeholder="100">
+                    <input type="number" id="carpetArea" class="list-form-input" placeholder="100">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="bathRooms">Bathrooms *</label>
-                    <input id="bathRooms" class="list-form-input" placeholder="1">
+                    <input type="number" id="bathRooms" class="list-form-input" placeholder="1">
                 </div>
                 <div class="list-input-field">
                     <label for="balconies">Balconies *</label>
-                    <input id="balconies" class="list-form-input" placeholder="1">
+                    <input type="number" id="balconies" class="list-form-input" placeholder="1">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="coveredParking">Parking (Covered) *</label>
-                    <input id="coveredParking" class="list-form-input" placeholder="1">
+                    <input type="number" id="coveredParking" class="list-form-input" placeholder="1">
                 </div>
                 <div class="list-input-field">
                     <label for="openParking">Parking (Open) *</label>
-                    <input id="openParking" class="list-form-input" placeholder="1">
+                    <input type="number" id="openParking" class="list-form-input" placeholder="1">
                 </div>
             </div>
             <div class="line-3">
@@ -67,7 +67,7 @@
                     <img src="{{asset('images/navbar/down-arrow.svg')}}" />
                     <ul class="drop-down-list">
                         <li onclick="changeoption(event)">Semi furnished</li>
-                        <li onclick="changeoption(event)">Fullly furnished</li>
+                        <li onclick="changeoption(event)">Fully furnished</li>
                         <li onclick="changeoption(event)">Unfurnished</li>
                     </ul>
                 </div>
@@ -86,11 +86,11 @@
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="floor">Floor *</label>
-                    <input id="floor" class="list-form-input" placeholder="8">
+                    <input type="number" id="floor" class="list-form-input" placeholder="8">
                 </div>
                 <div class="list-input-field">
                     <label for="totalFloors">Total floors *</label>
-                    <input id="totalFloors" class="list-form-input" placeholder="21">
+                    <input type="number" id="totalFloors" class="list-form-input" placeholder="21">
                 </div>
             </div>
             <div class="line-4">
@@ -139,31 +139,31 @@
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="commsuperArea">Area (Super Area) *</label>
-                    <input id="commsuperArea" class="list-form-input" placeholder="1900">
+                    <input type="number" id="commsuperArea" class="list-form-input" placeholder="1900">
                 </div>
                 <div class="list-input-field">
                     <label for="commcarpetArea">Area (Carpet Area) *</label>
-                    <input id="commstreetName" class="list-form-input" placeholder="100">
+                    <input type="number" id="commcarpetArea" class="list-form-input" placeholder="100">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="commbathRooms">Bathrooms *</label>
-                    <input id="commbathRooms" class="list-form-input" placeholder="1">
+                    <input type="number" id="commbathRooms" class="list-form-input" placeholder="1">
                 </div>
                 <div class="list-input-field">
                     <label for="commbalconies">Balconies *</label>
-                    <input id="commbalconies" class="list-form-input" placeholder="1">
+                    <input type="number" id="commbalconies" class="list-form-input" placeholder="1">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="commfloor">Floor *</label>
-                    <input id="commfloor" class="list-form-input" placeholder="8">
+                    <input type="number" id="commfloor" class="list-form-input" placeholder="8">
                 </div>
                 <div class="list-input-field">
                     <label for="commtotalFloors">Total floors *</label>
-                    <input id="commtotalFloors" class="list-form-input" placeholder="21">
+                    <input type="number" id="commtotalFloors" class="list-form-input" placeholder="21">
                 </div>
             </div>
             <div class="line-3">
@@ -176,6 +176,16 @@
                         <li onclick="changeoption(event)">2-5 years</li>
                         <li onclick="changeoption(event)">5-10 years</li>
                         <li onclick="changeoption(event)">>10 years</li>
+                    </ul>
+                </div>
+                <div class="form-drop-down-options">
+                    <div class="drop-down-label">Furnishing * </div>
+                    <div class="drop-down-heading" onclick="showdrop(event)" id="commfurnishing">Select</div>
+                    <img src="{{asset('images/navbar/down-arrow.svg')}}" />
+                    <ul class="drop-down-list">
+                        <li onclick="changeoption(event)">Semi furnished</li>
+                        <li onclick="changeoption(event)">Fully furnished</li>
+                        <li onclick="changeoption(event)">Unfurnished</li>
                     </ul>
                 </div>
             </div>

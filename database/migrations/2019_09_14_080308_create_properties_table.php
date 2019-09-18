@@ -44,6 +44,7 @@ class CreatePropertiesTable extends Migration
             $table->string('otherCharges');
             $table->string('closeTo');
             $table->string('ameneties');
+            $table->integer('inUse');
             $table->timestamps();
         });
     }

@@ -1,68 +1,210 @@
 {
     "properties": {
-        "postedBy": ["Owner","Builder","Broker"],
-        "listFor":["Rent", "Sell","Paying Guest"],
-        "type":{
-            "Residential":{
-                "type":{
-                    "Apartment/Flat/Builder Floor":["Residential Apartment","Independent Floor","Studio Apartment"],
-                    "Residential land":["None"],
-                    "Residential Plot":["None"],
-                    "House/Villa":["Independent House/Villa", "Farm House"],
-                    "others": ["None"]
+        "postedBy": [
+            "Owner",
+            "Builder",
+            "Broker"
+        ],
+        "listFor": [
+            "Rent",
+            "Sell",
+            "Paying Guest"
+        ],
+        "type": {
+            "Residential": {
+                "type": {
+                    "Apartment/Flat/Builder Floor": [
+                        "Residential Apartment",
+                        "Independent Floor",
+                        "Studio Apartment"
+                    ],
+                    "Residential land": [
+                        "None"
+                    ],
+                    "Residential Plot": [
+                        "None"
+                    ],
+                    "House/Villa": [
+                        "Independent House/Villa",
+                        "Farm House"
+                    ],
+                    "others": [
+                        "None"
+                    ]
                 }
             },
-            "Commercial":{
-                "type":{
-                    "Offices": ["Commercial Office/Space","Business Center","Time Share","Office in IT Park"],
-                    "Retail":["Commercial Shops","Commercial Showrooms","Space in Mall"],
-                    "Land":["Commercial land","Agricultural Land","Industrial Plots"],
-                    "Industry":["Factory","Manufacturing"],
-                    "Storage":["Ware house","Cold Storage"],
-                    "Hospitality":["Hotels/Resorts","Guest House/ Banquet Halls"],
-                    "Others":["None"]
+            "Commercial": {
+                "type": {
+                    "Offices": [
+                        "Commercial Office/Space",
+                        "Business Center",
+                        "Time Share",
+                        "Office in IT Park"
+                    ],
+                    "Retail": [
+                        "Commercial Shops",
+                        "Commercial Showrooms",
+                        "Space in Mall"
+                    ],
+                    "Land": [
+                        "Commercial land",
+                        "Agricultural Land",
+                        "Industrial Plots"
+                    ],
+                    "Industry": [
+                        "Factory",
+                        "Manufacturing"
+                    ],
+                    "Storage": [
+                        "Ware house",
+                        "Cold Storage"
+                    ],
+                    "Hospitality": [
+                        "Hotels/Resorts",
+                        "Guest House/ Banquet Halls"
+                    ],
+                    "Others": [
+                        "None"
+                    ]
                 },
                 "multipleUnits": "bool"
             }
         },
-        "location":{
-            "houseNo":"",
-            "streetName":"",
-            "nearByArea":"Recognized by which Area",
-            "locality":"Sector/Colony/Village/Town",
-            "City":"Gurugram/Hisar"
+        "location": {
+            "houseNo": "",
+            "streetName": "",
+            "nearByArea": "Recognized by which Area",
+            "locality": "Sector/Colony/Village/Town",
+            "City": "Gurugram/Hisar"
         },
-        "propertyDetailsResidential":{
-            "configuration": ["1BHK","2BHK","3BHK","4BHK","5BHK","More than 5BHK"],
-            "Area":["Super Area","Carpet Area"],
-            "areaUnits":["sq.ft.","sq.yards","sq.m.","acres","hectares"],
-            "Bathrooms":"number",
-            "Balconies":"number",
-            "Rooms": ["Pooja Room","Servant Room","Study Room"],
-            "furnishing":["Semi-furnished","Fully-furnished","Unfurnished"],
-            "parking":["Covered","Uncovered"],
+        "propertyDetailsResidential": {
+            "configuration": [
+                "1BHK",
+                "2BHK",
+                "3BHK",
+                "4BHK",
+                "5BHK",
+                "More than 5BHK"
+            ],
+            "Area": [
+                "Super Area",
+                "Carpet Area"
+            ],
+            "areaUnits": [
+                "sq.ft.",
+                "sq.yards",
+                "sq.m.",
+                "acres",
+                "hectares"
+            ],
+            "Bathrooms": "number",
+            "Balconies": "number",
+            "Rooms": [
+                "Pooja Room",
+                "Servant Room",
+                "Study Room"
+            ],
+            "furnishing": [
+                "Semi-furnished",
+                "Fully-furnished",
+                "Unfurnished"
+            ],
+            "parking": [
+                "Covered",
+                "Uncovered"
+            ],
             "ageOfProperty": "number",
             "availableFrom": "date",
-            "floor":"number",
+            "floor": "number",
             "totalFloors": "number"
         },
-        "propertyDetailsCommercial":{
-            "Area":["Super Area","Carpet Area"],
-            "areaUnits":["sq.ft.","sq.m.","sq.yards","acres","hectares"],
-            "washRooms":"number",
-            "balconies":"number",
-            "availabilty":["Under Construction","Ready to move", "Launching"]
+        "propertyDetailsCommercial": {
+            "Area": [
+                "Super Area",
+                "Carpet Area"
+            ],
+            "areaUnits": [
+                "sq.ft.",
+                "sq.m.",
+                "sq.yards",
+                "acres",
+                "hectares"
+            ],
+            "washRooms": "number",
+            "balconies": "number",
+            "availabilty": [
+                "Under Construction",
+                "Ready to move",
+                "Launching"
+            ]
         },
-        "Pricing":{
-            "contract":["Lease","Any"],
+        "Pricing": {
+            "contract": [
+                "Lease",
+                "Any"
+            ],
             "expectedPrice": "number",
-            "includeTaxes":"bool",
+            "includeTaxes": "bool",
             "anyOtherCharges": "text"
         },
-        "features":{
-            "ameneties":["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom", "Lifts",
-            "Visitor Parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated Society","24*7 water","Wooden Floor"],
-            "closeTo":["Metro Station","Main Road","Hospital","School","Bus Stand","Railway Station","Market"]
+        "features": {
+            "ameneties": [
+                "Air-conditioners",
+                "Swimming Pool",
+                "Sports Arena",
+                "Parks",
+                "Gym",
+                "Intercom",
+                "Lifts",
+                "Visitor Parking",
+                "Chimney",
+                "Pet friendly",
+                "Power backup",
+                "Wheelchair friendly",
+                "Gated Society",
+                "24*7 water",
+                "Wooden Floor"
+            ],
+            "closeTo": [
+                "Metro Station",
+                "Main Road",
+                "Hospital",
+                "School",
+                "Bus Stand",
+                "Railway Station",
+                "Market"
+            ]
         }
+    },
+    "sample": {
+        "ageOfProperty": "0-2 years",
+        "ameneties": "111111111111111",
+        "area": "1600_100",
+        "availabity": "None",
+        "availableFrom": "None",
+        "balconies": 3,
+        "bathRooms": 3,
+        "city": "Gurugram",
+        "closeTo": "0101010",
+        "configuration": "3BHK",
+        "contract": "Leasehold",
+        "expectedPrice": "19000",
+        "floor": 8,
+        "furnishing": 8,
+        "houseNo": "D-801",
+        "includeTaxes": "Yes",
+        "listedFor": "Rent",
+        "locality": "Sec-102",
+        "multipleUnits": "Select",
+        "nearByArea": "Adani",
+        "otherCharges": "10000 Maintenance",
+        "parking": "2_1",
+        "postedBy": "Owner",
+        "propertySecondType": "Apartment/Flat/Builder Floor",
+        "propertyThirdType": "Residential Apartment",
+        "propertyType": "Residential",
+        "rooms": 0,
+        "streetName": "None",
+        "totalFloors": 21
     }
 }
