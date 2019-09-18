@@ -25,6 +25,10 @@ body{
     padding: 10px 20px;
     height: 40px;
     margin-right: 20px;
+    a{
+        text-decoration: none;
+        color: white;
+    }
 }
 
 .nav-links{
@@ -92,6 +96,13 @@ body{
             color: #3a6ec9;
             background-color: white;
             padding: 10px 0px;
+        }
+    }
+    .mobile-login{
+        a{
+            background-color: white;
+            color: $main;
+            text-decoration: none;
         }
     }
 }

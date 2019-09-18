@@ -23,3 +23,9 @@ Route::get('contactus', array('as'=>'contactus',function () {
 Route::get('listproperties', array('as'=>'listproperties',function () {
     return view('includes/list');
 }));
+Route::get('login', array('as'=>'login',function () {
+    return view('includes/login');
+}));
+Route::get('search', array('as'=>'search',function () {
+    return view('includes/searchResults');
+}));

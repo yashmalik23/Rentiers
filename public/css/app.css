@@ -32,6 +32,11 @@ body {
   margin-right: 20px;
 }
 
+.login a {
+  text-decoration: none;
+  color: white;
+}
+
 .nav-links {
   list-style-type: none;
   display: inline;
@@ -112,6 +117,12 @@ body {
   color: #3a6ec9;
   background-color: white;
   padding: 10px 0px;
+}
+
+.mobile-nav-links .mobile-login a {
+  background-color: white;
+  color: #3a6ec9;
+  text-decoration: none;
 }
 
 ::-webkit-scrollbar {
@@ -1536,7 +1547,7 @@ footer {
 
 @media screen and (max-width: 700px) {
   .help-section {
-    grid-template-rows: 0.1fr 0.3fr 0.3fr 0.1fr;
+    grid-template-rows: 0.1fr 0.2fr 0.2fr 0.1fr;
     grid-template-areas: "continue" "help-heading" "help-line-1" "help-line-2";
   }
 }
@@ -1561,6 +1572,130 @@ footer {
     grid-template-columns: 1fr;
     grid-template-rows: 0.1fr 1fr 1fr;
     grid-template-areas: "list-heading" "form-area" "help-section";
+  }
+}
+
+.login-heading {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #424b5a;
+  padding-left: 100px;
+}
+
+@media screen and (max-width: 800px) {
+  .login-heading {
+    padding-left: 53px;
+  }
+}
+
+.signup-form,
+.login-form {
+  grid-area: signup-form;
+  width: 50%;
+  margin: auto;
+}
+
+.signup-form .input-field,
+.login-form .input-field {
+  padding: 5px 0px;
+}
+
+.signup-form .input-field:nth-child(1),
+.login-form .input-field:nth-child(1) {
+  padding-top: 0px;
+}
+
+.signup-form .signup-submit,
+.signup-form .login-submit,
+.login-form .signup-submit,
+.login-form .login-submit {
+  padding: 8px 30px;
+  background-color: #3a6ec9;
+  color: white;
+  width: 110px;
+  margin: 0px auto;
+}
+
+.signup-form .login-submit,
+.login-form .login-submit {
+  width: 100px;
+}
+
+@media screen and (max-width: 800px) {
+  .signup-form,
+  .login-form {
+    width: 100%;
+  }
+}
+
+.signup-form .signup-options,
+.login-form .signup-options {
+  display: flex;
+  width: 75%;
+  margin: 10px auto;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.signup-form .signup-options .login-form-check-field .check-option,
+.login-form .signup-options .login-form-check-field .check-option {
+  display: flex;
+}
+
+.signup-form .signup-options .login-form-check-field .check-option img,
+.login-form .signup-options .login-form-check-field .check-option img {
+  width: 12px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.signup-form .signup-options .login-member,
+.login-form .signup-options .login-member {
+  margin: 0px 0px 0px auto;
+  cursor: pointer;
+}
+
+.left-login-image {
+  grid-area: left-login-image;
+  width: 70%;
+  margin: 20px auto;
+}
+
+@media screen and (max-width: 800px) {
+  .left-login-image {
+    width: 90%;
+  }
+}
+
+.signup-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "left-login-image signup-form";
+}
+
+@media screen and (max-width: 900px) {
+  .signup-div {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.7fr 1fr;
+    grid-template-areas: "left-login-image" "signup-form";
+  }
+}
+
+.login-form {
+  display: none;
+}
+
+.search-result-container {
+  margin: 0px auto;
+  width: 600px;
+  display: flex;
+  align-items: flex-end;
+}
+
+@media screen and (max-width: 1120px) {
+  .search-result-container {
+    width: 400px;
+    margin-top: 20px;
   }
 }
 

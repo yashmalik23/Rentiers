@@ -17,7 +17,7 @@
             </ul>
         </li>
     </ul>
-    <div class="login">Login/SignUp</div>
+    <div class="login"><a href="login">Login/SignUp</a></div>
 </nav>
 
 <nav class="mobile-nav">
@@ -32,6 +32,6 @@
         <li><a href="contactus">Contact Us</a></li>
         <li><a href="listproperties">List your property</a></li>
         <li>+91 9414573503&nbsp;&nbsp;<img class="icons" src="{{asset('images/navbar/white-down-arrow.svg')}}"/></li>
-        <li><div class="mobile-login">Login/SignUp</div></li>
+        <li><div class="mobile-login"><a href="login">Login/SignUp</a></div></li>
     </ul>
 </nav>

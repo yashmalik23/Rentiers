@@ -1,0 +1,10 @@
+.search-result-container{
+    margin: 0px auto;
+    width: 600px;
+    display: flex;
+    align-items: flex-end;
+    @media screen and (max-width: $break-large) {
+        width: 400px;
+        margin-top: 20px;
+    }
+}

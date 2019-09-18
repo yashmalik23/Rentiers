@@ -1,0 +1,75 @@
+.login-heading{
+    font-size: 3rem;
+    font-weight: bold;
+    color: $font;
+    padding-left: 100px;
+    @media screen and (max-width: 800px){
+        padding-left: 53px;
+    }
+}
+.signup-form,.login-form{
+    grid-area: signup-form;
+    width: 50%;
+    margin: auto;
+    .input-field{
+        padding: 5px 0px;
+        &:nth-child(1){
+            padding-top: 0px;
+        }
+    }
+    .signup-submit,.login-submit{
+        padding: 8px 30px;
+        background-color: $main;
+        color: white;
+        width: 110px;
+        margin: 0px auto;
+    }
+    .login-submit{
+        width: 100px;
+    }
+    @media screen and (max-width: 800px){
+        width: 100%;
+    }
+    .signup-options{
+        display: flex;
+        width: 75%;
+        margin: 10px auto;
+        font-size: 1rem;
+        font-weight: 600;
+        .login-form-check-field{
+            .check-option{
+                display: flex;
+                img{
+                    width: 12px;
+                    margin-right: 5px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .login-member{
+            margin: 0px 0px 0px auto;
+            cursor: pointer;
+        }
+    }
+}
+.left-login-image{
+    grid-area: left-login-image;
+    width: 70%;
+    margin: 20px auto;
+    @media screen and (max-width: 800px){
+        width: 90%;
+    }
+}
+.signup-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'left-login-image signup-form';
+    @media screen and (max-width: 900px){
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.7fr 1fr;
+        grid-template-areas: 'left-login-image' 'signup-form'; 
+    }
+}
+.login-form{
+    display: none;
+}
