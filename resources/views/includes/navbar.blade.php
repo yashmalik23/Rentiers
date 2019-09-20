@@ -10,7 +10,7 @@
         <li>|</li>
         <li>+91 9414573503</li>
         <li>
-            <img class="icons" src="{{asset('images/navbar/down-arrow.svg')}}"/>
+            <img class="icons" src="{{asset('images/navbar/down-arrow.svg')}}" onclick="viewContacts(event)"/>
             <ul class="contact-numbers">
                 <li>+91 8683803539</li>
                 <li>+91 7901763826</li>
@@ -31,7 +31,9 @@
         <li><a href="aboutus">About Us</a></li>
         <li><a href="contactus">Contact Us</a></li>
         <li><a href="listproperties">List your property</a></li>
-        <li>+91 9414573503&nbsp;&nbsp;<img class="icons" src="{{asset('images/navbar/white-down-arrow.svg')}}"/></li>
+        <li>+91 9414573503</li>
+        <li>+91 8683803539</li>
+        <li>+91 7901763826</li>
         <li><div class="mobile-login"><a href="login">Login/SignUp</a></div></li>
     </ul>
 </nav>

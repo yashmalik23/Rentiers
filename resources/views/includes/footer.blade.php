@@ -24,6 +24,6 @@
         <li>Rental floor in house</li>
         <li>Independent floor</li>
     </ul>
-    <div class="copyright"> © rentiers.in, Gurugram, Haryana, India - 122003</div>
+    <div class="copyright"> Copyright © 2019 by Rentiers.in, Gurugram, Haryana, India</div>
     <img class="footer-right" src="{{asset('images/footer/footer-right.svg')}}">
 </footer>

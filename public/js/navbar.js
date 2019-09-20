@@ -18,3 +18,12 @@ function handleMenu() {
         menu.style.display = "none";
     }
 }
+
+function viewContacts(e){
+    let numbers = e.target.nextElementSibling;
+    if(numbers.style.display == "none" || numbers.style.display == ""){
+        numbers.style.display = "block";
+    }else{
+        numbers.style.display = "none";
+    }
+}

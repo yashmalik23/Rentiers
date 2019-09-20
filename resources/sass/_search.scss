@@ -1,4 +1,5 @@
 .search-result-container{
+    grid-area: search-result-container;
     margin: 0px auto;
     width: 600px;
     display: flex;
@@ -6,5 +7,91 @@
     @media screen and (max-width: $break-large) {
         width: 400px;
         margin-top: 20px;
+    }
+}
+.search-filters{
+    grid-area: search-filters;
+    margin: -80px auto 0px;
+    min-width: 192px;
+    .filter-heading, .sub-filter-heading{
+        display: flex;
+        margin: 10px 0px;
+        font-weight: bold;
+        img{
+            margin: 0px 0px 0px auto;
+            cursor: pointer;
+        }
+    }
+    .filter-heading{
+        font-size: 2rem;
+    }
+    .input-fields{
+        display: flex;
+        input{
+            width: 80px;
+            margin: 0px 5px;
+        }
+    }
+    .check-option{
+        display: flex;
+        img{
+            margin-right: 10px;
+            width: 15px;
+            cursor: pointer;
+        }
+    }
+}
+.search-results{
+    grid-area: search-results;
+}
+.extra-section{
+    grid-area: extra-section;
+    margin: -80px auto 0px;
+    .radio-option-label{
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 10px 0px
+    }
+    .radio-options{
+        display: grid;
+        width: 100%;
+        grid-auto-flow: row;
+        div{
+            display: inline-flex;
+            padding: 0px 10px;
+            img{
+                cursor: pointer;
+                pointer-events: none;
+            }
+            .radio-field-name{
+                pointer-events: none;
+                cursor: pointer;
+            }
+        } 
+    }
+}
+.search-section{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 100px 1fr;
+    grid-template-areas: 
+    'search-result-container search-result-container search-result-container'
+    'search-filters search-results extra-section';
+    @media screen and (max-width: $break-large){
+        grid-template-rows: 100px 1fr 400px;
+        grid-template-columns: 1fr 2fr;
+        grid-template-areas: 
+        'search-result-container search-result-container'
+        'search-filters search-results'
+        'extra-section extra-section';
+    }
+    @media screen and (max-width: $break-large){
+        grid-template-rows: 100px  400px 1fr 400px;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        'search-result-container'
+        'search-filters' 
+        'search-results'
+        'extra-section';
     }
 }
