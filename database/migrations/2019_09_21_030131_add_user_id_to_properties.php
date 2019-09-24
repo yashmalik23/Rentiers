@@ -14,7 +14,7 @@ class AddUserIdToProperties extends Migration
     public function up()
     {
         Schema::table('properties', function ($table) {
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
         });
     }
 

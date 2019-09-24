@@ -37,13 +37,14 @@ class CreatePropertiesTable extends Migration
             $table->string('floor')->nullable();
             $table->string('totalFloors')->nullable();
             $table->string('availableFrom')->nullable();
-            $table->string('availabilty')->nulllable();
+            $table->string('availability')->nulllable();
             $table->string('contract');
             $table->string('expectedPrice');
             $table->string('includeTaxes',20);
             $table->string('otherCharges');
             $table->string('closeTo');
             $table->string('ameneties');
+            $table->string('tenant');
             $table->integer('inUse');
             $table->timestamps();
         });

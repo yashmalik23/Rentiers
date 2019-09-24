@@ -9,21 +9,6 @@ function showdrop(e){
 }
 
 
-function changeradio(e){
-
-    let options = e.target.parentElement.children;
-
-    for(let i=0; i<3; i++){
-
-        let img = options[i].children[0];
-        if(options[i] == e.target){
-            img.src = 'images/listprops/radio-full.svg';
-        }else{
-            img.src = 'images/listprops/radio-empty.svg';
-        }
-    }
-}
-
 function previousForm(){
 
     let form2 = document.getElementById('form-2');

@@ -98,6 +98,11 @@ function changeoption(e){
         thirdoption.style.display = "none";
 
     }
+    let hiddeninput = e.target.parentElement.parentElement.nextElementSibling;
+    if(hiddeninput != null){
+        hiddeninput.value = e.target.textContent;
+        console.log(document.getElementById('doccc').value);
+    }
 
     let options = e.target.parentElement;
 
@@ -117,6 +122,7 @@ function changeradio(e){
         let img = options[i].children[0];
         if(options[i] == e.target){
             img.src = 'images/listprops/radio-full.svg';
+            e.target.parentElement.nextElementSibling.value = options[i].children[1].textContent;
         }else{
             img.src = 'images/listprops/radio-empty.svg';
         }

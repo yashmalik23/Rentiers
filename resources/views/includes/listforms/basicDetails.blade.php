@@ -17,6 +17,7 @@
                 <div class="radio-field-name">Broker</div>
             </div>
         </div>
+        <input name="postedBy" type="text" hidden value="Owner">
         <div class="line-3">
             <div class="form-drop-down-options">
                 <div class="drop-down-label">Reason For listing * </div>
@@ -28,6 +29,7 @@
                     <li onclick="changeoption(event)">Paying Guest</li>
                 </ul>
             </div>
+            <input name="listedFor" type="text" hidden>
             <div class="form-drop-down-options">
                 <div class="drop-down-label">Property Type * </div>
                 <div class="drop-down-heading" onclick="showdrop(event)" id="propertyType">Select</div>
@@ -37,6 +39,7 @@
                     <li onclick="changeoption(event)">Commercial</li>
                 </ul>
             </div>
+            <input name="propertyType" type="text" hidden>
         </div>
         <div class="line-4">
             <div class="form-drop-down-options" id="res-options">
@@ -46,6 +49,7 @@
                 <ul class="drop-down-list" id="populate-second-option">
                 </ul>
             </div>
+            <input name="propertySecondType" type="text" hidden>
         </div>
         <div class="line-4">
             <div class="form-drop-down-options" id="more-options">
@@ -55,6 +59,7 @@
                 <ul class="drop-down-list" id="populate-third-option">
                 </ul>
             </div>
+            <input name="propertyThirdType" type="text" hidden>
         </div>
         <div class="line-4">
             <div class="form-drop-down-options" id="multiple-units">
@@ -64,6 +69,7 @@
                 <ul class="drop-down-list" id="multiple-unit">
                 </ul>
             </div>
+            <input name="multipleUnits" type="text" hidden value="No">
         </div>
     </div>
 </div>

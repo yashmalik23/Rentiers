@@ -8,7 +8,7 @@ function validateforms(){
     
     if(form1.style.display != "none"){
 
-        let validation = true;
+        let validation = validateFirstForm();
         let firstdotted = document.getElementById("first-dotted");
         let nextoption = document.getElementById('list-second-option');
 
@@ -20,7 +20,7 @@ function validateforms(){
             nextoption.classList.add("active-list-menu");
         }
     }else if(form2.style.display == "block"){
-        let validation = true;
+        let validation = validateSecondForm();
         let seconddotted = document.getElementById("second-dotted");
         let nextoption = document.getElementById('list-third-option');
 
@@ -47,9 +47,9 @@ function validateforms(){
         let propertyType = document.getElementById("propertyType");
         let validation = false;
         if(propertyType.textContent == "Residential"){
-            validation = true;
+            validation = validateThirdResidentForm();
         }else{
-            validation = true;
+            validation = validateThirdCommercialForm();
         }
         let thirddotted = document.getElementById("third-dotted");
         let nextoption = document.getElementById('list-fourth-option');
@@ -63,7 +63,7 @@ function validateforms(){
         }
     }else if(form4.style.display == "block"){
 
-        let validation = true;
+        let validation = validateFourthForm();
         let firstdotted = document.getElementById("fourth-dotted");
         let nextoption = document.getElementById('list-fifth-option');
 
@@ -82,34 +82,13 @@ function validateforms(){
 function handleSubmit(){
     let submitObject = {}
 
-    //Radio
-    let postedBy = document.getElementById('postedBy').children;
-    for(let i=0; i<3; i++){
-
-        let img = postedBy[i].children[0];
-        if(img.src.indexOf('images/listprops/radio-full.svg')>-1){
-            submitObject["postedBy"] = img.nextElementSibling.textContent;
-        }
-    }
-    
-    //Select and normal inputs
-    submitObject["listedFor"] = document.getElementById("listedFor").textContent;
-    submitObject["propertyType"] = document.getElementById("propertyType").textContent;
-    submitObject["propertySecondType"] = document.getElementById("propertySecondType").textContent;
-    submitObject["propertyThirdType"] = document.getElementById("propertyThirdType").textContent;
-    submitObject["multipleUnits"] = document.getElementById("multipleUnits").textContent;
-    submitObject["houseNo"] = document.getElementById('houseNo').value;
-    submitObject["streetName"] = document.getElementById('streetName').value;
-    submitObject["nearByArea"] = document.getElementById('nearByArea').value;
-    submitObject["locality"] = document.getElementById('locality').value;
-    submitObject["city"] = document.getElementById('city').textContent;
+    let propertyType = document.getElementById("propertyType").textContent;
 
     //Commercial and residential options
-    let propertyType = submitObject["propertyType"];
 
     if(propertyType == "Residential"){
 
-        submitObject["configuration"]= document.getElementById("configuration").textContent;
+        document.getElementById('configuration-hidden').value= document.getElementById("configuration").textContent;
         
         //Area
         let areaUnit = document.getElementById("areaUnit").textContent;
@@ -122,10 +101,10 @@ function handleSubmit(){
         }
         let superArea = parseInt(document.getElementById('superArea').value)*units[areaUnit];
         let carpetArea = parseInt(document.getElementById('carpetArea').value)*units[areaUnit];
-        submitObject["area"]= superArea.toString()+"_"+carpetArea.toString();
+        document.getElementById('area-hidden').value = superArea.toString()+"_"+carpetArea.toString();
 
-        submitObject["bathRooms"] = parseInt(document.getElementById('bathRooms').value);
-        submitObject["balconies"] = parseInt(document.getElementById('balconies').value);
+        document.getElementById('bathRooms-hidden').value = parseInt(document.getElementById('bathRooms').value);
+        document.getElementById('balconies-hidden').value = parseInt(document.getElementById('balconies').value);
 
         //Rooms (Checkbox)
         let rooms = document.getElementById('rooms').children;
@@ -138,32 +117,31 @@ function handleSubmit(){
                 roomString=roomString.concat("0");
             }
         }
-        submitObject["rooms"] = parseInt(roomString);
+        document.getElementById('rooms-hidden').value = parseInt(roomString);
 
         //Furnishing
         let furnishing = document.getElementById("furnishing").textContent;
         if(furnishing == "Semi furnished"){
-            submitObject["furnishing"] = 10;
-            console.log(furnishing);
+            document.getElementById('furnishing-hidden').value = 10;
         }else if(furnishing == "Fully furnished"){
-            submitObject["furnishing"] = 1;
+            document.getElementById('furnishing-hidden').value = 1;
         }else if(furnishing == "Unfurnished"){
-            submitObject["furnishing"] = 100;
+            document.getElementById('furnishing-hidden').value = 100;
         }
 
         //covered and Open parking
         let coveredParking = parseInt(document.getElementById('coveredParking').value);
         let openParking = parseInt(document.getElementById('openParking').value);
-        submitObject["parking"] = coveredParking.toString()+"_"+openParking.toString();
+        document.getElementById('parking-hidden').value = coveredParking.toString()+"_"+openParking.toString();
 
-        submitObject["ageOfProperty"] = document.getElementById('ageOfProperty').textContent;
-        submitObject["floor"]= parseInt(document.getElementById('floor').value);
-        submitObject["totalFloors"]= parseInt(document.getElementById('totalFloors').value);
-        submitObject["availableFrom"]= "None"
-        submitObject["availabity"]= "None";
+        document.getElementById('ageOfProperty-hidden').value = document.getElementById('ageOfProperty').textContent;
+        document.getElementById('floor-hidden').value= parseInt(document.getElementById('floor').value);
+        document.getElementById('totalFloors-hidden').value= parseInt(document.getElementById('totalFloors').value);
+        document.getElementById('availableFrom-hidden').value= "None"
+        document.getElementById('availability-hidden').value= "None";
 
     }else if(propertyType == "Commercial"){
-        submitObject["configuration"]= "Select";
+        document.getElementById('configuration-hidden').value= "Select";
         
         //Area
         let areaUnit = document.getElementById("commareaUnit").textContent;
@@ -176,39 +154,33 @@ function handleSubmit(){
         }
         let superArea = parseInt(document.getElementById('commsuperArea').value)*units[areaUnit];
         let carpetArea = parseInt(document.getElementById('commcarpetArea').value)*units[areaUnit];
-        submitObject["area"]= superArea.toString()+"_"+carpetArea.toString();
+        document.getElementById('area-hidden').value= superArea.toString()+"_"+carpetArea.toString();
 
-        submitObject["bathRooms"] = parseInt(document.getElementById('commbathRooms').value);
-        submitObject["balconies"] = parseInt(document.getElementById('commbalconies').value);
+        document.getElementById('bathRooms-hidden').value = parseInt(document.getElementById('commbathRooms').value);
+        document.getElementById('balconies-hidden').value = parseInt(document.getElementById('commbalconies').value);
 
         //Rooms (Checkbox)
-        submitObject["rooms"] = 000;
+        document.getElementById('rooms-hidden').value = 000;
 
         //Furnishing
         let furnishing = document.getElementById("commfurnishing").textContent;
         if(furnishing == "Semi furnished"){
-            submitObject["furnishing"] = 010;
+            document.getElementById('furnishing-hidden').value = 10;
         }else if(furnishing == "Fully furnished"){
-            submitObject["furnishing"] = 001;
+            document.getElementById('furnishing-hidden').value = 1;
         }else if(furnishing == "Unfurnished"){
-            submitObject["furnishing"] = 100;
+            document.getElementById('furnishing-hidden').value = 100;
         }
 
         //covered and Open parking
-        submitObject["parking"] = "0_0";
+        document.getElementById('parking-hidden').value = "0_0";
 
-        submitObject["ageOfProperty"] = document.getElementById('commageOfProperty').textContent;
-        submitObject["floor"]= parseInt(document.getElementById('commfloor').value);
-        submitObject["totalFloors"]= parseInt(document.getElementById('commtotalFloors').value);
-        submitObject["availableFrom"]= "None"
-        submitObject["availabity"]= document.getElementById('commavailabilty').textContent;
+        document.getElementById('ageOfProperty-hidden').value = document.getElementById('commageOfProperty').textContent;
+        document.getElementById('floor-hidden').value= parseInt(document.getElementById('commfloor').value);
+        document.getElementById('totalFloors-hidden').value= parseInt(document.getElementById('commtotalFloors').value);
+        document.getElementById('availableFrom-hidden').value= "None"
+        document.getElementById('availability-hidden').value= document.getElementById('commavailabilty').textContent;
     }
-
-    //pricing
-    submitObject["contract"] = document.getElementById('contract').textContent;
-    submitObject["expectedPrice"] = document.getElementById('expectedPrice').value;
-    submitObject["includeTaxes"] = document.getElementById('includeTaxes').textContent;
-    submitObject["otherCharges"] = document.getElementById('otherCharges').value;
 
     //features
     let closeTo = document.getElementById('closeTo').children;
@@ -221,7 +193,7 @@ function handleSubmit(){
             closeToString=closeToString.concat("0");
         }
     }
-    submitObject["closeTo"] = closeToString;
+    document.getElementById('closeTo-hidden').value= closeToString;
 
     let ameneties = document.getElementById('ameneties').children;
     let amenetiesString = ""
@@ -233,9 +205,23 @@ function handleSubmit(){
             amenetiesString=amenetiesString.concat("0");
         }
     }
-    submitObject["ameneties"] = amenetiesString;
 
-    console.log(submitObject);
+    document.getElementById('ameneties-hidden').value = amenetiesString;
+
+    let tenant = document.getElementById('tenant').children;
+    let tenantString = ""
+    for(let i=1; i<8;i++){
+        let img = tenant[i].children[0];
+        if(img.src.indexOf('images/listprops/checked.svg')>-1){
+            tenantString=tenantString.concat("1");
+        }else{
+            tenantString=tenantString.concat("0");
+        }
+    }
+    document.getElementById('tenant-hidden').value = tenantString;
+
+    let button = document.getElementById('property-submit');
+    button.click();
 }
 
 function validateFirstForm(){
@@ -388,7 +374,7 @@ function validateThirdCommercialForm(){
 
 function validateFourthForm(){
     let contract = document.getElementById('contract');
-    let includeCharges = document.getElementById('includeCharges');
+    let includeCharges = document.getElementById('includeTaxes');
     let expectedPrice = document.getElementById('expectedPrice');
     let otherCharges = document.getElementById('otherCharges');
 

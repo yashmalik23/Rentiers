@@ -42,13 +42,15 @@
             </ul>
             <img class="list-side-menu-line" src="{{asset('images/listprops/line.svg')}}">
         </div>
-        <div class="list-property-form">
+        <form class="list-property-form" method="POST" action="listprops">
+            @csrf
             @include('includes/listforms/basicDetails')
             @include('includes/listforms/location')
             @include('includes/listforms/moreDetails')
             @include('includes/listforms/pricing')
             @include('includes/listforms/features')
-        </div>
+        <button type="submit" id="property-submit" ></button>
+        </form>
         <div class="help-section">
             <div class="help-heading">Help</div>
             <div class="help-line-1">

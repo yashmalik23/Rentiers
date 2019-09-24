@@ -191,5 +191,17 @@
             </div>
         </div>
     </div>
+    <input name="configuration" type="text" id="configuration-hidden" hidden>
+    <input name="area" type="text" id="area-hidden" hidden>
+    <input name="bathRooms" type="text" id="bathRooms-hidden" hidden>
+    <input name="balconies" type="text" id="balconies-hidden" hidden>
+    <input name="rooms" type="text" id="rooms-hidden" hidden>
+    <input name="furnishing" type="text" id="furnishing-hidden" hidden>
+    <input name="parking" type="text" id="parking-hidden" hidden>
+    <input name="ageOfProperty" type="text" id="ageOfProperty-hidden" hidden>
+    <input name="floor" type="text" id="floor-hidden" hidden>
+    <input name="totalFloors" type="text" id="totalFloors-hidden" hidden>
+    <input name="availableFrom" type="text" id="availableFrom-hidden" hidden>
+    <input name="availabilty" type="text" id="availability-hidden" hidden>
     <div class="list-previous-button" onclick="previous2Form()">Previous</div>
 </div>

@@ -16,9 +16,14 @@ Route::get('home', 'HomeController@index');
 Route::get('contactus', 'requestsController@index')->name('contactus');
 Route::get('listproperties', 'propertiesController@index')->name('listproperties');
 Route::get('login', 'loginController@index')->name('login');
+
+
 Route::post('register', 'loginController@store')->name('register');
 Route::post('login','loginController@checklogin');
 Route::post('requests','requestsController@store');
+Route::post('listprops', 'propertiesController@store');
+
+
 Route::get('logout','loginController@logout');
 Route::get('useraccount','userAccountController@index')->name('useraccount');
 

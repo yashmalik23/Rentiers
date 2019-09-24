@@ -14,11 +14,12 @@
                     <li onclick="changeoption(event)">Power of attorney</li>
                 </ul>
             </div>
+            <input name="contract" type="text" hidden>
         </div> 
         <div class="line-3">
             <div class="list-input-field">
                 <label for="expectedPrice">Expected price (₹)*</label>
-                <input id="expectedPrice" class="list-form-input" placeholder="19000">
+                <input id="expectedPrice" class="list-form-input" placeholder="19000" name="expectedPrice">
             </div>
             <div class="form-drop-down-options">
                 <div class="drop-down-label">Include all taxes * </div>
@@ -29,11 +30,12 @@
                     <li onclick="changeoption(event)">No</li>
                 </ul>
             </div>
+            <input name="includeTaxes" type="text" hidden value="Yes" id="doccc">
         </div> 
         <div class="line-4">
             <div class="list-area-field">
                 <label for="otherCharges">Other charges *</label>
-                <textarea id="otherCharges" maxlength="191" class="list-form-input" placeholder="5000 Maintenance"></textarea>
+                <textarea id="otherCharges" maxlength="191" class="list-form-input" placeholder="5000 Maintenance" name="otherCharges"></textarea>
             </div>
         </div> 
     </div>
