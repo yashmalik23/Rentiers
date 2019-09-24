@@ -101,6 +101,11 @@ body {
   padding-left: 10px;
 }
 
+.user-name {
+  line-height: 40px;
+  margin-right: 10px;
+}
+
 .mobile-nav-links {
   width: 200px;
   height: 100vh;
@@ -124,7 +129,7 @@ body {
   color: white;
 }
 
-.mobile-nav-links li:nth-child(8) {
+.mobile-nav-links li:last-child {
   padding-top: 50px;
   text-align: center;
 }
@@ -1602,6 +1607,10 @@ footer {
   .login-heading {
     padding-left: 53px;
   }
+}
+
+.login-div {
+  display: none;
 }
 
 .signup-form,

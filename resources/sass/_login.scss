@@ -7,6 +7,9 @@
         padding-left: 53px;
     }
 }
+.login-div{
+    display: none;
+}
 .signup-form,.login-form{
     grid-area: signup-form;
     width: 50%;

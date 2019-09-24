@@ -11,21 +11,22 @@
 |
 */
 
-Route::get('/', array('as'=>'home',function () {
-    return view('includes/home');
-}));
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index');
+Route::get('contactus', 'requestsController@index')->name('contactus');
+Route::get('listproperties', 'propertiesController@index')->name('listproperties');
+Route::get('login', 'loginController@index')->name('login');
+Route::post('register', 'loginController@store')->name('register');
+Route::post('login','loginController@checklogin');
+Route::post('requests','requestsController@store');
+Route::get('logout','loginController@logout');
+Route::get('useraccount','userAccountController@index')->name('useraccount');
+
 Route::get('aboutus', array('as'=>'aboutus',function () {
     return view('includes/about');
 }));
-Route::get('contactus', array('as'=>'contactus',function () {
-    return view('includes/contact');
-}));
-Route::get('listproperties', array('as'=>'listproperties',function () {
-    return view('includes/list');
-}));
-Route::get('login', array('as'=>'login',function () {
-    return view('includes/login');
-}));
+
 Route::get('search', array('as'=>'search',function () {
     return view('includes/searchResults');
 }));
+

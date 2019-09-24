@@ -1,8 +1,6 @@
 @extends('layout')
 @section('views')
     {{--------------- Home Page ------------------}}
-
-
     <script type="text/javascript" src="{{asset('js/home.js') }}"></script>
 
     {{--------------- Headings -------------------}}
@@ -285,28 +283,4 @@
         </div>
     </div>
 
-    {{------------- Confused form --------------}}
-    <div class="confuse-form">
-        <div class="form-heading">Confused?</div>
-        <div class="form-line">Submit a query and we will reply in 24 hours. You are the first priority for us.</div>
-        <div class="form-fields">
-            <div class="input-field">
-                <div class="input-label">Full name *</div>
-                <input type="text" required />
-            </div>
-            <div class="input-field">
-                <div class="input-label">Contact number *</div>
-                <input type="text" required />
-            </div>
-            <div class="input-field">
-                <div class="input-label">Email Address *</div>
-                <input type="text" required />
-            </div>
-            <div class="input-field">
-                <div class="input-label">What are you looking for?</div>
-                <input type="text" required />
-            </div>
-        </div>
-        <div class="submit-confuse-form">Submit</div>
-    </div> 
 @stop

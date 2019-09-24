@@ -81,6 +81,10 @@ body{
     width: 170px;
     padding-left: 10px;
 }
+.user-name{
+    line-height: 40px;
+    margin-right: 10px;
+}
 .mobile-nav-links{
     width: 200px;
     height: 100vh;
@@ -99,7 +103,7 @@ body{
             text-decoration: none;
             color: white;
         }
-        &:nth-child(8){
+        &:last-child{
             padding-top: 50px;
             text-align: center;
         }
