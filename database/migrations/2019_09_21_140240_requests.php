@@ -16,8 +16,8 @@ class Requests extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('contact')->unique();
+            $table->string('email');
+            $table->string('contact');
             $table->string('request');
             $table->rememberToken();
             $table->timestamps();

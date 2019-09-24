@@ -37,10 +37,10 @@
                 <input type="checkbox" name="rememberme" style="display:none"/>
                 <div class="signup-options">
                     <div class="login-form-check-field" id="rememberMe">
-                        <div class="check-option">
+                        {{-- <div class="check-option">
                             <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" id="signup-remember"/>
                             <div class="check-option-value">Remember Me</div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="login-member" onclick="changeForm()" >Already a member? Log in</div>
                 </div>
@@ -60,10 +60,10 @@
                 <input type="checkbox" name="rememberme" style="display:none"/>
                 <div class="signup-options">
                     <div class="login-form-check-field" id="rememberMe">
-                        <div class="check-option">
+                        {{-- <div class="check-option">
                             <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" id="login-remember"/>
                             <div class="check-option-value">Remember Me</div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="login-member" onclick="changeForm()">Not a member? Sign Up</div>
                 </div>

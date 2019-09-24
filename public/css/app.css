@@ -882,29 +882,73 @@ button.next {
   margin: auto auto 0px;
 }
 
+.request-div {
+  grid-area: chat;
+  background-color: white;
+  margin: -50px 10px 40px auto;
+  display: flex;
+}
+
+.request-div div {
+  line-height: 30px;
+  margin-right: 10px;
+}
+
+#footer-chat-image {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.request-footer-form {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 0px 60px rgba(80, 67, 112, 0.1);
+  margin: -290px -230px 30px -230px;
+  width: 300px;
+  background-color: white;
+}
+
+.request-footer-form .footer-submit {
+  background-color: #3a6ec9;
+  color: white;
+  padding: 5px 20px;
+  width: 85px;
+  margin: 10px auto;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.request-footer-form .input-field {
+  width: 92%;
+}
+
 footer {
   margin-top: 50px;
   width: 100%;
   background-color: #3a6ec9;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 1fr 0.1fr;
-  grid-template-areas: "footer-left links-1 links-2 links-3 footer-right" "footer-left copyright copyright copyright footer-right";
+  grid-template-rows: 0.1fr 1fr 0.1fr;
+  grid-template-areas: "chat chat chat chat chat" "footer-left links-1 links-2 links-3 footer-right" "footer-left copyright copyright copyright footer-right";
 }
 
 @media screen and (max-width: 800px) {
   footer {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 0.1fr;
-    grid-template-areas: "links-1 links-2 links-3" "copyright copyright copyright";
+    grid-template-rows: 0.1 fr 1fr 0.1fr;
+    grid-template-areas: "chat chat chat" "links-1 links-2 links-3" "copyright copyright copyright";
   }
 }
 
 @media screen and (max-width: 500px) {
   footer {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 0.1fr;
-    grid-template-areas: "links-1 links-2" "links-3 links-3" "copyright copyright";
+    grid-template-rows: 0.3fr 1fr 1fr 0.1fr;
+    grid-template-areas: "chat chat" "links-1 links-2" "links-3 links-3" "copyright copyright";
   }
 }
 

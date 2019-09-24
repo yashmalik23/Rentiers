@@ -27,3 +27,17 @@ function viewContacts(e){
         numbers.style.display = "none";
     }
 }
+
+function footerSubmit(){
+    let button = document.getElementById('footer-button');
+    button.click();
+}
+
+function togglechat(e){
+    let form = e.target.nextElementSibling;
+    if(form.style.display == "none" || form.style.display == ""){
+        form.style.display = "block";
+    }else{
+        form.style.display = "none";
+    }
+}
