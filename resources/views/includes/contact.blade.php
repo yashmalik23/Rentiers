@@ -5,7 +5,7 @@
         <div class="contact-heading">Feel free to contact us</div>
         <div class="contact-us-div">
             <img class="left-contact-image" src="{{asset('images/contactus/main.svg')}}">
-            <form class="contact-form" method="POST" action="requests">
+            <form class="contact-form" method="POST" action="{{ route('requests') }}">
                 @csrf
                 <div class="input-field">
                     <div class="input-label">Full name *</div>

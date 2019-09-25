@@ -262,6 +262,7 @@ function validateSecondForm(){
     let city = document.getElementById('city');
     let houseNo = document.getElementById('houseNo');
     let locality = document.getElementById('locality');
+    let society = document.getElementById('streetName');
 
     if(city.textContent == "Select"){
         showModal("Select city");
@@ -271,6 +272,9 @@ function validateSecondForm(){
         return false;
     }else if(locality.value == ""){
         showModal("Enter locality of your property");
+        return false;
+    }else if(society.value == ""){
+        showModal("Enter street/society of your property");
         return false;
     }
     return true;

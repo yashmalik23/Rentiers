@@ -1870,3 +1870,78 @@ footer {
   }
 }
 
+.card-image-circle {
+  grid-area: image1;
+  max-width: 100px;
+  min-height: 100px;
+  border-radius: 50px;
+  margin: auto;
+}
+
+.property-actions {
+  grid-area: actions;
+  margin: 10px 10px auto auto;
+}
+
+.property-actions img {
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.property-details {
+  grid-area: pdetails;
+  margin: auto;
+}
+
+.property-details div {
+  color: #717377;
+}
+
+.property-details .property-title {
+  color: #424b5a;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.property-footer {
+  grid-area: pfooter;
+  margin: auto;
+}
+
+.user-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+}
+
+.user-properties .property-card {
+  margin: 12px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 200px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 0.2fr;
+  grid-template-areas: "image1 pdetails actions" "pfooter pfooter pfooter";
+}
+
+.view-slider {
+  position: relative;
+  margin: 50px auto;
+  width: 70vw;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.view-slider .slide {
+  width: 70vw;
+  min-height: 500px;
+  position: absolute;
+}
+
+.view-slider .slide img {
+  width: 100%;
+}
+
+.view-slider button#view-previous {
+  top: 245px;
+}
+

@@ -20,7 +20,7 @@
                 <input id="houseNo" class="list-form-input" placeholder="None"  name="houseNo" required>
             </div>
             <div class="list-input-field">
-                <label for="streetName">Street Name</label>
+                <label for="streetName">Street/Society Name *</label>
                 <input id="streetName" class="list-form-input" placeholder="Street I" name="streetName">
             </div>
         </div>

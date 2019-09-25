@@ -2,7 +2,7 @@
     <div class="request-div">
         <div>Contact us</div>
         <img src="{{asset('images/navbar/chat.svg')}}" id='footer-chat-image' onclick="togglechat(event)">
-        <form class="request-footer-form" method="POST" action="requests">
+        <form class="request-footer-form" method="POST" action="{{ route('requests') }}">
             @csrf
             <div class="input-field">
                 <div class="input-label">Full name *</div>
