@@ -6,7 +6,7 @@ function nextSlide(e){
         currentActiveSlide.nextElementSibling.classList.add('active');
     }
 
-    var circles = e.target.nextElementSibling.nextElementSibling;
+    var circles = e.target.nextElementSibling;
     var currentActiveCircle = circles.querySelector("div.active");
     if (currentActiveCircle.nextElementSibling != null){
         currentActiveCircle.classList.remove('active');
@@ -21,7 +21,7 @@ function previousSlide(e){
         currentActiveSlide.classList.remove('active');
         currentActiveSlide.previousElementSibling.classList.add('active');
     }
-    var circles = e.target.nextElementSibling.nextElementSibling.nextElementSibling;
+    var circles = e.target.nextElementSibling.nextElementSibling;
     var currentActiveCircle = circles.querySelector("div.active");
     if (currentActiveCircle.previousElementSibling != null){
         currentActiveCircle.classList.remove('active');

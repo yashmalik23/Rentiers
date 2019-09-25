@@ -1,18 +1,148 @@
+.view-property-header{
+    display: inline-flex;
+    margin: 10px auto 10px 100px;
+    div{
+        color: #717377;
+        line-height: 40px;
+        align-items: flex-end;
+        &:first-child{
+            color: $font;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+    }
+    @media screen and (max-width: $break-large){
+        margin-left: 60px;
+        display: block;
+    }
+}
+
 .view-slider{
     position: relative;
-    margin: 50px auto;
-    width: 70vw;
-    min-height: 500px;
+    margin: 30px auto 20px 100px;
+    width: 60%;
+    min-height: 400px;
     overflow: hidden;
     .slide {
-        width: 70vw;
-        min-height: 500px;
+        width: 100%;
+        min-height: 100%;
         position: absolute;
         img{
             width: 100%;
         }
     }
     button#view-previous{
-        top: 245px;
+        top: 45%;
+    }
+    button#view-next{
+        margin-left: 97%;
+        top: 45%;
+    }
+    .circles{
+        left: 45%;
+    }
+    @media screen and (max-width: 1300px){
+        width: 70%;
+    }
+    @media screen and (max-width: $break-large){
+        width: 80%;
+        button#view-next{
+            margin-left: 96%;
+            top: 45%;
+        }
+    }
+    @media screen and (max-width: 950px){
+        margin: 30px auto 20px;
+        width: 70%;
+        min-height: 300px;
+    }
+    @media screen and (max-width: 650px){
+        margin: 30px auto 20px;
+        width: 80%;
+        min-height: 300px;
+    }
+    @media screen and (max-width: 650px){
+        margin: 30px auto 20px;
+        min-width: 90%;
+        min-height: 250px;
+    }
+}
+.view-property-details{
+    grid-area: viewprop;
+}
+.view-help-section{
+    grid-area: vhelp;
+    text-align: justify;
+    margin: 40px auto;
+    .help-heading{
+        font-size: 2rem;
+        padding: 40px 0px 20px;
+        font-weight: bold;
+    }
+    .help-line-1{
+        width: 95%;
+        max-width: 300px;
+        color: #717377;
+        padding: 10px 0px;
+    }
+}
+.view-property{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 'viewprop vhelp';
+    @media screen and (max-width: 950px){
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 0.2fr;
+        grid-template-areas: 'viewprop' 'vhelp';
+    }
+}
+.view-main-details{
+    display: inline-flex;
+    margin: 0px auto 10px 100px;
+    .view-prop-main-logo{
+        margin: 0px 10px;
+        display: inline-flex;
+        img{
+            width: 20px;
+            padding-right: 5px;
+        }
+        div{
+            color: $main;
+        }
+    }
+    @media screen and (max-width: $break-large){
+        margin-left: 60px;
+    }
+    @media screen and (max-width: 600px){
+        display: block;
+    }
+}
+.rest-details{
+    display: block;
+    margin: 10px auto 10px 100px;
+    .rest-heading{
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: $font;
+        display: block;
+    }
+    .rest-details-div{
+        color: #717377;
+        .one-feature{
+            display: block;
+            div{
+                color: $font;
+                display: inline-flex;
+            }
+            .one-feature-heading{
+                color: #717377;
+                padding-right: 10px;
+            }
+        }
+    }
+    
+    @media screen and (max-width: $break-large){
+        margin-left: 60px;
     }
 }

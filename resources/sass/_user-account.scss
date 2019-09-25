@@ -3,7 +3,7 @@
     max-width: 100px;
     min-height: 100px;
     border-radius: 50px;
-    margin: auto;
+    margin: 50px auto auto;
 }
 .property-actions{
     grid-area: actions;
@@ -15,7 +15,7 @@
 }
 .property-details{
     grid-area: pdetails;
-    margin: auto;
+    margin: 50px auto auto;
     div{
         color: #717377;
     }
@@ -27,7 +27,7 @@
 }
 .property-footer{
     grid-area: pfooter;
-    margin: auto;
+    margin: 0px auto 0px 50px;
 }
 
 

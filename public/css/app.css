@@ -1875,7 +1875,7 @@ footer {
   max-width: 100px;
   min-height: 100px;
   border-radius: 50px;
-  margin: auto;
+  margin: 50px auto auto;
 }
 
 .property-actions {
@@ -1890,7 +1890,7 @@ footer {
 
 .property-details {
   grid-area: pdetails;
-  margin: auto;
+  margin: 50px auto auto;
 }
 
 .property-details div {
@@ -1905,7 +1905,7 @@ footer {
 
 .property-footer {
   grid-area: pfooter;
-  margin: auto;
+  margin: 0px auto 0px 50px;
 }
 
 .user-properties {
@@ -1923,17 +1923,42 @@ footer {
   grid-template-areas: "image1 pdetails actions" "pfooter pfooter pfooter";
 }
 
+.view-property-header {
+  display: inline-flex;
+  margin: 10px auto 10px 100px;
+}
+
+.view-property-header div {
+  color: #717377;
+  line-height: 40px;
+  align-items: flex-end;
+}
+
+.view-property-header div:first-child {
+  color: #424b5a;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 1120px) {
+  .view-property-header {
+    margin-left: 60px;
+    display: block;
+  }
+}
+
 .view-slider {
   position: relative;
-  margin: 50px auto;
-  width: 70vw;
-  min-height: 500px;
+  margin: 30px auto 20px 100px;
+  width: 60%;
+  min-height: 400px;
   overflow: hidden;
 }
 
 .view-slider .slide {
-  width: 70vw;
-  min-height: 500px;
+  width: 100%;
+  min-height: 100%;
   position: absolute;
 }
 
@@ -1942,6 +1967,160 @@ footer {
 }
 
 .view-slider button#view-previous {
-  top: 245px;
+  top: 45%;
+}
+
+.view-slider button#view-next {
+  margin-left: 97%;
+  top: 45%;
+}
+
+.view-slider .circles {
+  left: 45%;
+}
+
+@media screen and (max-width: 1300px) {
+  .view-slider {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1120px) {
+  .view-slider {
+    width: 80%;
+  }
+
+  .view-slider button#view-next {
+    margin-left: 96%;
+    top: 45%;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .view-slider {
+    margin: 30px auto 20px;
+    width: 70%;
+    min-height: 300px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .view-slider {
+    margin: 30px auto 20px;
+    width: 80%;
+    min-height: 300px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .view-slider {
+    margin: 30px auto 20px;
+    min-width: 90%;
+    min-height: 250px;
+  }
+}
+
+.view-property-details {
+  grid-area: viewprop;
+}
+
+.view-help-section {
+  grid-area: vhelp;
+  text-align: justify;
+  margin: 40px auto;
+}
+
+.view-help-section .help-heading {
+  font-size: 2rem;
+  padding: 40px 0px 20px;
+  font-weight: bold;
+}
+
+.view-help-section .help-line-1 {
+  width: 95%;
+  max-width: 300px;
+  color: #717377;
+  padding: 10px 0px;
+}
+
+.view-property {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas: "viewprop vhelp";
+}
+
+@media screen and (max-width: 950px) {
+  .view-property {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.2fr;
+    grid-template-areas: "viewprop" "vhelp";
+  }
+}
+
+.view-main-details {
+  display: inline-flex;
+  margin: 0px auto 10px 100px;
+}
+
+.view-main-details .view-prop-main-logo {
+  margin: 0px 10px;
+  display: inline-flex;
+}
+
+.view-main-details .view-prop-main-logo img {
+  width: 20px;
+  padding-right: 5px;
+}
+
+.view-main-details .view-prop-main-logo div {
+  color: #3a6ec9;
+}
+
+@media screen and (max-width: 1120px) {
+  .view-main-details {
+    margin-left: 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .view-main-details {
+    display: block;
+  }
+}
+
+.rest-details {
+  display: block;
+  margin: 10px auto 10px 100px;
+}
+
+.rest-details .rest-heading {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #424b5a;
+  display: block;
+}
+
+.rest-details .rest-details-div {
+  color: #717377;
+}
+
+.rest-details .rest-details-div .one-feature {
+  display: block;
+}
+
+.rest-details .rest-details-div .one-feature div {
+  color: #424b5a;
+  display: inline-flex;
+}
+
+.rest-details .rest-details-div .one-feature .one-feature-heading {
+  color: #717377;
+  padding-right: 10px;
+}
+
+@media screen and (max-width: 1120px) {
+  .rest-details {
+    margin-left: 60px;
+  }
 }
 
