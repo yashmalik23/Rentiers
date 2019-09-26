@@ -18,7 +18,7 @@ function previousForm(){
 
     let firstdotted = document.getElementById("first-dotted");
     let nextoption = document.getElementById('list-second-option');
-    firstdotted.src = "images/listprops/dotted.svg";
+    firstdotted.src = "/images/listprops/dotted.svg";
     nextoption.classList.remove("active-list-menu");
 
 }

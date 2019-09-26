@@ -33,4 +33,18 @@ class userAccountController extends Controller
             return view('includes/login');
         }
     }
+
+    public function edit($id){
+        $user = Auth::user();
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
+        $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
+        $rooms = ["Pooja Room","Servant Room","Study Room"];
+        $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple"];
+        if($user->id != null){
+            $props = DB::select('SELECT * from properties where id='.$id);
+            return view('includes/edit')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant)->with('rooms', $rooms);
+        }else{
+            return view('includes/login');
+        }
+    }
 }

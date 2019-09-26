@@ -30,8 +30,8 @@ class CreatePropertiesTable extends Migration
             $table->string('area'); // super+carpet unit sq. ft.
             $table->integer('bathRooms')->default(0);
             $table->integer('balconies')->default(0);
-            $table->integer('rooms')->nullable(); //puja+servant+study
-            $table->integer('furnishing')->nullable(); // full+semi+un
+            $table->string('rooms')->nullable(); //puja+servant+study
+            $table->string('furnishing')->nullable(); // full+semi+un
             $table->string('parking'); // covered + uncovered;
             $table->string('ageOfProperty');
             $table->string('floor')->nullable();
@@ -40,12 +40,13 @@ class CreatePropertiesTable extends Migration
             $table->string('availability')->nulllable();
             $table->string('contract');
             $table->string('expectedPrice');
-            $table->string('includeTaxes',20);
+            $table->string('includeTaxes');
             $table->string('otherCharges');
             $table->string('closeTo');
             $table->string('ameneties');
             $table->string('tenant');
             $table->integer('inUse');
+            $table->integer('verified');
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@
         <div class="view-property-details">
             @foreach ($props as $prop)
                 <div class="view-property-header">
-                    <div class="view-nearByArea">{{$prop->nearByArea}}</div>
+                    <div class="view-nearByArea">{{$prop->streetName}}</div>
                     <div class="view-locality">{{$prop->locality}}, {{$prop->city}}</div>
                 </div>
                 <div class="view-slider">

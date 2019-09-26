@@ -231,7 +231,7 @@
                         </div>
                         <div class="name">John Doe, Businessman</div>
                     </div>
-                    <img src="{{asset('images/home/man2.svg')}}">
+                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
@@ -240,7 +240,7 @@
                         </div>
                         <div class="name">Sophie Turner, Lawyer</div>
                     </div>
-                    <img src="{{asset('images/home/girl1.svg')}}">
+                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
@@ -249,7 +249,7 @@
                         </div>
                         <div class="name">Alex Williams, Trader</div>
                     </div>
-                    <img src="{{asset('images/home/man1.svg')}}">
+                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
@@ -258,7 +258,7 @@
                         </div>
                         <div class="name">John Doe, Businessman</div>
                     </div>
-                    <img src="{{asset('images/home/man2.svg')}}">
+                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
@@ -267,7 +267,7 @@
                         </div>
                         <div class="name">Alex Williams, Trader</div>
                     </div>
-                    <img src="{{asset('images/home/man1.svg')}}">
+                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
@@ -276,7 +276,7 @@
                         </div>
                         <div class="name">Sophie Turner, Lawyer</div>
                     </div>
-                    <img src="{{asset('images/home/girl1.svg')}}">
+                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
             </div>
             <img src="{{asset('images/home/test-down-arrow.svg')}}" onclick="scrollDown(event)" />

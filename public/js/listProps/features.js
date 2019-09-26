@@ -8,7 +8,7 @@ function previous4Form(){
 
     let seconddotted = document.getElementById("fourth-dotted");
     let nextoption = document.getElementById('list-fifth-option');
-    seconddotted.src = "images/listprops/dotted.svg";
+    seconddotted.src = "/images/listprops/dotted.svg";
     nextoption.classList.remove("active-list-menu");
 
 }

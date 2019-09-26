@@ -391,9 +391,10 @@ button.next{
                    }
                 }
                 img{
-                    width: auto;
-                    max-height: 90px;
+                    width: 90px;
+                    height: 90px;
                     margin: auto;
+                    border-radius: 45px;
                 }
             }
         }

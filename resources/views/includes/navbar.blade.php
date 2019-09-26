@@ -18,7 +18,7 @@
         </li>
     </ul>
     @if (isset(Auth::user()->email))
-        <div class="user-name"><a href="useraccount"> {{Auth::user()->name}}</a></div>
+        <div class="user-name"><a href="{{ route('useraccount') }}"> {{Auth::user()->name}}</a></div>
         <div class="login"><a href="{{ route('logout') }}">Log Out</a></div>
     @else
     <div class="login"><a href="{{ route('login') }}">Login/SignUp</a></div>
@@ -40,7 +40,7 @@
         <li>+91 8683803539</li>
         <li>+91 7901763826</li>
         @if (isset(Auth::user()->email))
-            <li><a href="useraccount"> {{Auth::user()->name}}</a></li>
+            <li><a href="{{ route('useraccount') }}"> {{Auth::user()->name}}</a></li>
             <li><div class="mobile-login"><a href="{{ route('logout') }}">Log Out</a></div></li>
         @else
             <li><div class="mobile-login"><a href="{{ route('login') }}">Login/SignUp</a></div></li>

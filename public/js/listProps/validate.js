@@ -117,7 +117,7 @@ function handleSubmit(){
                 roomString=roomString.concat("0");
             }
         }
-        document.getElementById('rooms-hidden').value = parseInt(roomString);
+        document.getElementById('rooms-hidden').value = roomString;
 
         //Furnishing
         let furnishing = document.getElementById("furnishing").textContent;
@@ -160,7 +160,7 @@ function handleSubmit(){
         document.getElementById('balconies-hidden').value = parseInt(document.getElementById('commbalconies').value);
 
         //Rooms (Checkbox)
-        document.getElementById('rooms-hidden').value = 000;
+        document.getElementById('rooms-hidden').value = "000";
 
         //Furnishing
         let furnishing = document.getElementById("commfurnishing").textContent;

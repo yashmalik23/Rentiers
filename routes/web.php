@@ -22,11 +22,14 @@ Route::post('register', 'loginController@store')->name('register');
 Route::post('login','loginController@checklogin');
 Route::post('requests','requestsController@store')->name('requests');
 Route::post('listprops', 'propertiesController@store');
+Route::post('editprops', 'propertiesController@update')->name('editprops');
+Route::post('deleteprops', 'propertiesController@delete')->name('deleteprops');
 
 
 Route::get('logout','loginController@logout')->name('logout');
 Route::get('useraccount','userAccountController@index')->name('useraccount');
 Route::get('useraccount/{id}','userAccountController@show')->name('propview');
+Route::get('useraccountedit/{id}','userAccountController@edit')->name('propedit');
 
 Route::get('aboutus', array('as'=>'aboutus',function () {
     return view('includes/about');

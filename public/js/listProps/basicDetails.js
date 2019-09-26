@@ -101,7 +101,6 @@ function changeoption(e){
     let hiddeninput = e.target.parentElement.parentElement.nextElementSibling;
     if(hiddeninput != null){
         hiddeninput.value = e.target.textContent;
-        console.log(document.getElementById('doccc').value);
     }
 
     let options = e.target.parentElement;

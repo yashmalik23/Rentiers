@@ -7,7 +7,7 @@ function previous2Form(){
 
     let seconddotted = document.getElementById("second-dotted");
     let nextoption = document.getElementById('list-third-option');
-    seconddotted.src = "images/listprops/dotted.svg";
+    seconddotted.src = "/images/listprops/dotted.svg";
     nextoption.classList.remove("active-list-menu");
 
 }
@@ -16,10 +16,10 @@ function changecheck(e){
     let checkbox = e.target;
     
     if(checkbox.src.indexOf('images/listprops/unchecked.svg')>-1){
-        checkbox.src = 'images/listprops/checked.svg'
+        checkbox.src = '/images/listprops/checked.svg'
         checkbox.style.width = "18px";
     }else{
-        checkbox.src = 'images/listprops/unchecked.svg'
+        checkbox.src = '/images/listprops/unchecked.svg'
         checkbox.style.width = "15px";
     }
 }
