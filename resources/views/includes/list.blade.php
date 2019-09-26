@@ -1,5 +1,8 @@
 @extends('layout')
 @section('views')
+    @if(Auth::user() == null)
+        <script>window.location.href="/login"</script>
+    @endif
     <script type="text/javascript" src="{{asset('js/listProps/validate.js') }}"></script>
     <div class="list-properties">
         <div class="list-heading">

@@ -11,6 +11,8 @@
 |
 */
 
+
+//Normal website
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@index');
 Route::get('contactus', 'requestsController@index')->name('contactus');
@@ -21,9 +23,12 @@ Route::get('login', 'loginController@index')->name('login');
 Route::post('register', 'loginController@store')->name('register');
 Route::post('login','loginController@checklogin');
 Route::post('requests','requestsController@store')->name('requests');
+
+
 Route::post('listprops', 'propertiesController@store');
 Route::post('editprops', 'propertiesController@update')->name('editprops');
 Route::post('deleteprops', 'propertiesController@delete')->name('deleteprops');
+Route::post('addimagetoprop' , 'propertiesController@addimage')->name('addimagetoprop');
 
 
 Route::get('logout','loginController@logout')->name('logout');
@@ -39,3 +44,5 @@ Route::get('search', array('as'=>'search',function () {
     return view('includes/searchResults');
 }));
 
+
+//Admin panel

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\properties;
 use Auth;
+use DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class propertiesController extends Controller
@@ -47,14 +49,18 @@ class propertiesController extends Controller
         $props->tenant = $request->input('tenant');
         $props->closeTo = $request->input('closeTo');
         $props->inUse = $request->input('inUse');
+        $props->images = "noimage.png,";
         $props->verified = 0;
         $user = Auth::user();
-        if($user->id != null){
+        if($user){
             $props->user_id = $user->id;
+            $props->save();
+            return redirect('listproperties')->with('property','added_successfully');
+        }else{
+            $props->save();
+            return view('includes/login');
         }
-        $props->save();
 
-        return redirect('listproperties')->with('property','added_successfully');
     }
 
     public function update(Request $request){
@@ -86,8 +92,10 @@ class propertiesController extends Controller
         $props->inUse = $request->input('inUse');
         $props->verified = 0;
         $user = Auth::user();
-        if($user->id != null){
-            $props->user_id = $user->id;
+        if($user){
+            if($user->email != "inforentiers@gmail.com"){
+                $props->user_id = $user->id;
+            }
         }
         $props->save();   
         return view('includes/list')->with('property',$request->input('area'));
@@ -98,6 +106,30 @@ class propertiesController extends Controller
         $props = properties::find($id);
         $props->delete();
         $user = Auth::user();
+        $id = $user->id;
+        $props = DB::select('SELECT * from properties where user_id='.$id);
+        return view('includes/useraccount')->with('delete',"deleted successfully")->with('props', $props);
+    }
+
+    public function addimage(Request $request){
+        
+        $user = Auth::user();
+        $id = $request->input('id');
+        $props = properties::find($id);
+        $string = $props->images;
+        if($request->hasFile('file')){
+            foreach ($request->file as $file){
+                $filename = pathinfo($file, PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $nameToStore = $filename."_".time().".".$extension;
+                $path = $file->storeAs("public/".$user->email, $nameToStore);   
+                $string = $string.$nameToStore.","; 
+            }
+        }
+        
+        $props->images = $string;
+        $props->save();
+
         $id = $user->id;
         $props = DB::select('SELECT * from properties where user_id='.$id);
         return view('includes/useraccount')->with('delete',"deleted successfully")->with('props', $props);

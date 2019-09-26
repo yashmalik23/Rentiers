@@ -10,22 +10,30 @@
                 </div>
                 <div class="view-slider">
                     <div class="slider-images">
-                        <div class="slide active">
-                            <img src="{{asset('images/home/picture2.png')}}">
-                        </div>
-                        <div class="slide">
-                            <img src="{{asset('images/home/picture.png')}}">
-                        </div>
-                        <div class="slide">
-                            <img src="{{asset('images/home/picture.png')}}">
-                        </div>
+                        @if(count(explode(",",$prop->images))>0 && explode(",",$prop->images)[0] != "")
+                            <div class="slide active">
+                                <img src="/storage/{{Auth::user()->email}}/{{explode(",",$prop->images)[0]}}">
+                            </div>
+                        @else
+                            <div class="slide active">
+                                <img src="/storage/noimage.png">
+                            </div>
+                        @endif
+                        @for($i =1 ; $i<count(explode(",",$prop->images))-1 ;$i++ )
+                            <div class="slide">
+                                <img src="/storage/{{Auth::user()->email}}/{{explode(",",$prop->images)[$i]}}">
+                            </div>
+                        @endfor
                     </div>  
                     <button class="previous" onclick="previousSlide(event)" id="view-previous"><</button>
                     <button class="next" onclick="nextSlide(event)" id="view-next">></button>
                     <div class="circles">
                         <div class="circle active"></div>
-                        <div class="circle"></div>
-                        <div class="circle"></div>
+                        @for($i =1 ; $i<count(explode(",",$prop->images))-1 ;$i++ )
+                            <div class="slide">
+                                <div class="circle"></div>
+                            </div>
+                        @endfor
                     </div>
                 </div>
                 <div class="view-main-details">

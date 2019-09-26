@@ -1887,6 +1887,7 @@ footer {
 .property-actions img {
   padding-right: 10px;
   cursor: pointer;
+  width: 25px;
 }
 
 .property-details {
@@ -1924,7 +1925,8 @@ footer {
   grid-template-areas: "image1 pdetails actions" "pfooter pfooter pfooter";
 }
 
-.delete-modal {
+.delete-modal,
+.upload-image-modal {
   position: absolute;
   display: none;
   width: 100%;
@@ -1932,7 +1934,8 @@ footer {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.delete-modal .modal-content {
+.delete-modal .modal-content,
+.upload-image-modal .modal-content {
   background: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin: auto;
@@ -1940,7 +1943,13 @@ footer {
   text-align: center;
 }
 
-.delete-modal .modal-content button {
+.delete-modal .modal-content input,
+.upload-image-modal .modal-content input {
+  margin: auto;
+}
+
+.delete-modal .modal-content button,
+.upload-image-modal .modal-content button {
   background-color: #3a6ec9;
   color: white;
   position: relative;
@@ -1951,15 +1960,16 @@ footer {
   display: inline-flex;
 }
 
-.delete-modal .modal-content div {
+.delete-modal .modal-content div,
+.upload-image-modal .modal-content div {
   display: inline-flex;
-  font: bold;
   font-size: 2rem;
   color: #424b5a;
   margin: 10px;
 }
 
-.delete-modal .modal-content .cancel {
+.delete-modal .modal-content .cancel,
+.upload-image-modal .modal-content .cancel {
   background-color: white;
   color: #3a6ec9;
   border: 1px solid #3a6ec9;
@@ -1970,6 +1980,14 @@ footer {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+.upload-image-modal .modal-content button {
+  padding: 5px 28px;
+}
+
+.upload-image-modal .modal-content .cancel {
+  padding: 5px 21px;
 }
 
 .view-property-header {

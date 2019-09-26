@@ -14,14 +14,32 @@
                     </form>
                 </div>
             </div>
+            <div class="upload-image-modal">
+                <div class="modal-content">
+                    <div>You can add upto 15 images and 1 video</div>
+                    <form class="image-props" method="POST" action="{{ route('addimagetoprop')}}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="number" id="image-prop" name="id" hidden>
+                        <label for="file-field-image">Images</label>
+                        <input type="file" id="file-field-image" name="file[]" accept=".jpg,.png" multiple>
+                        <button type="submit">Save</button>
+                        <div class="cancel" onclick="closeImageModal()">Cancel</div>
+                    </form>
+                </div>
+            </div>
             <div class="user-account">
                 <div class="user-properties">
                     @foreach($props as $prop)
                     <div class="property-card" onclick="">
-                        <img class="card-image-circle" src="{{asset('images/home/picture.png')}}"/>
+                        @if(count(explode(",", $prop->images))>0 && explode(",",$prop->images)[0] != "") 
+                        <img class="card-image-circle" src="/storage/{{Auth::user()->email}}/{{explode(",",$prop->images)[0]}}"/>
+                        @else
+                            <img class="card-image-circle" src="/storage/noimage.png"/>
+                        @endif
                         <div class="property-actions">
                             <a href="useraccountedit/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/edit.svg')}}"/></a>
                             <img class="card-image-cancel" src="{{asset('images/viewprops/close.svg')}}" onclick="showModal(event, {{$prop->id}})" >
+                            <img class="card-image-cancel" src="{{asset('images/viewprops/photo.svg')}}" onclick="showImageModal(event, {{$prop->id}})" >
                         </div>
                         <div class="property-details">
                             <div class="property-title"><a href="useraccount/{{$prop->id}}">{{$prop->streetName}}</a></div>
