@@ -68,6 +68,42 @@ body{
     @media screen and (max-width: $break-large) {
         display: flex;
     }
+    .mobile-nav-links{
+        width: 200px;
+        height: 100vh;
+        display: inline-block;
+        position: fixed;
+        background-color: #3a6ec9;
+        color: white;
+        font-size: 1.2rem;
+        display: none;
+        margin: 0;
+        padding: 20px 0px 0px 0px;
+        list-style-type: none;
+        li{
+            padding: 15px 30px;
+            a{
+                text-decoration: none;
+                color: white;
+            }
+            &:last-child{
+                padding-top: 50px;
+                text-align: center;
+            }
+            div{
+                color: #3a6ec9;
+                background-color: white;
+                padding: 10px 0px;
+            }
+        }
+        .mobile-login{
+            a{
+                background-color: white;
+                color: $main;
+                text-decoration: none;
+            }
+        }
+    }
 }
 .main-layout{
     display: inline-flex;
@@ -85,43 +121,6 @@ body{
     line-height: 40px;
     margin-right: 10px;
 }
-.mobile-nav-links{
-    width: 200px;
-    height: 100vh;
-    display: inline-block;
-    position: fixed;
-    background-color: #3a6ec9;
-    color: white;
-    font-size: 1.2rem;
-    display: none;
-    margin: 0;
-    padding: 20px 0px 0px 0px;
-    list-style-type: none;
-    li{
-        padding: 15px 30px;
-        a{
-            text-decoration: none;
-            color: white;
-        }
-        &:last-child{
-            padding-top: 50px;
-            text-align: center;
-        }
-        div{
-            color: #3a6ec9;
-            background-color: white;
-            padding: 10px 0px;
-        }
-    }
-    .mobile-login{
-        a{
-            background-color: white;
-            color: $main;
-            text-decoration: none;
-        }
-    }
-}
-
 ::-webkit-scrollbar {
     width: 5px;
   }

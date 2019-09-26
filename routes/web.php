@@ -46,3 +46,5 @@ Route::get('search', array('as'=>'search',function () {
 
 
 //Admin panel
+Route::get('traceadmin', 'adminController@index')->name('adminlogin');
+Route::post('adminlogin', 'adminController@login')->name('tryadminlogin');

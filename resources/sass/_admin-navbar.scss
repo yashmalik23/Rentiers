@@ -1,0 +1,55 @@
+.nav-bar{
+    height: 40px;
+    width: 100vw;
+    min-width: 1400px;
+    background-color: #3C8DBC;
+    display: inline-flex;
+}
+
+.dashboard-icon{
+    width: 20px;
+    margin: 5px;
+    display: inline-flex;
+    cursor: pointer;
+}
+
+.dashboard-heading{
+    font-size: 2rem;
+    color: white;
+    display: inline-flex;
+    margin: 6px 10px;
+}
+
+.main-layout{
+    display: inline-block;
+}
+.app-title{
+    padding: 0px 30px;
+    margin-top: 20px;
+}
+.side-menu{
+    width: 250px;
+    height: 100vh;
+    display: inline-block;
+    position: fixed;
+    background-color: #1A2226;
+    color: white;
+    display: none;
+}
+
+.side-menu-list{
+    list-style-type: none;
+    padding: 20px;
+}
+.side-menu-list>li{
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.side-menu-list>li>a{
+    text-decoration: none;
+    color: white;
+}
+.side-menu-list>li>a:active{
+    text-decoration: none;
+    color: green;
+}

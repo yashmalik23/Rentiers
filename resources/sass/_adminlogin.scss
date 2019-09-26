@@ -1,0 +1,37 @@
+.container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-container {
+    margin: 0 auto;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
+
+.login-container > input {
+    padding: 10px;
+}
+
+.login-container{
+    button{
+    height: 40px;
+    font-family: "MontSerrat";
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: white;
+    background-color: #00C0EF;
+    border: none;
+    outline: none;
+    top: 0;
+    position: relative;
+    }
+}
+.login-container h1 {
+    font-family: "MontSerrat";
+    text-align: center;
+    padding: 20px 0px;
+}

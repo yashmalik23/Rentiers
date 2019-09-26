@@ -86,6 +86,46 @@ body {
   }
 }
 
+.mobile-nav .mobile-nav-links {
+  width: 200px;
+  height: 100vh;
+  display: inline-block;
+  position: fixed;
+  background-color: #3a6ec9;
+  color: white;
+  font-size: 1.2rem;
+  display: none;
+  margin: 0;
+  padding: 20px 0px 0px 0px;
+  list-style-type: none;
+}
+
+.mobile-nav .mobile-nav-links li {
+  padding: 15px 30px;
+}
+
+.mobile-nav .mobile-nav-links li a {
+  text-decoration: none;
+  color: white;
+}
+
+.mobile-nav .mobile-nav-links li:last-child {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.mobile-nav .mobile-nav-links li div {
+  color: #3a6ec9;
+  background-color: white;
+  padding: 10px 0px;
+}
+
+.mobile-nav .mobile-nav-links .mobile-login a {
+  background-color: white;
+  color: #3a6ec9;
+  text-decoration: none;
+}
+
 .main-layout {
   display: inline-flex;
 }
@@ -104,46 +144,6 @@ body {
 .user-name {
   line-height: 40px;
   margin-right: 10px;
-}
-
-.mobile-nav-links {
-  width: 200px;
-  height: 100vh;
-  display: inline-block;
-  position: fixed;
-  background-color: #3a6ec9;
-  color: white;
-  font-size: 1.2rem;
-  display: none;
-  margin: 0;
-  padding: 20px 0px 0px 0px;
-  list-style-type: none;
-}
-
-.mobile-nav-links li {
-  padding: 15px 30px;
-}
-
-.mobile-nav-links li a {
-  text-decoration: none;
-  color: white;
-}
-
-.mobile-nav-links li:last-child {
-  padding-top: 50px;
-  text-align: center;
-}
-
-.mobile-nav-links li div {
-  color: #3a6ec9;
-  background-color: white;
-  padding: 10px 0px;
-}
-
-.mobile-nav-links .mobile-login a {
-  background-color: white;
-  color: #3a6ec9;
-  text-decoration: none;
 }
 
 ::-webkit-scrollbar {
@@ -2189,5 +2189,102 @@ footer {
   .rest-details {
     margin-left: 60px;
   }
+}
+
+.nav-bar {
+  height: 40px;
+  width: 100vw;
+  min-width: 1400px;
+  background-color: #3C8DBC;
+  display: inline-flex;
+}
+
+.dashboard-icon {
+  width: 20px;
+  margin: 5px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.dashboard-heading {
+  font-size: 2rem;
+  color: white;
+  display: inline-flex;
+  margin: 6px 10px;
+}
+
+.main-layout {
+  display: inline-block;
+}
+
+.app-title {
+  padding: 0px 30px;
+  margin-top: 20px;
+}
+
+.side-menu {
+  width: 250px;
+  height: 100vh;
+  display: inline-block;
+  position: fixed;
+  background-color: #1A2226;
+  color: white;
+  display: none;
+}
+
+.side-menu-list {
+  list-style-type: none;
+  padding: 20px;
+}
+
+.side-menu-list > li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.side-menu-list > li > a {
+  text-decoration: none;
+  color: white;
+}
+
+.side-menu-list > li > a:active {
+  text-decoration: none;
+  color: green;
+}
+
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-container {
+  margin: 0 auto;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+.login-container > input {
+  padding: 10px;
+}
+
+.login-container button {
+  height: 40px;
+  font-family: "MontSerrat";
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: white;
+  background-color: #00C0EF;
+  border: none;
+  outline: none;
+  top: 0;
+  position: relative;
+}
+
+.login-container h1 {
+  font-family: "MontSerrat";
+  text-align: center;
+  padding: 20px 0px;
 }
 
