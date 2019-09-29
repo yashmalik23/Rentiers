@@ -219,6 +219,7 @@ function handleSubmit(){
         }
     }
     document.getElementById('tenant-hidden').value = tenantString;
+    document.getElementById('ownerss-hidden').value = document.getElementById('ownerDetails1').value+","+document.getElementById('ownerDetails2').value+","+document.getElementById('ownerDetails3').value;
 
     let button = document.getElementById('property-submit');
     button.click();

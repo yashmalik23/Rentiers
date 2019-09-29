@@ -51,6 +51,7 @@ class propertiesController extends Controller
         $props->inUse = $request->input('inUse');
         $props->images = "noimage.png,";
         $props->verified = 0;
+        $props->ownerdetails = $request->input('ownerDetails');
         $user = Auth::user();
         if($user){
             $props->user_id = $user->id;
@@ -91,6 +92,7 @@ class propertiesController extends Controller
         $props->closeTo = $request->input('closeTo');
         $props->inUse = $request->input('inUse');
         $props->verified = 0;
+        $props->ownerdetails = $request->input('ownerDetails');
         $user = Auth::user();
         if($user){
             if($user->email != "inforentiers@gmail.com"){

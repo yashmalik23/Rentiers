@@ -56,10 +56,13 @@ class adminController extends Controller
         return view('admin/includes/login');
     }
 
+
+    //Sellers
     public function sellers(){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
-                return view('admin/includes/sellers');
+                $sellers = DB::table('users')->where('member','=','Seller')->paginate(12);
+                return view('admin/includes/sellers')->with('sellers',$sellers)->with('search',"");
             }else{
                 return view('admin/includes/login');
             }
@@ -95,6 +98,7 @@ class adminController extends Controller
         }
         return view('admin/includes/login');
     }
+    
     public function vassets(){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
