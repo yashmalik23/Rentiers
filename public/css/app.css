@@ -2194,8 +2194,6 @@ footer {
 .nav-bar {
   height: 40px;
   width: 100vw;
-  min-width: 1400px;
-  background-color: #3C8DBC;
   display: inline-flex;
 }
 
@@ -2208,7 +2206,7 @@ footer {
 
 .dashboard-heading {
   font-size: 2rem;
-  color: white;
+  color: #424b5a;
   display: inline-flex;
   margin: 6px 10px;
 }
@@ -2286,5 +2284,120 @@ footer {
   font-family: "MontSerrat";
   text-align: center;
   padding: 20px 0px;
+}
+
+.quick-links {
+  width: 100vw;
+}
+
+.quick-links .links-heading {
+  font-weight: bold;
+  color: #424b5a;
+  font-size: 3rem;
+  padding: 20px 40px;
+}
+
+.quick-links .admin-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+.quick-links .admin-card-container .admin-card {
+  margin: 10px 20px;
+  height: 191px;
+  border: 1px solid #3a6ec9;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.quick-links .admin-card-container .admin-card .card-image {
+  min-width: 100px;
+  padding: 40px 20px;
+}
+
+.quick-links .admin-card-container .admin-card .admin-card-text {
+  margin: 10px auto auto 20px;
+}
+
+.quick-links .admin-card-container .admin-card .admin-card-text .card-name {
+  font-weight: 500;
+  width: 100px;
+  margin-top: 20px;
+  color: #424b5a;
+  font-size: 2.8rem;
+}
+
+.quick-links .admin-card-container .admin-card .admin-card-text .card-info {
+  color: #717377;
+  font-size: 1.5rem;
+}
+
+.admin-search-bar-container {
+  width: 300px;
+}
+
+.admin-search-bar-container input {
+  outline: none;
+  border: none;
+  padding: 4px;
+  margin-left: 20px;
+}
+
+.admin-search-bar-container img {
+  width: 15px;
+  cursor: pointer;
+}
+
+.users-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.users-card-container .user-card {
+  margin: 10px 20px;
+  height: 130px;
+  box-shadow: 3px 5px 40px #f0f0f2;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-areas: "texts actions";
+}
+
+.users-card-container .user-card .user-card-text {
+  grid-area: texts;
+  margin: 10px auto 0px 20px;
+}
+
+.users-card-container .user-card .user-card-text .user-card-name {
+  font-weight: 500;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.users-card-container .user-card .user-card-text .user-info-group {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.users-card-container .user-card .user-card-text .user-info-group img {
+  width: 15px;
+  margin-right: 10px;
+}
+
+.users-card-container .user-card .user-card-actions {
+  grid-area: actions;
+  margin: 10px 0px 0px auto;
+}
+
+.users-card-container .user-card .user-card-actions img {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.admin-page-links {
+  margin-left: 20px;
 }
 

@@ -1,8 +1,6 @@
 .nav-bar{
     height: 40px;
     width: 100vw;
-    min-width: 1400px;
-    background-color: #3C8DBC;
     display: inline-flex;
 }
 
@@ -15,7 +13,7 @@
 
 .dashboard-heading{
     font-size: 2rem;
-    color: white;
+    color: $font;
     display: inline-flex;
     margin: 6px 10px;
 }

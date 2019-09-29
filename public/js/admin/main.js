@@ -18,3 +18,33 @@ function handleMenu() {
         menu.style.display = "none";
     }
 }
+
+// Members
+function searchMember(e){
+    let search = e.target.previousElementSibling.value
+    window.location.href = "/members/"+search.toLowerCase();
+}
+function showMemberModal(e, id){
+    let modal = document.getElementsByClassName('delete-modal')[0];
+    modal.style.display = "block";
+    document.getElementById('member-user-delete').value = id;
+}
+function closeMemberModal(){
+    let modal = document.getElementsByClassName('delete-modal')[0];
+    modal.style.display = "none";
+}
+
+//Sellers
+function searchSeller(e){
+    let search = e.target.previousElementSibling.value
+    window.location.href = "/sellers/"+search.toLowerCase();
+}
+function showSellerModal(e, id){
+    let modal = document.getElementsByClassName('delete-modal')[0];
+    modal.style.display = "block";
+    document.getElementById('seller-user-delete').value = id;
+}
+function closeSellerModal(){
+    let modal = document.getElementsByClassName('delete-modal')[0];
+    modal.style.display = "none";
+}

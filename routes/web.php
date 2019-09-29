@@ -48,3 +48,19 @@ Route::get('search', array('as'=>'search',function () {
 //Admin panel
 Route::get('traceadmin', 'adminController@index')->name('adminlogin');
 Route::post('adminlogin', 'adminController@login')->name('tryadminlogin');
+
+Route::get('members', 'adminController@members')->name('members');
+Route::post('memberdelete','adminController@memberdelete')->name('memberdelete');
+
+Route::get('sellers', 'adminController@sellers')->name('sellers');
+Route::post('sellerdelete','adminController@sellerdelete')->name('sellerdelete');
+
+Route::get('uassets', 'adminController@uassets')->name('uassets');
+Route::get('vassets', 'adminController@vassets')->name('vassets');
+Route::get('requests', 'adminController@requests')->name('requests');
+Route::get('dashboard', 'adminController@dashboard')->name('dashboard');
+
+
+//Admin search routes
+Route::get('/members/{text}','adminController@membersearch')->name('membersearch');
+Route::get('/sellers/{text}','adminController@sellersearch')->name('sellersearch');

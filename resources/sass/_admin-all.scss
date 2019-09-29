@@ -1,0 +1,96 @@
+.quick-links{
+    width: 100vw;
+    .links-heading{
+        font-weight: bold;
+        color: $font;
+        font-size: 3rem;
+        padding: 20px 40px;
+    }
+    .admin-card-container{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        .admin-card{
+            margin: 10px 20px;
+            height: 191px;
+            border: 1px solid $main;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            .card-image{
+                min-width: 100px;
+                padding: 40px 20px;
+            }
+            .admin-card-text{
+                margin: 10px auto auto 20px;
+                .card-name{
+                    font-weight: 500;
+                    width: 100px;
+                    margin-top: 20px;
+                    color: $font;
+                    font-size: 2.8rem;
+                }
+                .card-info{
+                    color: #717377;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+.admin-search-bar-container{
+    width: 300px;
+    input{
+        outline: none;
+        border: none;
+        padding: 4px;
+        margin-left: 20px;
+    }
+    img{
+        width: 15px;
+        cursor: pointer;
+    }
+}
+.users-card-container{
+    display: grid;
+    // width: 100vw;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    .user-card{
+        margin: 10px 20px;
+        height: 130px;
+        box-shadow: 3px 5px 40px #f0f0f2;
+        background-color: white;
+        .user-card-text{
+            grid-area: texts;
+            margin: 10px auto 0px 20px;
+            .user-card-name{
+                font-weight: 500;
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .user-info-group{
+                display: flex;
+                img{
+                    width: 15px;
+                    margin-right: 10px;
+                }
+                margin-bottom: 10px;
+            }
+        }
+        .user-card-actions{
+            grid-area: actions;
+            margin: 10px 0px 0px auto;
+            img{
+                margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        grid-template-areas: 'texts actions';
+    }
+}
+.admin-page-links{
+    margin-left: 20px;
+}
