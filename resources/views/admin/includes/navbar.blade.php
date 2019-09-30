@@ -7,7 +7,7 @@
         <li><a href ="{{route('vassets')}}">Verified Assets</a></li>
         <li><a href ="{{route('uassets')}}">Pending Assets</a></li>
         <li><a href ="{{route('requests')}}">Contact Requests</a></li>
-        <li><a href ="">Settings</a></li>
-        <li><a href="">Log Out</a></li>
+        <li><a href ="{{route('password')}}">Settings</a></li>
+        <li><a href="{{route('adminlogout')}}">Log Out</a></li>
     </ul>
 </div>

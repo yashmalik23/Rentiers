@@ -71,6 +71,7 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="admin-page-links">{{$props->links()}}</div>
             </div>
         @else
             <script>window.location.href="/login"</script>

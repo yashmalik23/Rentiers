@@ -66,7 +66,15 @@ Route::post('vaddimagetoprop' , 'adminController@vaddimage')->name('vaddimagetop
 
 
 Route::get('requests', 'adminController@requests')->name('requests');
+Route::post('requestdelete','adminController@requestdelete')->name('requestdelete');
+Route::post('requeststatus','adminController@requeststatus')->name('requeststatus');
+
 Route::get('dashboard', 'adminController@dashboard')->name('dashboard');
+Route::get('settings', array('as'=>'password',function () {
+    return view('admin/includes/password');
+}));
+Route::post('adminchangepassword','adminController@changepassword')->name('adminchangepassword');
+Route::get('logout','adminController@logout')->name('adminlogout');
 
 
 //Admin search routes
@@ -74,3 +82,4 @@ Route::get('/members/{text}','adminController@membersearch')->name('membersearch
 Route::get('/sellers/{text}','adminController@sellersearch')->name('sellersearch');
 Route::get('/uassets/{text}','adminController@upropsearch')->name('upropsearch');
 Route::get('/vassets/{text}','adminController@vpropsearch')->name('vpropsearch');
+Route::get('/requests/{text}','adminController@requestsearch')->name('requestsearch');

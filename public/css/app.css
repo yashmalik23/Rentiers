@@ -2270,7 +2270,7 @@ footer {
 .login-container button {
   height: 40px;
   font-family: "MontSerrat";
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   cursor: pointer;
   color: white;
   background-color: #00C0EF;
@@ -2412,5 +2412,166 @@ button.continue-ver-button {
   font-size: 1.4rem;
   font-weight: 400;
   width: 80px;
+}
+
+.requests-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+}
+
+.requests-card-container .request-card {
+  margin: 10px 20px;
+  height: 180px;
+  box-shadow: 3px 5px 40px #f0f0f2;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 3fr 0.1fr;
+  grid-template-areas: "texts actions";
+}
+
+.requests-card-container .request-card .user-card-text {
+  grid-area: texts;
+  margin: 10px auto 0px 20px;
+}
+
+.requests-card-container .request-card .user-card-text .user-card-name {
+  font-weight: 500;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.requests-card-container .request-card .user-card-text .user-info-group {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.requests-card-container .request-card .user-card-text .user-info-group img {
+  width: 15px;
+  margin-right: 10px;
+}
+
+.requests-card-container .request-card .user-card-text .user-info-group div {
+  max-height: 60px;
+  white-space: normal;
+  overflow: hidden;
+}
+
+.requests-card-container .request-card .user-card-actions {
+  grid-area: actions;
+  margin: 10px 0px 0px auto;
+}
+
+.requests-card-container .request-card .user-card-actions img {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.edit-modal {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.edit-modal .modal-content {
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: auto;
+  width: 400px;
+  max-width: 80vw;
+  text-align: center;
+}
+
+.edit-modal .modal-content input {
+  margin: auto;
+}
+
+.edit-modal .modal-content button {
+  background-color: #3a6ec9;
+  color: white;
+  position: relative;
+  margin: 30px 10px 30px;
+  top: 0;
+  width: 100px;
+  padding: 5px 27px;
+  display: inline-flex;
+}
+
+.edit-modal .modal-content .cancel {
+  display: inline-flex;
+  font-size: 2rem;
+  color: #424b5a;
+  margin: 10px;
+}
+
+.edit-modal .modal-content .cancel {
+  background-color: white;
+  color: #3a6ec9;
+  border: 1px solid #3a6ec9;
+  width: 100px;
+  padding: 5px 23px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.edit-modal .form-drop-down-options {
+  width: 180px;
+  display: block;
+  margin-right: 16px;
+  font-size: 1.2rem;
+}
+
+.edit-modal .form-drop-down-options .drop-down-label {
+  padding: 10px 0px;
+}
+
+.edit-modal .form-drop-down-options .drop-down-heading {
+  border: 1px solid #424b5a;
+  padding: 5px 20px;
+  display: inline-flex;
+  width: 150px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+}
+
+.edit-modal .form-drop-down-options img {
+  margin-left: -40px;
+}
+
+.edit-modal .form-drop-down-options .drop-down-list {
+  padding: 0;
+  margin-left: 27px;
+  z-index: 1000;
+  list-style-type: none;
+  display: none;
+  position: absolute;
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-shadow: 3px 5px 40px #f0f0f2;
+}
+
+.edit-modal .form-drop-down-options .drop-down-list li {
+  padding: 5px 20px;
+  width: 145px;
+  background-color: white;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.edit-modal .form-drop-down-options .drop-down-list li:hover {
+  background-color: #3a6ec9;
+  color: white;
+  cursor: pointer;
 }
 

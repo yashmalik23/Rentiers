@@ -6,6 +6,7 @@ use App\properties;
 use App\User;
 use App\requests;
 use DB;
+use Hash;
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -102,7 +103,7 @@ class adminController extends Controller
     public function vassets(){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = DB::select('SELECT * from properties where verified = 1');
+                $props = DB::table('properties')->where('verified','=',1)->paginate(12);
                 return view('admin/includes/vassets')->with('props', $props)->with('search',"");
             }else{
                 return view('admin/includes/login');
@@ -115,7 +116,7 @@ class adminController extends Controller
     public function uassets(){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = DB::select('SELECT * from properties where verified = 0');
+                $props = DB::table('properties')->where('verified','=',0)->paginate(12);
                 return view('admin/includes/uassets')->with('props', $props)->with('search',"");
             }else{
                 return view('admin/includes/login');
@@ -127,13 +128,51 @@ class adminController extends Controller
     public function requests(){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
-                return view('admin/includes/requests');
+                $requests = DB::table('requests')->paginate(12);
+                return view('admin/includes/requests')->with('requests', $requests)->with('search',"");
             }else{
                 return view('admin/includes/login');
             }
         }
         return view('admin/includes/login');
     }
+    public function requestsearch($text){
+        if(Auth::user()){
+            if(Auth::user()->email == 'inforentiers@gmail.com'){
+                $requests = DB::table('requests')->whereRaw('status like "%'.$text.'%" OR contact like "%'.$text.'%"')->paginate(12);
+                return view('admin/includes/requests')->with('requests', $requests)->with('search',$text);
+            }else{
+                return view('admin/includes/login');
+            }
+        }
+        return view('admin/includes/login');
+    }
+    public function requestdelete(Request $request){
+        if(Auth::user()){
+            if(Auth::user()->email == 'inforentiers@gmail.com'){
+                requests::find($request->input($id))->delete();
+                return redirect('requests');
+            }else{
+                return view('admin/includes/login');
+            }
+        }
+        return view('admin/includes/login');
+    }
+    public function requeststatus(Request $request){
+        if(Auth::user()){
+            if(Auth::user()->email == 'inforentiers@gmail.com'){
+                $req = requests::find($request->input('id'));
+                $req->status = $request->input('requeststatus');
+                $req->updated_at = time();
+                $req->save();
+                return redirect('requests');
+            }else{
+                return view('admin/includes/login');
+            }
+        }
+        return view('admin/includes/login');
+    }
+
     public function dashboard(){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
@@ -171,6 +210,30 @@ class adminController extends Controller
         }else{
             return view('admin/includes/login')->with('error','wrong_details');
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect(route('adminlogin'));
+    }
+
+    public function changepassword(Request $request){
+        if(Auth::user()){
+            if(Auth::user()->email == 'inforentiers@gmail.com'){
+                if($request->input('npassword') != $request->input('cpassword')){
+                    return redirect(route('password'))->with('error','password_dont_match');
+                }else if(Hash::check($request->input('opassword'),Auth::user()->password)){
+                    $admin = User::find(1);
+                    $admin->password = Hash::make($request->input('npassword'));
+                    $admin->save();
+                    return redirect(route('password'))->with('success','Changed successfully');
+                }
+                return redirect(route('password'))->with('error','wrong_current_password');
+            }else{
+                return view('admin/includes/login');
+            }
+        }
+        return view('admin/includes/login');
     }
 
     public function show($id){
@@ -219,7 +282,7 @@ class adminController extends Controller
     public function upropsearch($text){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = DB::select('SELECT * from `properties` where verified=0 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")');
+                $props = properties::whereRaw('verified=0 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
                 return view('admin/includes/uassets')->with('props', $props)->with('search',$text);
             }else{
                 return view('admin/includes/login');
@@ -231,7 +294,7 @@ class adminController extends Controller
     public function vpropsearch($text){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = DB::select('SELECT * from `properties` where verified=1 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")');
+                $props = properties::whereRaw(' verified=1 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
                 return view('admin/includes/vassets')->with('props', $props)->with('search',$text);
             }else{
                 return view('admin/includes/login');
