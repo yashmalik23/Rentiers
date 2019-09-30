@@ -35,6 +35,12 @@ Route::get('logout','loginController@logout')->name('logout');
 Route::get('useraccount','userAccountController@index')->name('useraccount');
 Route::get('useraccount/{id}','userAccountController@show')->name('propview');
 Route::get('useraccountedit/{id}','userAccountController@edit')->name('propedit');
+Route::get('password','userAccountController@password')->name('userpassword');
+Route::post('changepassword','userAccountController@changepassword')->name('changepassword');
+Route::post('changedetails','userAccountController@changedetails')->name('changedetails');
+
+Route::get('images/{id}','userAccountController@images')->name('editimages');
+Route::post('deleteimage','userAccountController@deleteimage')->name('deleteimage');
 
 Route::get('aboutus', array('as'=>'aboutus',function () {
     return view('includes/about');

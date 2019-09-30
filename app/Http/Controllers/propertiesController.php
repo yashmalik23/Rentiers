@@ -110,8 +110,14 @@ class propertiesController extends Controller
     public function delete(Request $request){
         $id = $request->input('id');
         $props = properties::find($id);
-        $props->delete();
         $user = Auth::user();
+        $images = explode(",",$props->images);
+        for($i = 0;$i <count($images);$i++){
+            if($images[$i] != "noimage.png"){
+                Storage::delete('public/'.$id."/".$images[$i]);
+            }
+        }
+        $props->delete();
         $id = $user->id;
         $props = DB::select('SELECT * from properties where user_id='.$id);
         return back()->with('delete',"deleted successfully")->with('props', $props);
