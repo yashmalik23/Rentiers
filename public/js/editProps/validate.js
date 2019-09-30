@@ -211,7 +211,7 @@ function handleSubmit(){
 
     let tenant = document.getElementById('tenant').children;
     let tenantString = ""
-    for(let i=1; i<8;i++){
+    for(let i=1; i<9;i++){
         let img = tenant[i].children[0];
         if(img.src.indexOf('/images/listprops/checked.svg')>-1){
             tenantString=tenantString.concat("1");

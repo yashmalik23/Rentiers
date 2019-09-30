@@ -240,7 +240,7 @@ class adminController extends Controller
         $user = Auth::user();
         $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
-        $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple"];
+        $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","Unmarried Couple","Company Lease"];
         if($user->id != null){
             $props = DB::select('SELECT * from properties where id='.$id);
             return view('admin/includes/adminview')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant);
@@ -254,7 +254,7 @@ class adminController extends Controller
         $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $rooms = ["Pooja Room","Servant Room","Study Room"];
-        $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple"];
+        $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple","Company Lease"];
         if($user->id != null){
             $props = DB::select('SELECT * from properties where id='.$id);
             return view('admin/includes/adminedit')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant)->with('rooms', $rooms);

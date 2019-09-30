@@ -11,7 +11,7 @@
                 @endif
                 <div class="delete-modal">
                     <div class="modal-content">
-                        <div>Are you sure you want to delete this user?</div>
+                        <div>Are you sure you want to delete this user? This will delete the properties associated with the user</div>
                         <form class="delete-props" method="POST" action="{{ route('memberdelete')}}">
                             @csrf
                             <input type="number" id="member-user-delete" name="id" hidden>
@@ -33,7 +33,7 @@
                     @foreach ($members as $member)
                         <div class="user-card">
                             <div class="user-card-text">
-                                <div class="user-card-name">{{$member->name}}</div>
+                                <div class="user-card-name"><a href="/useraccount/{{$member->id}}">{{$member->name}}</a></div>
                                 <div class="user-info-group">
                                     <img src="{{asset('/images/admin/phone.svg')}}">
                                     <div>+91 {{$member->contact}}</div>

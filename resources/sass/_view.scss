@@ -86,6 +86,10 @@
         color: #717377;
         padding: 10px 0px;
     }
+    
+    @media screen and (max-width:950px) {
+        margin-left: 60px;
+    }
 }
 .view-property{
     display: grid;
@@ -144,5 +148,26 @@
     
     @media screen and (max-width: $break-large){
         margin-left: 60px;
+    }
+}
+.interest-form{
+    display: block;
+    width: 80%;
+    input{
+        padding: 2px 5px;
+        outline: none;
+        margin: 5px 0px;
+    }
+    button{
+        top: 0px;
+        position: relative;
+        display: block;
+        margin: 5px auto 5px 0px;
+        color: $main;
+        border: 1px solid $main;
+        background-color: white;
+        font-size: 1.6rem;
+        font-weight: 400;
+        padding: 5px 10px;
     }
 }

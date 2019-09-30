@@ -51,6 +51,10 @@ Route::get('search', array('as'=>'search',function () {
 }));
 
 
+//User search and view
+Route::get('property/{id}','searchController@show')->name('userpropview');
+Route::post('interests','interestController@store')->name('addinterest');
+
 //Admin panel
 Route::get('traceadmin', 'adminController@index')->name('adminlogin');
 Route::post('adminlogin', 'adminController@login')->name('tryadminlogin');

@@ -30,9 +30,7 @@
                     <div class="circles">
                         <div class="circle active"></div>
                         @for($i =1 ; $i<count(explode(",",$prop->images))-1 ;$i++ )
-                            <div class="slide">
-                                <div class="circle"></div>
-                            </div>
+                            <div class="circle"></div>
                         @endfor
                     </div>
                 </div>

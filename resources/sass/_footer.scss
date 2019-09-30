@@ -11,11 +11,17 @@
         grid-area: links-3;
     }
     li{
-        color: white;
-        font-size: 1.2rem;
+        a{
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
         &:nth-child(1){
-            font-size: 1.5rem;
-            font-weight: 800;
+            a{
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: white;
+            }
         }
     }
     @media screen and (max-width: 500px){
@@ -50,6 +56,7 @@
 .request-div{ 
     background-color: white;
     position: fixed;
+    z-index: 800;
     display: inline-flex;
     bottom: 0px;
     right: 0px;
@@ -84,9 +91,16 @@
     .input-field{
         width: 92%;
     }
+    span{
+        padding: 10px;
+    }
+}
+.wrap{
+    min-height: 100vh;
 }
 footer{
     margin-top: 50px;
+    position: relative;
     width: 100%;
     background-color: $main;
     display: grid;

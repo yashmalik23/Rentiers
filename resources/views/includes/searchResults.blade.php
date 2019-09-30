@@ -228,7 +228,7 @@
             <div class="help-section">
                 <div class="help-heading">Help</div>
                 <div class="help-line-1">
-                    If you are stuck on the form and don't know what to do next, you can email us at support@rentiers.in or call us at +91 9414573503.  
+                    If you are stuck and don't know what to do next, you can email us at support@rentiers.in or call us at +91 8860050003/4/6.  
                 </div>
             </div>
         </div>

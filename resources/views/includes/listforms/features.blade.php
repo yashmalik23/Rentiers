@@ -131,6 +131,10 @@
                     <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
                     <div class="check-option-value">Unmarried couple</div>
                 </div>
+                <div class="check-option">
+                    <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                    <div class="check-option-value">Company lease</div>
+                </div>
             </div>
         </div>
         @if(Auth::user()->email=="inforentiers@gmail.com")

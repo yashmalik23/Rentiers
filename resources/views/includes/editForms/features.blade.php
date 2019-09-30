@@ -45,12 +45,12 @@
                     @if(str_split($prop->tenant)[$i]== "1")
                         <div class="check-option">
                             <img src="{{asset('images/listprops/checked.svg')}}" class="check-image" onclick="changecheck(event)" />
-                            <div class="check-option-value">{{$tenant[$i+7-count(str_split($prop->tenant))]}}</div>
+                            <div class="check-option-value">{{$tenant[$i+8-count(str_split($prop->tenant))]}}</div>
                         </div>
                     @else
                         <div class="check-option">
                             <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
-                            <div class="check-option-value">{{$tenant[$i+7-count(str_split($prop->tenant))]}}</div>
+                            <div class="check-option-value">{{$tenant[$i+8-count(str_split($prop->tenant))]}}</div>
                         </div>
                     @endif
                 @endfor  

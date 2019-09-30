@@ -20,19 +20,21 @@
                             </div>
                         @endif
                         @for($i =1 ; $i<count(explode(",",$prop->images))-1 ;$i++ )
+                            @if(explode(",",$prop->images)[$i] != "")
                             <div class="slide">
                                 <img src="/storage/{{$prop->id}}/{{explode(",",$prop->images)[$i]}}">
                             </div>
+                            @endif
                         @endfor
                     </div>  
                     <button class="previous" onclick="previousSlide(event)" id="view-previous"><</button>
                     <button class="next" onclick="nextSlide(event)" id="view-next">></button>
                     <div class="circles">
                         <div class="circle active"></div>
-                        @for($i =1 ; $i<count(explode(",",$prop->images))-1 ;$i++ )
-                            <div class="slide">
+                        @for($i = 1 ; $i<count(explode(",",$prop->images))-1 ;$i++)
+                            @if(explode(",",$prop->images)[$i] != "")
                                 <div class="circle"></div>
-                            </div>
+                            @endif
                         @endfor
                     </div>
                 </div>
@@ -188,7 +190,7 @@
         <div class="view-help-section">
             <div class="help-heading">Help</div>
             <div class="help-line-1">
-                If you don't know what to do next, you can email us at support@rentiers.in or call us at +91 9414573503.  
+                If you don't know what to do next, you can email us at support@rentiers.in or call us at +91 8860050003/4/6.  
             </div>
         </div>
     </div>

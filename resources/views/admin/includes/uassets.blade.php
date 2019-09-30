@@ -67,7 +67,7 @@
                             <div class="property-actions">
                                 <a href="/adminedit/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/edit.svg')}}"/></a>
                                 <img class="card-image-cancel" src="{{asset('images/viewprops/close.svg')}}" onclick="showModal(event, {{$prop->id}})" >
-                                <img class="card-image-cancel" src="{{asset('images/viewprops/photo.svg')}}" onclick="showImageModal(event, {{$prop->id}})" >
+                                <img class="card-image-cancel" src="{{asset('images/viewprops/upload.svg')}}" onclick="showImageModal(event, {{$prop->id}})" >
                                 <a href="/images/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/photo.svg')}}"/></a>
                             </div>
                             <div class="property-details">

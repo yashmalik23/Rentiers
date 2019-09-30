@@ -11,7 +11,7 @@
                 @endif
                 <div class="delete-modal">
                     <div class="modal-content">
-                        <div>Are you sure you want to delete this user?</div>
+                        <div>Are you sure you want to delete this user? This will delete the properties associated with the user</div>
                         <form class="delete-props" method="POST" action="{{ route('sellerdelete')}}">
                             @csrf
                             <input type="number" id="seller-user-delete" name="id" hidden>
