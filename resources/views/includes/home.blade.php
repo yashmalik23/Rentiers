@@ -3,16 +3,31 @@
     {{--------------- Home Page ------------------}}
     <script type="text/javascript" src="{{asset('js/home.js') }}"></script>
 
+    <div class="main-slider">
+        <div class="slider-images">
+            <div class="slide active">
+                <img src="/images/home/picture.jpg">
+            </div>
+            <div class="slide">
+                <img src="/images/home/picture.jpg">
+            </div>
+            <div class="slide">
+                <img src="/images/home/picture2.png">
+            </div>
+        </div>  
+        <button class="previous" onclick="previousSlideMain(event)" id="view-previous"><</button>
+        <button class="next" onclick="nextSlideMain(event)" id="view-next">></button>
+    </div>    
+
     {{--------------- Headings -------------------}}
     <div class="title-container"> 
         <div class="main-heading">Making Renting Easy</div>
-        <div class="main-line">Your rental community platform for lifetime.</div>
+        <div class="main-line">Your homes are...... our first priority.</div>
         <div class="second-line">Welcome to 21st century renting</div>
     </div>
 
     {{--------------- Search bar -----------------}}
     <div class="search-container">
-        <img src="{{asset('images/home/dot-background.svg')}}" class="dot-background" />
         <div class="search-bar"> 
             <div class="drop-down-btn">
                 <div class="drop-down-title" onclick="dropdown(event)">GURUGRAM</div>
@@ -35,8 +50,6 @@
         </div>
     </div>
 
-    {{---------------- Image at home ------------------}}
-    <img src="{{asset('images/home/home.svg')}}" class="main-image"/>
 
     {{---------------- Recent properties --------------}}
     <div class="recent-properties">
@@ -55,10 +68,10 @@
                                     <img src="{{asset('images/home/picture2.png')}}">
                                 </div>
                                 <div class="slide">
-                                    <img src="{{asset('images/home/picture.png')}}">
+                                    <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                                 <div class="slide">
-                                        <img src="{{asset('images/home/picture.png')}}">
+                                        <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                             </div>  
                             <button class="previous" onclick="previousSlide(event)"><</button>
@@ -85,10 +98,10 @@
                                     <img src="{{asset('images/home/picture2.png')}}">
                                 </div>
                                 <div class="slide">
-                                    <img src="{{asset('images/home/picture.png')}}">
+                                    <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                                 <div class="slide">
-                                        <img src="{{asset('images/home/picture.png')}}">
+                                        <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                             </div>  
                             <button class="previous" onclick="previousSlide(event)"><</button>
@@ -115,10 +128,10 @@
                                     <img src="{{asset('images/home/picture2.png')}}">
                                 </div>
                                 <div class="slide">
-                                    <img src="{{asset('images/home/picture.png')}}">
+                                    <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                                 <div class="slide">
-                                        <img src="{{asset('images/home/picture.png')}}">
+                                        <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                             </div>  
                             <button class="previous" onclick="previousSlide(event)"><</button>
@@ -145,10 +158,10 @@
                                     <img src="{{asset('images/home/picture2.png')}}">
                                 </div>
                                 <div class="slide">
-                                    <img src="{{asset('images/home/picture.png')}}">
+                                    <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                                 <div class="slide">
-                                        <img src="{{asset('images/home/picture.png')}}">
+                                        <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                             </div>  
                             <button class="previous" onclick="previousSlide(event)"><</button>
@@ -175,10 +188,10 @@
                                     <img src="{{asset('images/home/picture2.png')}}">
                                 </div>
                                 <div class="slide">
-                                    <img src="{{asset('images/home/picture.png')}}">
+                                    <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                                 <div class="slide">
-                                        <img src="{{asset('images/home/picture.png')}}">
+                                        <img src="{{asset('images/home/picture.jpg')}}">
                                 </div>
                             </div>  
                             <button class="previous" onclick="previousSlide(event)"><</button>

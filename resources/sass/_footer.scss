@@ -47,11 +47,13 @@
     font-size: 1.2rem;
     margin: auto auto 0px;
 }
-.request-div{
-    grid-area: chat;  
+.request-div{ 
     background-color: white;
-    margin: -50px 10px 40px auto;
-    display: flex;
+    position: fixed;
+    display: inline-flex;
+    bottom: 0px;
+    right: 0px;
+    padding: 3px 10px;
     div{
         line-height: 30px;
         margin-right: 10px;
@@ -60,13 +62,14 @@
 #footer-chat-image{
     width: 30px;
     height: 30px;
+    padding: 0px 5px;
     cursor: pointer;
 }
 .request-footer-form{
     display: none;
     position: absolute;
     box-shadow: 0px 0px 60px rgb(80, 67, 112, 0.1);
-    margin: -290px -230px 30px -230px;
+    margin: -330px -230px 30px -180px;
     width: 300px;
     background-color: white;
     .footer-submit{
@@ -88,24 +91,21 @@ footer{
     background-color: $main;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 0.1fr 1fr 0.1fr;
+    grid-template-rows: 1fr 0.1fr;
     grid-template-areas:
-    'chat chat chat chat chat'
     'footer-left links-1 links-2 links-3 footer-right'
     'footer-left copyright copyright copyright footer-right';
     @media screen and (max-width: 800px){
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 0.1 fr 1fr 0.1fr;
+        grid-template-rows: 1fr 0.1fr;
         grid-template-areas:
-        'chat chat chat'
         'links-1 links-2 links-3'
         'copyright copyright copyright';
     }
     @media screen and (max-width: 500px){
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 0.3fr 1fr 1fr 0.1fr;
+        grid-template-rows: 1fr 1fr 0.1fr;
         grid-template-areas:
-        'chat chat'
         'links-1 links-2'
         'links-3 links-3'
         'copyright copyright';

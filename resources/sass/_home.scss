@@ -1,11 +1,98 @@
 // ----------------Title
-
+.main-slider{
+    position: relative;
+    margin: 0px auto 20px;
+    min-width: 87%;
+    max-width: 87%;
+    min-height: 85vh;
+    overflow: hidden;
+    .slide {
+        width: 100%;
+        min-height: 100%;
+        position: absolute;
+        img{
+            width: 100%;
+            min-height: 100%;
+        }
+    }
+    button#view-previous{
+        top: 88%;
+        margin-left: 90%;
+        padding:10px;
+        @media screen and (max-width: 1366px){
+            top: 77%;
+        }
+        @media screen and (max-width: 1150px){
+            top: 70%;
+        }
+        @media screen and (max-width: 800px){
+            top: 80%;
+            margin-left: 85%;
+        }
+        @media screen and (max-width: 600px){
+            top: 70%;
+            padding: 5px;
+        }
+    }
+    button#view-next{
+        margin-left: 95%;
+        top: 88%;
+        padding: 10px;
+        @media screen and (max-width: 1366px){
+            top: 77%;
+        }
+        @media screen and (max-width: 1150px){
+            top: 70%;
+        }
+        @media screen and (max-width: 800px){
+            top: 80%;
+            margin-left: 90%;
+        }
+        @media screen and (max-width: 600px){
+            top: 70%;
+            margin-left: 93%;
+            padding: 5px;
+        }
+    }
+    @media screen and (max-width: 1370px){
+        min-height: 70vh;
+    }
+    @media screen and (max-width: $break-large){
+        margin-top: 40px;
+        min-width: 90vw;
+        max-width: 90vw;
+        min-height: 75vh;
+    }
+    @media screen and (max-width: 900px){
+        min-height: 50vh;
+    }
+    @media screen and (max-width: 600px){
+        min-height: 30vh;
+        max-height: 30vh;
+    }
+}
 .title-container{
     text-align: center;
+    position: relative;
     width: 400px;
-    margin: 100px auto 0px;
+    z-index: 500;
+    margin: -450px auto 0px;
+    padding-bottom: 20px;
+    color: white;
+    @media screen and (max-width: 1300px){
+        margin-top: -500px;
+    }
     @media screen and (max-width: $break-large) {
-        margin: 150px auto 0px;
+        margin-top: -450px;
+        width: 86vw;
+    }
+    @media screen and (max-width: 900px) {
+        margin-top: -450px;
+        width: 86vw;
+    }
+    @media screen and (max-width: 600px) {
+        margin-top: 40px;
+        color: $font;
         width: 86vw;
     }
 }
@@ -14,14 +101,13 @@
     font-weight: bold;
     padding: 10px;
 }
-.main-line,.second-line{
-    color: #717377;
-}
 
 // ---------------Search bar
 .search-container{
-    margin: -40px auto 0px;
+    margin: 0px auto 0px;
     width: 600px;
+    position: relative;
+    z-index: 500;
     display: flex;
     align-items: flex-end;
     @media screen and (max-width: $break-large) {
@@ -35,7 +121,7 @@
     padding: 10px;
     width: 500px;
     height: 40px;
-    margin-left: -20px;
+    margin-left: 50px;
     box-shadow: 0px 0px 60px rgb(80, 67, 112, 0.1);
     @media screen and (max-width: $break-large) {
         width: 380px;
@@ -113,9 +199,13 @@
 
 // --------------------Recent properties
 .recent-properties{
+    margin-top: 300px;
     display:inline-flex;
     @media screen and (max-width: $break-large){
         display: block;
+    }
+    @media screen and (max-width: 600px){
+        margin-top: 10px;
     }
 }
 .recent-title{
@@ -124,6 +214,9 @@
     @media screen and (max-width: $break-large){
         padding: 20px;
         margin-top: 160px;
+    }
+    @media screen and (max-width: 600px){
+        margin-top: 30px;
     }
 }
 .recent-head{
@@ -235,6 +328,8 @@
         max-height: 100%;
     }
 }
+
+
 button {
     border: none;
     outline: none;

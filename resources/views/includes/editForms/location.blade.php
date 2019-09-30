@@ -20,7 +20,7 @@
                 <input id="houseNo" class="list-form-input" value="{{$prop->houseNo}}"  name="houseNo" required>
             </div>
             <div class="list-input-field">
-                <label for="streetName">Street/Society Name *</label>
+                <label for="streetName">Street/Project Name *</label>
                 <input id="streetName" class="list-form-input" value="{{$prop->streetName}}" name="streetName">
             </div>
         </div>

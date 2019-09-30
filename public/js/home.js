@@ -16,6 +16,23 @@ function changeoption(e){
         options.style.display= "none";
     }
 }
+function nextSlideMain(e){
+    var slides = e.target.previousElementSibling.previousElementSibling;
+    var currentActiveSlide = slides.querySelector('div.active');
+    if (currentActiveSlide.nextElementSibling != null){
+        currentActiveSlide.classList.remove('active');
+        currentActiveSlide.nextElementSibling.classList.add('active');
+    }
+    
+}
+function previousSlideMain(e){
+    var slides = e.target.previousElementSibling;
+    var currentActiveSlide = slides.querySelector('div.active');
+    if (currentActiveSlide.previousElementSibling != null){
+        currentActiveSlide.classList.remove('active');
+        currentActiveSlide.previousElementSibling.classList.add('active');
+    }
+}
 function nextSlide(e){
     var slides = e.target.previousElementSibling.previousElementSibling;
     var currentActiveSlide = slides.querySelector('div.active');

@@ -43,7 +43,7 @@
                     </div>
                     <div class="view-prop-main-logo">
                         <img src={{asset('images/search/area.svg')}}>
-                        <div>{{explode("_",$prop->area)[0]}} sq.ft.</div>
+                        <div>{{explode("_",$prop->area)[0]}} sq.ft. / {{intval(explode("_",$prop->area)[0])*0.09}} sq. m.</div>
                     </div>
                     <div class="view-prop-main-logo">
                         <img src={{asset('images/search/parking.svg')}}>

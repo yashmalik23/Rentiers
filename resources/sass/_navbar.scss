@@ -18,6 +18,7 @@ body{
     display: inline-block;
     padding: 10px 10px 10px 100px;
     width: 250px;
+    cursor: pointer;
 }
 .login{
     color: white;
@@ -73,6 +74,7 @@ body{
         height: 100vh;
         display: inline-block;
         position: fixed;
+        z-index: 1000;
         background-color: #3a6ec9;
         color: white;
         font-size: 1.2rem;
@@ -105,8 +107,28 @@ body{
         }
     }
 }
-.main-layout{
+.man-layout{
     display: inline-flex;
+    width: 100vw;
+    div{
+        display: flex;
+        margin: 10px 10px 10px auto;
+        span{
+            line-height: 20px;
+            padding-right: 10px;
+        }
+        ul{
+            list-style-type: none;
+            position: absolute;
+            display: none;
+            margin: 20px 10px 10px auto;
+            padding:0;
+            li{
+                display: block;
+                background: white;
+            }
+        }
+    }
 }
 .mobile-menu{
     width: 45px;    
@@ -116,6 +138,7 @@ body{
 .mobile-logo{
     width: 170px;
     padding-left: 10px;
+    cursor: pointer;
 }
 .user-name{
     line-height: 40px;

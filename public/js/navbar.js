@@ -1,6 +1,6 @@
 function handleMenu() {
     var menu = document.getElementsByClassName("mobile-nav-links")[0];
-    var main = document.getElementsByClassName("main-layout")[0];
+    var main = document.getElementsByClassName("man-layout")[0];
 
     if (menu.style.display == "" || menu.style.display == "none") {
         menu.animate([
