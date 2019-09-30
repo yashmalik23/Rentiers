@@ -2401,3 +2401,16 @@ footer {
   margin-left: 20px;
 }
 
+button.continue-ver-button {
+  top: 0;
+  background-color: white;
+  color: #3a6ec9;
+  border: 1px solid #3a6ec9;
+  padding: 5px 10px;
+  outline: none;
+  position: relative;
+  font-size: 1.4rem;
+  font-weight: 400;
+  width: 80px;
+}
+

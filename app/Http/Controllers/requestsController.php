@@ -18,6 +18,7 @@ class requestsController extends Controller
         $user->contact = $request->input('contact');
         $user->email = $request->input('email');
         $user->request = $request->input('request');
+        $user->status = "Recieved";
         $user->save();
 
         return redirect('contactus')->with('request','sent_successfully');

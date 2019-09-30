@@ -2,7 +2,7 @@
 @section('views')
     <script type="text/javascript" src="{{asset('js/user.js') }}"></script>
     @if (isset(Auth::user()->email))
-        @if(Auth::user()->email != "inforentiers@gmail.com")
+        @if(Auth::user()->email != "inforentier@gmail.com")
             <div class="delete-modal">
                 <div class="modal-content">
                     <div>Are you sure you want to delete this property?</div>
@@ -31,18 +31,18 @@
                 <div class="user-properties">
                     @foreach($props as $prop)
                     <div class="property-card" onclick="">
-                        @if(count(explode(",", $prop->images))>0 && explode(",",$prop->images)[0] != "") 
-                        <img class="card-image-circle" src="/storage/{{Auth::user()->email}}/{{explode(",",$prop->images)[0]}}"/>
+                        @if(count(explode(",", $prop->images))>0 && explode(",",$prop->images)[0] != "" && explode(",",$prop->images)[0] != "noimage.png") 
+                        <img class="card-image-circle" src="/storage/{{$prop->id}}/{{explode(",",$prop->images)[0]}}"/>
                         @else
                             <img class="card-image-circle" src="/storage/noimage.png"/>
                         @endif
                         <div class="property-actions">
-                            <a href="useraccountedit/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/edit.svg')}}"/></a>
+                            <a href="/useraccountedit/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/edit.svg')}}"/></a>
                             <img class="card-image-cancel" src="{{asset('images/viewprops/close.svg')}}" onclick="showModal(event, {{$prop->id}})" >
                             <img class="card-image-cancel" src="{{asset('images/viewprops/photo.svg')}}" onclick="showImageModal(event, {{$prop->id}})" >
                         </div>
                         <div class="property-details">
-                            <div class="property-title"><a href="useraccount/{{$prop->id}}">{{$prop->streetName}}</a></div>
+                            <div class="property-title"><a href="/useraccount/{{$prop->id}}">{{$prop->streetName}}</a></div>
                             <div class="property-address">{{$prop->locality.", ".$prop->city}}</div>
                             <div class="property-interested-numbers">Interested members : 10</div>
                         </div>

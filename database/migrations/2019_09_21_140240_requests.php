@@ -19,6 +19,7 @@ class Requests extends Migration
             $table->string('email');
             $table->string('contact');
             $table->string('request');
+            $table->string('status');
             $table->rememberToken();
             $table->timestamps();
         });

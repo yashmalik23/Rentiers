@@ -118,13 +118,17 @@ class propertiesController extends Controller
         $user = Auth::user();
         $id = $request->input('id');
         $props = properties::find($id);
-        $string = $props->images;
+        if($props->images == "noimage.png,"){
+            $string = "";
+        }else{
+            $string = $props->images;
+        }
         if($request->hasFile('file')){
             foreach ($request->file as $file){
                 $filename = pathinfo($file, PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
                 $nameToStore = $filename."_".time().".".$extension;
-                $path = $file->storeAs("public/".$user->email, $nameToStore);   
+                $path = $file->storeAs("public/".$id, $nameToStore);   
                 $string = $string.$nameToStore.","; 
             }
         }
@@ -134,6 +138,6 @@ class propertiesController extends Controller
 
         $id = $user->id;
         $props = DB::select('SELECT * from properties where user_id='.$id);
-        return view('includes/useraccount')->with('delete',"deleted successfully")->with('props', $props);
+        return redirect(route('useraccount'));
     }
 }

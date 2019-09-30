@@ -56,7 +56,15 @@ Route::get('sellers', 'adminController@sellers')->name('sellers');
 Route::post('sellerdelete','adminController@sellerdelete')->name('sellerdelete');
 
 Route::get('uassets', 'adminController@uassets')->name('uassets');
+Route::get('adminview/{id}','adminController@show')->name('adminview');
+Route::get('adminedit/{id}','adminController@edit')->name('adminedit');
+Route::post('changeverification', 'adminController@changever')->name('changeVer');
+Route::post('uaddimagetoprop' , 'adminController@uaddimage')->name('uaddimagetoprop');
+
 Route::get('vassets', 'adminController@vassets')->name('vassets');
+Route::post('vaddimagetoprop' , 'adminController@vaddimage')->name('vaddimagetoprop');
+
+
 Route::get('requests', 'adminController@requests')->name('requests');
 Route::get('dashboard', 'adminController@dashboard')->name('dashboard');
 
@@ -64,3 +72,5 @@ Route::get('dashboard', 'adminController@dashboard')->name('dashboard');
 //Admin search routes
 Route::get('/members/{text}','adminController@membersearch')->name('membersearch');
 Route::get('/sellers/{text}','adminController@sellersearch')->name('sellersearch');
+Route::get('/uassets/{text}','adminController@upropsearch')->name('upropsearch');
+Route::get('/vassets/{text}','adminController@vpropsearch')->name('vpropsearch');

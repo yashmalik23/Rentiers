@@ -6,11 +6,11 @@
             @foreach ($props as $prop)
                 <div class="view-property-header">
                     <div class="view-nearByArea">{{$prop->streetName}}</div>
-                    <div class="view-locality">{{$prop->locality}}, {{$prop->city}}</div>
+                    <div class="view-locality">{{$prop->houseNo}}, near {{$prop->nearByArea}},{{$prop->locality}}, {{$prop->city}}</div>
                 </div>
                 <div class="view-slider">
                     <div class="slider-images">
-                        @if(count(explode(",",$prop->images))>0 && explode(",",$prop->images)[0] != "" && explode(",",$prop->images)[0] != "noimage.png")
+                        @if(count(explode(",",$prop->images))>0 && explode(",",$prop->images)[0] != "" && explode(",",$prop->images)[0] != "noimage.png" )
                             <div class="slide active">
                                 <img src="/storage/{{$prop->id}}/{{explode(",",$prop->images)[0]}}">
                             </div>
@@ -190,6 +190,15 @@
             <div class="help-line-1">
                 If you don't know what to do next, you can email us at support@rentiers.in or call us at +91 9414573503.  
             </div>
+            @foreach($props as $prop)
+                @if($prop->verified == 0)
+                    <form method="POST" action="{{route('changeVer')}}" class="verify-form">
+                        @csrf
+                        <input name="id" value="{{$prop->id}}" type="number" hidden />
+                        <button type="submit" class="continue-ver-button">Verify</button>
+                    </form>
+                @endif
+            @endforeach
         </div>
     </div>
 @endsection

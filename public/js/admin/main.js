@@ -48,3 +48,15 @@ function closeSellerModal(){
     let modal = document.getElementsByClassName('delete-modal')[0];
     modal.style.display = "none";
 }
+
+//Uassets
+function searchUProps(e){
+    let search = e.target.previousElementSibling.value
+    window.location.href = "/uassets/"+search.toLowerCase();
+}
+
+//Vassets
+function searchVProps(e){
+    let search = e.target.previousElementSibling.value
+    window.location.href = "/vassets/"+search.toLowerCase();
+}

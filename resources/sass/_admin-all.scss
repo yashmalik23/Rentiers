@@ -94,3 +94,15 @@
 .admin-page-links{
     margin-left: 20px;
 }
+button.continue-ver-button{
+    top: 0;
+    background-color: white;
+    color: $main;
+    border: 1px solid $main;
+    padding: 5px 10px;
+    outline: none;
+    position: relative;
+    font-size: 1.4rem;
+    font-weight: 400;
+    width: 80px;
+}

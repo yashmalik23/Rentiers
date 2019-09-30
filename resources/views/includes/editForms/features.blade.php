@@ -57,33 +57,41 @@
             </div>
         </div>
         <div class="line-4">
-                @if(count(explode(",",$prop->ownerdetails))>2)
-                    <div class="list-input-field">
-                        <label for="ownerDetails1">Owner's name *</label>
-                        <input id="ownerDetails1" class="list-form-input" value="{{explode(",",$prop->ownerdetails)[0]}}" name="ownerDetails1" >
-                    </div>
-                    <div class="list-input-field">
-                        <label for="ownerDetails2">Owner's email *  </label>
-                        <input id="ownerDetails2" class="list-form-input" value="{{explode(",",$prop->ownerdetails)[1]}}" name="ownerDetails2" >
-                    </div>
-                    <div class="list-input-field">
-                        <label for="ownerDetails3">Owner's contact* </label>
-                        <input id="ownerDetails3" class="list-form-input" value="{{explode(",",$prop->ownerdetails)[2]}}" name="ownerDetails3" >
-                    </div>
+            @if(Auth::user()!= null)
+                @if(Auth::user()->email == "inforentiers@gmail.com")
+                    @if(count(explode(",",$prop->ownerdetails))>2)
+                        <div class="list-input-field">
+                            <label for="ownerDetails1">Owner's name *</label>
+                            <input id="ownerDetails1" class="list-form-input" value="{{explode(",",$prop->ownerdetails)[0]}}" name="ownerDetails1" >
+                        </div>
+                        <div class="list-input-field">
+                            <label for="ownerDetails2">Owner's email *  </label>
+                            <input id="ownerDetails2" class="list-form-input" value="{{explode(",",$prop->ownerdetails)[1]}}" name="ownerDetails2" >
+                        </div>
+                        <div class="list-input-field">
+                            <label for="ownerDetails3">Owner's contact* </label>
+                            <input id="ownerDetails3" class="list-form-input" value="{{explode(",",$prop->ownerdetails)[2]}}" name="ownerDetails3" >
+                        </div>
+                    @else
+                        <div class="list-input-field">
+                            <label for="ownerDetails1">Owner's name *</label>
+                            <input id="ownerDetails1" class="list-form-input" placeholder="Name" name="ownerDetails1" >
+                        </div>
+                        <div class="list-input-field">
+                            <label for="ownerDetails2">Owner's email *  </label>
+                            <input id="ownerDetails2" class="list-form-input" placeholder="Email" name="ownerDetails2" >
+                        </div>
+                        <div class="list-input-field">
+                            <label for="ownerDetails3">Owner's contact* </label>
+                            <input id="ownerDetails3" class="list-form-input" placeholder="contact" name="ownerDetails3" >
+                        </div>
+                    @endif
                 @else
-                <div class="list-input-field">
-                        <label for="ownerDetails1">Owner's name *</label>
-                        <input id="ownerDetails1" class="list-form-input" placeholder="Name" name="ownerDetails1" >
-                    </div>
-                    <div class="list-input-field">
-                        <label for="ownerDetails2">Owner's email *  </label>
-                        <input id="ownerDetails2" class="list-form-input" placeholder="Email" name="ownerDetails2" >
-                    </div>
-                    <div class="list-input-field">
-                        <label for="ownerDetails3">Owner's contact* </label>
-                        <input id="ownerDetails3" class="list-form-input" placeholder="contact" name="ownerDetails3" >
-                    </div>
+                    <input id="ownerDetails1" class="list-form-input" value="{{Auth::user()->name}}" name="ownerDetails1" hidden />
+                    <input id="ownerDetails2" class="list-form-input" value="{{Auth::user()->email}}" name="ownerDetails2" hidden />
+                    <input id="ownerDetails3" class="list-form-input" value="{{Auth::user()->contact}}" name="ownerDetails3" hidden />
                 @endif
+            @endif
         </div>
     </div>
     <input name="ameneties" type="text" id="ameneties-hidden" hidden>
