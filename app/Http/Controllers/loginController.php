@@ -51,9 +51,9 @@ class loginController extends Controller
         );
 
         if(Auth::attempt($user_data)){
-            return redirect('/')->with('success','logged_in');
+            return redirect('/');
         }else{
-            return redirect('login')->with('error','wrong_details');
+            return back()->with('error','wrong_details');
         }
         
     }
@@ -66,15 +66,15 @@ class loginController extends Controller
 
 
         if(Auth::attempt($user_data)){
-            return redirect('/')->with('success','logged_in');
+            return redirect('/');
         }else{
-            return redirect('login')->with('error','wrong_details');
+            return back()->with('error','wrong_details');
         }
     }
 
     public function logout(){
         Auth::logout();
-        return view('includes/list');
+        return redirect('/');
     }
 
     /**

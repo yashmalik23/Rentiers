@@ -3,6 +3,18 @@
     <script type="text/javascript" src="{{asset('js/user.js') }}"></script>
     @if (isset(Auth::user()->email))
         @if(Auth::user()->email != "inforentier@gmail.com")
+        @if(isset($image))
+            <div class="alert alert-success" role="alert">
+            <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success!</strong> Image added successfully.
+        </div>
+        @endif
+        @if(isset($delete))
+            <div class="alert alert-success" role="alert">
+            <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success!</strong> Property deleted successfully.
+        </div>
+        @endif
             <div class="delete-modal">
                 <div class="modal-content">
                     <div>Are you sure you want to delete this property?</div>

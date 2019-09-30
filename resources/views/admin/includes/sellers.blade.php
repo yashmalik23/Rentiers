@@ -3,6 +3,12 @@
     @if(Auth::user() != null)
         @if (Auth::user()->email == "inforentiers@gmail.com")
             <div class="main-layout">
+                @if(isset($delete))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> User deleted successfully.
+                </div>
+                @endif
                 <div class="delete-modal">
                     <div class="modal-content">
                         <div>Are you sure you want to delete this user?</div>

@@ -41,3 +41,22 @@ function togglechat(e){
         form.style.display = "none";
     }
 }
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 2000);
+function showalert(){
+    let alert = document.getElementsByClassName('frontalert')[0];
+    if(alert != null){
+        console.log(alert.style.display);
+        if(alert.style.display =="none" || alert.style.display == ""){
+            alert.style.display="block";
+            alert.style.opacity = 1;
+            window.setTimeout(function() {
+                $(".frontalert").fadeTo(500, 0).slideUp(500,0);
+            }, 2000);
+        }
+    }
+}
+

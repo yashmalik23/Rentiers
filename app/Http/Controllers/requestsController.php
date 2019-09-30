@@ -21,6 +21,6 @@ class requestsController extends Controller
         $user->status = "Received";
         $user->save();
 
-        return redirect('contactus')->with('request','sent_successfully');
+        return back()->with('request','sent_successfully');
     }
 }

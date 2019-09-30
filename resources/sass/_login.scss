@@ -76,3 +76,49 @@
 .login-form{
     display: none;
 }
+.signup-form{
+    .form-drop-down-options{
+        width: 75%;
+        display: block;
+        margin: 0px auto 5px;
+        font-size: 1.2rem;
+        .drop-down-label{
+            padding: 10px 0px;
+        }
+        .drop-down-heading{
+            border: 1px solid $font;
+            padding: 5px 20px;
+            display: inline-flex;
+            width: 150px;
+            cursor: pointer;
+            user-select: none;  
+            white-space: nowrap;    
+        }
+        img{
+            margin-left: -40px;
+        }
+        .drop-down-list{
+            padding: 0;
+            margin: 0;
+            z-index: 1000;
+            list-style-type: none;
+            display: none;
+            position: absolute;
+            max-height: 150px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            box-shadow: 3px 5px 40px #f0f0f2;
+            li{
+                padding: 5px 20px;
+                width: 145px;
+                background-color: white;
+                user-select: none;
+                &:hover{
+                    background-color: $main;
+                    color: white;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

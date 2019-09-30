@@ -8,6 +8,18 @@
                     <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleMenu()" />
                     <span class="dashboard-heading">Settings</span>
                 </div>
+                @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> Password changed.
+                </div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Error!</strong> {{session('error')}}.
+                </div>
+                @endif
                 <div class="container">
                     <form class="login-container" method="POST" action="{{ route('adminchangepassword')}}">
                         @csrf

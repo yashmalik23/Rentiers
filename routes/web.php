@@ -74,7 +74,7 @@ Route::get('settings', array('as'=>'password',function () {
     return view('admin/includes/password');
 }));
 Route::post('adminchangepassword','adminController@changepassword')->name('adminchangepassword');
-Route::get('logout','adminController@logout')->name('adminlogout');
+Route::get('adminlogout','adminController@logout')->name('adminlogout');
 
 
 //Admin search routes

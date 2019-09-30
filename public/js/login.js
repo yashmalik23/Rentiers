@@ -43,16 +43,47 @@ function checkLogin(){
 }
 
 function validate(data){
-    let mem = data["signupas"].toLowerCase()
+    let mem = document.getElementById('membercheck').textContent;
     if(data["password"] != data["confirm"]){
-        alert("Password doesn't match")
+        document.getElementById('frontalert').textContent = "Password doesn't match"
+        showalert()
         return false
     }else if(data["name"] == "" || data["contact"] == "" || data["email"] == ""){
-        alert("Fill the details please")
+        document.getElementById('frontalert').textContent = "Fill the details please"
+        showalert()
         return false
-    }else if(mem != "member" && mem != "seller"){
-        alert("Choose between member and seller")
+    }else if(mem != "Member" && mem != "Seller"){
+        document.getElementById('frontalert').textContent = "Fill the form"
+        showalert()
         return false
     }
     return true
+}
+
+function changeoption(e){
+    let target = e.target.parentElement.previousElementSibling.previousElementSibling;
+    target.textContent = e.target.textContent;
+   
+    let hiddeninput = e.target.parentElement.parentElement.nextElementSibling;
+    if(hiddeninput != null){
+        hiddeninput.value = e.target.textContent;
+    }
+
+    let options = e.target.parentElement;
+
+    if (options.style.display == "none" || options.style.display == ""){
+        options.style.display = "block";
+    }else{
+        options.style.display= "none";
+    }
+}
+
+function showdrop(e){
+    let options = e.target.nextElementSibling.nextElementSibling;
+
+    if (options.style.display == "none" || options.style.display == ""){
+        options.style.display = "block";
+    }else{
+        options.style.display= "none";
+    }
 }

@@ -13,6 +13,18 @@
                     <input type="text" placeholder="Search address" value="{{$search}}" class="admin-search-bar" name="search-text"/>
                     <img src="{{asset('/images/home/search.svg')}}" onclick="searchVProps(event)"/>
                 </div>
+                @if(isset($image))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> Image added successfully.
+                </div>
+                @endif
+                @if(isset($delete))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> Property deleted successfully.
+                </div>
+                @endif
                 <div class="delete-modal">
                     <div class="modal-content">
                         <div>Are you sure you want to delete this property?</div>

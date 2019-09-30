@@ -168,6 +168,10 @@ body {
   background: #555;
 }
 
+.frontalert {
+  display: none;
+}
+
 .title-container {
   text-align: center;
   width: 400px;
@@ -1755,6 +1759,63 @@ footer {
   display: none;
 }
 
+.signup-form .form-drop-down-options {
+  width: 75%;
+  display: block;
+  margin: 0px auto 5px;
+  font-size: 1.2rem;
+}
+
+.signup-form .form-drop-down-options .drop-down-label {
+  padding: 10px 0px;
+}
+
+.signup-form .form-drop-down-options .drop-down-heading {
+  border: 1px solid #424b5a;
+  padding: 5px 20px;
+  display: inline-flex;
+  width: 150px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+}
+
+.signup-form .form-drop-down-options img {
+  margin-left: -40px;
+}
+
+.signup-form .form-drop-down-options .drop-down-list {
+  padding: 0;
+  margin: 0;
+  z-index: 1000;
+  list-style-type: none;
+  display: none;
+  position: absolute;
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-shadow: 3px 5px 40px #f0f0f2;
+}
+
+.signup-form .form-drop-down-options .drop-down-list li {
+  padding: 5px 20px;
+  width: 145px;
+  background-color: white;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.signup-form .form-drop-down-options .drop-down-list li:hover {
+  background-color: #3a6ec9;
+  color: white;
+  cursor: pointer;
+}
+
 .search-result-container {
   grid-area: search-result-container;
   margin: 0px auto;
@@ -2573,5 +2634,10 @@ button.continue-ver-button {
   background-color: #3a6ec9;
   color: white;
   cursor: pointer;
+}
+
+.alert {
+  top: 0px;
+  position: relative;
 }
 

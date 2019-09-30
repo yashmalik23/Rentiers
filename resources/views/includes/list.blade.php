@@ -3,6 +3,15 @@
     @if(Auth::user() == null)
         <script>window.location.href="/login"</script>
     @endif
+    @if(session('property'))
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Success!</strong> Property listed.
+    </div>
+    @endif
+    <div class="frontalert alert-danger" id="frontalert">
+        Wrong details
+    </div>
     <script type="text/javascript" src="{{asset('js/listProps/validate.js') }}"></script>
     <div class="list-properties">
         <div class="list-heading">

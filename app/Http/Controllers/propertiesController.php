@@ -11,8 +11,12 @@ class propertiesController extends Controller
 {
     //
     public function index()
-    {
-        return view('includes/list');
+    {   
+        if(Auth::user()!=null){
+            return view('includes/list');
+        }else{
+            return redirect(route('login'))->with('message','login');
+        }
     }
     
     public function store(Request $request)
@@ -56,7 +60,7 @@ class propertiesController extends Controller
         if($user){
             $props->user_id = $user->id;
             $props->save();
-            return redirect('listproperties')->with('property','added_successfully');
+            return back()->with('property','added_successfully');
         }else{
             $props->save();
             return view('includes/login');
@@ -100,7 +104,7 @@ class propertiesController extends Controller
             }
         }
         $props->save();   
-        return view('includes/list')->with('property',$request->input('area'));
+        return back()->with('property',$request->input('area'));
     }
 
     public function delete(Request $request){
@@ -110,7 +114,7 @@ class propertiesController extends Controller
         $user = Auth::user();
         $id = $user->id;
         $props = DB::select('SELECT * from properties where user_id='.$id);
-        return view('includes/useraccount')->with('delete',"deleted successfully")->with('props', $props);
+        return back()->with('delete',"deleted successfully")->with('props', $props);
     }
 
     public function addimage(Request $request){
@@ -138,6 +142,6 @@ class propertiesController extends Controller
 
         $id = $user->id;
         $props = DB::select('SELECT * from properties where user_id='.$id);
-        return redirect(route('useraccount'));
+        return back()->with('image',"added");
     }
 }

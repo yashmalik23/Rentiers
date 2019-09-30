@@ -15,6 +15,12 @@
 </head>
 <body>
     @include('includes.navbar')
+    @if(session('request'))
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Success!</strong> Request sent! We will call you within 24 hours.
+    </div>
+    @endif
     @yield('views')
     @include('includes/footer')
 </body>

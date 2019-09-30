@@ -1,8 +1,20 @@
 @extends('layout')
 @section('views')
-@if ($msg = Session::get('error'))
-{{ $msg }}
-@endif 
+@if(session('error'))
+<div class="alert alert-danger" role="alert">
+    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Error!</strong> Login failed! Wrong details or format.
+</div>
+@endif
+@if(session('message'))
+<div class="alert alert-danger" role="alert">
+    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Error!</strong> Login to continue.
+</div>
+@endif
+<div class="frontalert alert-danger" id="frontalert">
+    Wrong details
+</div>
     <script type="text/javascript" src="{{asset('js/login.js') }}"></script>
     <div class="login-page">
         <div class="login-heading">Get started with us!</div>
@@ -30,10 +42,16 @@
                     <div class="input-label">Confirm password *</div>
                     <input type="password" required name="password_confirmation"/>
                 </div>
-                <div class="input-field">
-                    <div class="input-label">Sign up as *</div>
-                    <input type="text" placeholder="Member/Seller" required name="signupas"/>
+                <div class="form-drop-down-options">
+                    <div class="drop-down-label">Sign Up as * </div>
+                    <div class="drop-down-heading" onclick="showdrop(event)" id="membercheck">Select</div>
+                    <img src="{{asset('images/navbar/down-arrow.svg')}}" />
+                    <ul class="drop-down-list">
+                        <li onclick="changeoption(event)">Member</li>
+                        <li onclick="changeoption(event)">Seller</li>
+                    </ul>
                 </div>
+                <input name="signupas" type="text" hidden>
                 <input type="checkbox" name="rememberme" style="display:none"/>
                 <div class="signup-options">
                     <div class="login-form-check-field" id="rememberMe">

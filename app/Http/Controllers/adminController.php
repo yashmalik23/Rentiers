@@ -22,10 +22,10 @@ class adminController extends Controller
                 $members = DB::table('users')->where('member','=','Member')->paginate(12);
                 return view('admin/includes/members')->with('members',$members)->with('search',"");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function membersearch($text){
@@ -34,10 +34,10 @@ class adminController extends Controller
                 $members = DB::table('users')->where('member','=','Member')->where('name','like',$text)->paginate(12);
                 return view('admin/includes/members')->with('members',$members)->with('search',$text);
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function memberdelete(Request $request){
@@ -49,12 +49,12 @@ class adminController extends Controller
                 $props = DB::table('properties')->where('user_id','=',$id);
                 $props->delete();
                 $members = DB::table('users')->where('member','=','Member')->paginate(12);
-                return view('admin/includes/members')->with('members',$members)->with('search',"");
+                return view('admin/includes/members')->with('members',$members)->with('search',"")->with('delete',"deleted");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
 
@@ -65,22 +65,22 @@ class adminController extends Controller
                 $sellers = DB::table('users')->where('member','=','Seller')->paginate(12);
                 return view('admin/includes/sellers')->with('sellers',$sellers)->with('search',"");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     
     public function sellersearch($text){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
                 $members = DB::table('users')->where('member','=','Seller')->where('name','like',$text)->paginate(12);
-                return view('admin/includes/members')->with('members',$members)->with('search',$text);
+                return view('admin/includes/sellers')->with('sellers',$members)->with('search',$text);
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function sellerdelete(Request $request){
@@ -92,12 +92,12 @@ class adminController extends Controller
                 $props = DB::table('properties')->where('user_id','=',$id);
                 $props->delete();
                 $members = DB::table('users')->where('member','=','Seller')->paginate(12);
-                return view('admin/includes/members')->with('members',$members)->with('search',"");
+                return view('admin/includes/sellers')->with('sellers',$members)->with('search',"")->with('delete',"deleted");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     
     public function vassets(){
@@ -106,10 +106,10 @@ class adminController extends Controller
                 $props = DB::table('properties')->where('verified','=',1)->paginate(12);
                 return view('admin/includes/vassets')->with('props', $props)->with('search',"");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     //Unverified assets
@@ -119,10 +119,10 @@ class adminController extends Controller
                 $props = DB::table('properties')->where('verified','=',0)->paginate(12);
                 return view('admin/includes/uassets')->with('props', $props)->with('search',"");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function requests(){
@@ -131,10 +131,10 @@ class adminController extends Controller
                 $requests = DB::table('requests')->paginate(12);
                 return view('admin/includes/requests')->with('requests', $requests)->with('search',"");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     public function requestsearch($text){
         if(Auth::user()){
@@ -142,21 +142,21 @@ class adminController extends Controller
                 $requests = DB::table('requests')->whereRaw('status like "%'.$text.'%" OR contact like "%'.$text.'%"')->paginate(12);
                 return view('admin/includes/requests')->with('requests', $requests)->with('search',$text);
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     public function requestdelete(Request $request){
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
                 requests::find($request->input($id))->delete();
-                return redirect('requests');
+                return back()->with('delete',"deleted");
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     public function requeststatus(Request $request){
         if(Auth::user()){
@@ -165,12 +165,12 @@ class adminController extends Controller
                 $req->status = $request->input('requeststatus');
                 $req->updated_at = time();
                 $req->save();
-                return redirect('requests');
+                return back()->with('status','status');
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function dashboard(){
@@ -183,10 +183,10 @@ class adminController extends Controller
                 $contacts = requests::count();
                 return view('admin/includes/dashboard')->with('success','logged_in')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function login(Request $request){
@@ -203,7 +203,7 @@ class adminController extends Controller
                 $vassets = DB::table('properties')->where('verified','=','1')->count();
                 $uassets = DB::table('properties')->where('verified','=','0')->count();
                 $contacts = requests::count();
-                return view('admin/includes/dashboard')->with('success','logged_in')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
+                return view('admin/includes/dashboard')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
             }else{
                 return view('admin/includes/login')->with('error','wrong_details');
             }
@@ -221,19 +221,19 @@ class adminController extends Controller
         if(Auth::user()){
             if(Auth::user()->email == 'inforentiers@gmail.com'){
                 if($request->input('npassword') != $request->input('cpassword')){
-                    return redirect(route('password'))->with('error','password_dont_match');
+                    return back()->with('error','password_dont_match');
                 }else if(Hash::check($request->input('opassword'),Auth::user()->password)){
                     $admin = User::find(1);
                     $admin->password = Hash::make($request->input('npassword'));
                     $admin->save();
-                    return redirect(route('password'))->with('success','Changed successfully');
+                    return back()->with('success','Changed successfully');
                 }
-                return redirect(route('password'))->with('error','wrong_current_password');
+                return back()->with('error','wrong_current_password');
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function show($id){
@@ -245,7 +245,7 @@ class adminController extends Controller
             $props = DB::select('SELECT * from properties where id='.$id);
             return view('admin/includes/adminview')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant);
         }else{
-            return view('includes/login');
+            return redirect(route('adminlogin'))->with('timeout',"timed_out");
         }
     }
 
@@ -259,7 +259,7 @@ class adminController extends Controller
             $props = DB::select('SELECT * from properties where id='.$id);
             return view('admin/includes/adminedit')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant)->with('rooms', $rooms);
         }else{
-            return view('includes/login');
+            return redirect(route('adminlogin'))->with('timeout',"timed_out");
         }
     }
 
@@ -270,12 +270,12 @@ class adminController extends Controller
                 $prop = properties::find($id);
                 $prop->verified = 1;
                 $prop->save();
-                return redirect(route('uassets'));
+                return redirect(route('uassets'))->with('success','success');
             }else{
-                return redirect(route('adminlogin'));
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }else{
-            return redirect(route('adminlogin'));
+            return redirect(route('adminlogin'))->with('timeout',"timed_out");
         }
     }
 
@@ -285,10 +285,10 @@ class adminController extends Controller
                 $props = properties::whereRaw('verified=0 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
                 return view('admin/includes/uassets')->with('props', $props)->with('search',$text);
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function vpropsearch($text){
@@ -297,10 +297,10 @@ class adminController extends Controller
                 $props = properties::whereRaw(' verified=1 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
                 return view('admin/includes/vassets')->with('props', $props)->with('search',$text);
             }else{
-                return view('admin/includes/login');
+                return redirect(route('adminlogin'))->with('timeout',"timed_out");
             }
         }
-        return view('admin/includes/login');
+        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     public function uaddimage(Request $request){
         
@@ -325,7 +325,7 @@ class adminController extends Controller
         $props->images = $string;
         $props->save();
 
-        return redirect(route('uassets'));
+        return redirect(route('uassets'))->with('image','image');
     }
     public function vaddimage(Request $request){
         
@@ -349,6 +349,6 @@ class adminController extends Controller
         
         $props->images = $string;
         $props->save();
-        return redirect(route('vassets'));
+        return redirect(route('vassets'))->with('image','image');
     }
 }

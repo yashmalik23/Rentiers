@@ -371,6 +371,8 @@ function validateFourthForm(){
 }
 
 
+
 function showModal(message){
-    alert(message);
+    document.getElementById('frontalert').textContent = message;
+    showalert()
 }

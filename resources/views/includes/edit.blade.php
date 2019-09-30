@@ -1,6 +1,15 @@
 @extends('layout')
 @section('views')
     <script type="text/javascript" src="{{asset('js/editProps/validate.js') }}"></script>
+    @if(session('property'))
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Success!</strong> Property updated.
+    </div>
+    @endif
+    <div class="frontalert alert-danger" id="frontalert">
+        Wrong details
+    </div>
     @foreach ($props as $prop)
         <div class="list-properties">
             <div class="list-heading">

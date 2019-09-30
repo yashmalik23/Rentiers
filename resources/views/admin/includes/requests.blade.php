@@ -8,6 +8,18 @@
                     <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleMenu()" />
                     <span class="dashboard-heading">Contact requests</span>
                 </div>
+                @if(session('status'))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> Request status changed.
+                </div>
+                @endif
+                @if(session('delete'))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> Request deleted successfully.
+                </div>
+                @endif
                 <div class="delete-modal">
                     <div class="modal-content">
                         <div>Are you sure you want to delete this user?</div>
