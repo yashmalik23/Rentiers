@@ -61,6 +61,7 @@ Route::post('adminlogin', 'adminController@login')->name('tryadminlogin');
 
 Route::get('members', 'adminController@members')->name('members');
 Route::post('memberdelete','adminController@memberdelete')->name('memberdelete');
+Route::get('adminuseraccount/{id}','userAccountController@showaccount')->name('adminuseraccount');
 
 Route::get('sellers', 'adminController@sellers')->name('sellers');
 Route::post('sellerdelete','adminController@sellerdelete')->name('sellerdelete');

@@ -23,6 +23,19 @@ class userAccountController extends Controller
         }
     }
 
+    public function showaccount($id)
+    {
+        $user = Auth::user();
+        if($user->id != null){
+            if($user->email == "inforentiers@gmail.com"){
+                $props = DB::select('SELECT * from properties where user_id='.$id);
+                return view('admin/includes/adminuseraccount')->with('props', $props);
+            }
+        }else{
+            return view('includes/login');
+        }
+    }
+
     public function show($id){
         $user = Auth::user();
         $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];

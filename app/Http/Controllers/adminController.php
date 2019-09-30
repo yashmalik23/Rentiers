@@ -243,7 +243,8 @@ class adminController extends Controller
         $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","Unmarried Couple","Company Lease"];
         if($user->id != null){
             $props = DB::select('SELECT * from properties where id='.$id);
-            return view('admin/includes/adminview')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant);
+            $interests = DB::select('SELECT * from interests where prop_id='.$id);
+            return view('admin/includes/adminview')->with('interests', $interests)->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant);
         }else{
             return redirect(route('adminlogin'))->with('timeout',"timed_out");
         }

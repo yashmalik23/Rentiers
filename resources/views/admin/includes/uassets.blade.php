@@ -43,13 +43,16 @@
                     </div>
                 </div>
                 <div class="upload-image-modal">
+                    <div class="frontalert alert-danger" id="frontalert">
+                        Wrong details
+                    </div>
                     <div class="modal-content">
-                        <div>You can add upto 15 images and 1 video</div>
+                        <div>You can add upto 5 images, the size of each image must be less than 2MB</div>
                         <form class="image-props" method="POST" action="{{ route('uaddimagetoprop')}}" enctype="multipart/form-data">
                             @csrf
                             <input type="number" id="image-prop" name="id" hidden>
                             <label for="file-field-image">Images</label>
-                            <input type="file" id="file-field-image" name="file[]" accept=".jpg,.png" multiple>
+                            <input type="file" id="file-field-image" name="file[]" accept=".jpg,.png" multiple onchange="checkImages(e)">
                             <button type="submit">Save</button>
                             <div class="cancel" onclick="closeImageModal()">Cancel</div>
                         </form>

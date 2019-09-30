@@ -27,4 +27,12 @@
     </div>
     @include('includes/footer')
 </body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148925859-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148925859-1');
+</script>
 </html>

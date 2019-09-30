@@ -60,3 +60,21 @@ function showalert(){
     }
 }
 
+function checkImages(e){
+    let input = e.target;
+    if(input.files){
+        if(input.files.length>5){
+            document.getElementById('frontalert').textContent = "More than 5 files are not allowed";
+            showalert()
+            e.target.value = "";
+        }else{
+            for(let i=0; i<input.files.length; i++){
+                if(input.files[i].size> 2097152){
+                    document.getElementById('frontalert').textContent = "One of the file is greater than 2MB";
+                    showalert()
+                    e.target.value = "";
+                }
+            }
+        }
+    }
+}

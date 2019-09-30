@@ -188,6 +188,10 @@
             <div class="help-line-1">
                 If you don't know what to do next, you can email us at support@rentiers.in or call us at +91 9414573503.  
             </div>
+            <div>Interested users</div>
+            @foreach($interests as $interest)
+                <div class="adminseeinterest">{{$interest->name}},{{$interest->contact}}</div>
+            @endforeach
             @foreach($props as $prop)
                 @if($prop->verified == 0)
                     <form method="POST" action="{{route('changeVer')}}" class="verify-form">
