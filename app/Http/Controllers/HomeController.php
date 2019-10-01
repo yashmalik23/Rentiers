@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
+use App\staticvalues;
+use App\properties;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('includes/home');
+        $stat = staticvalues::find(1);
+        $prop1 = properties::find(explode(",",$stat->recentproperties)[0]);
+        $prop2 = properties::find(explode(",",$stat->recentproperties)[1]);
+        $prop3 = properties::find(explode(",",$stat->recentproperties)[2]);
+        $prop4 = properties::find(explode(",",$stat->recentproperties)[3]);
+        $prop5 = properties::find(explode(",",$stat->recentproperties)[4]);
+        $prop = [$prop1,$prop2,$prop3, $prop4, $prop5];
+        return view('includes/home')
+                ->with('stats',$stat)
+                ->with('props',$prop)
+                ->with('prop2',$prop2)
+                ->with('prop3',$prop3)
+                ->with('prop4',$prop4)
+                ->with('prop5',$prop5);
     }
 }

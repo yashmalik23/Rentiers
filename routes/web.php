@@ -66,6 +66,9 @@ Route::get('adminuseraccount/{id}','userAccountController@showaccount')->name('a
 Route::get('sellers', 'adminController@sellers')->name('sellers');
 Route::post('sellerdelete','adminController@sellerdelete')->name('sellerdelete');
 
+Route::get('interests', 'interestController@show')->name('interests');
+Route::post('interestdelete','interestcontroller@delete')->name('interestdelete');
+
 Route::get('uassets', 'adminController@uassets')->name('uassets');
 Route::get('adminview/{id}','adminController@show')->name('adminview');
 Route::get('adminedit/{id}','adminController@edit')->name('adminedit');
@@ -94,3 +97,4 @@ Route::get('/sellers/{text}','adminController@sellersearch')->name('sellersearch
 Route::get('/uassets/{text}','adminController@upropsearch')->name('upropsearch');
 Route::get('/vassets/{text}','adminController@vpropsearch')->name('vpropsearch');
 Route::get('/requests/{text}','adminController@requestsearch')->name('requestsearch');
+Route::get('/interests/{text}','interestController@search')->name('interestsearch');

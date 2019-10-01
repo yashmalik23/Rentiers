@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use DB;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Illuminate\Http\Request;
@@ -36,6 +37,10 @@ class loginController extends Controller
      */
     public function store(Request $request)
     {
+        $check = DB::table('users')->where('email','=',$request->input('email'));
+        if($check != null){
+            return back()->with('error','wrong_details');
+        }
         $user = new User;
         $user->name = $request->input('name');
         $user->contact = $request->input('contact');

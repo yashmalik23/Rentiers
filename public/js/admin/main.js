@@ -66,6 +66,10 @@ function searchRequests(e){
     let search = e.target.previousElementSibling.value
     window.location.href = "/requests/"+search.toLowerCase();
 }
+function searchInterests(e){
+    let search = e.target.previousElementSibling.value
+    window.location.href = "/interests/"+search.toLowerCase();
+}
 
 function changeoption(e){
     let target = e.target.parentElement.previousElementSibling.previousElementSibling;

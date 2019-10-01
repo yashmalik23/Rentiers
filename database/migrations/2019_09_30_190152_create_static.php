@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Interests extends Migration
+class CreateStatic extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class Interests extends Migration
      */
     public function up()
     {
-        Schema::create('interests', function (Blueprint $table) {
+        Schema::create('staticvalues', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('contact');
-            $table->integer('prop_id');
-            $table->string('propdetails')->nullable();
+            $table->string('recentproperties');
+            $table->string('rentalproperties');
+            $table->string('buyproperties');
+            $table->integer('clientlogolength');
+            $table->integer('mainprojectlength');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class Interests extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interests');
+        Schema::dropIfExists('staticvalues');
     }
 }

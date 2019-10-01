@@ -6,14 +6,13 @@
     <div class="main-slider">
         <div class="slider-images">
             <div class="slide active">
-                <img src="/images/home/picture.jpg">
+                <img src="/storage/main/picture0.jpg">
             </div>
-            <div class="slide">
-                <img src="/images/home/picture.jpg">
-            </div>
-            <div class="slide">
-                <img src="/images/home/picture2.png">
-            </div>
+            @for($i=1;$i<$stats->mainprojectlength;$i++)
+                <div class="slide">
+                    <img src="/storage/main/picture{{$i}}.jpg">
+                </div>
+            @endfor
         </div>  
         <button class="previous" onclick="previousSlideMain(event)" id="view-previous"><</button>
         <button class="next" onclick="nextSlideMain(event)" id="view-next">></button>
@@ -57,160 +56,56 @@
             <img src="{{asset('images/home/recent-head.svg')}}" class="recent-head"/>
             <div class="recent-heading">Recent Properties</div>
             <div class="recent-line">You stopped by just in time to see these new properties</div>
-            <div class="see-all">View All</div>
+            <div class="see-all" onclick="function c(){window.location.href='/search'};c()">View All</div>
         </div>
         <div class="content-slider">
             <div class="card-container">
-                <div class="card">
+                @for($i=0;$i<5;$i++)
+                    <div class="card">
                         <div class="slider">
                             <div class="slider-images">
-                                <div class="slide active">
-                                    <img src="{{asset('images/home/picture2.png')}}">
-                                </div>
-                                <div class="slide">
-                                    <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                                <div class="slide">
-                                        <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
+                                @if(count(explode(",",$props[$i]->images))>0 && explode(",",$props[$i]->images)[0] != "" && explode(",",$props[$i]->images)[0] != "noimage.png")
+                                    <div class="slide active">
+                                        <img src="/storage/{{$props[$i]->id}}/{{explode(",",$props[$i]->images)[0]}}">
+                                    </div>
+                                @else
+                                    <div class="slide active">
+                                        <img src="/storage/noimage.png">
+                                    </div>
+                                @endif
+                                @for($j = 1 ; $j<count(explode(",",$props[$i]->images))-1 ;$j++)
+                                    @if($j <3)
+                                        @if(explode(",",$props[$i]->images)[$j] != "")
+                                        <div class="slide">
+                                            <img src="/storage/{{$props[$i]->id}}/{{explode(",",$props[$i]->images)[$j]}}">
+                                        </div>
+                                        @endif
+                                    @endif
+                                @endfor
                             </div>  
                             <button class="previous" onclick="previousSlide(event)"><</button>
                             <button class="next" onclick="nextSlide(event)">></button>
-                            <div class="price-tag">₹ 20,000</div>
+                            <div class="price-tag">₹ {{$props[$i]->expectedPrice}}</div>
                             <div class="circles">
                                 <div class="circle active"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
+                                @for($j = 1 ; $j<count(explode(",",$props[$i]->images))-1 ;$j++)
+                                    @if($j<3)
+                                        @if(explode(",",$props[$i]->images)[$j] != "")
+                                            <div class="circle"></div>
+                                        @endif
+                                    @endif
+                                @endfor
                             </div>
                         </div>
-                        <div class="card-property-name">Adani M2K Oyster Grande</div>
-                        <div class="card-property-location">Sector-102A, Gurugram</div>
+                        <div class="card-property-name"><a href="/property/{{$props[$i]->id}}" >{{$props[$i]->streetName}}</a></div>
+                        <div class="card-property-location">{{$props[$i]->locality}}, {{$props[$i]->city}}</div>
                         <div class="card-amenities">
                             <img src="{{asset('images/home/home-icon.svg')}}">
-                            <div>2 BHK</div>
-                            <div>2100 sqft.</div>  
+                            <div>{{$props[$i]->configuration}}</div>
+                            <div>{{explode("_",$props[$i]->area)[0]}} sq.ft. / {{intval(explode("_",$props[$i]->area)[0])*0.09}} sq. m.</div>  
                         </div>
-                </div>
-                <div class="card">
-                        <div class="slider">
-                            <div class="slider-images">
-                                <div class="slide active">
-                                    <img src="{{asset('images/home/picture2.png')}}">
-                                </div>
-                                <div class="slide">
-                                    <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                                <div class="slide">
-                                        <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                            </div>  
-                            <button class="previous" onclick="previousSlide(event)"><</button>
-                            <button class="next" onclick="nextSlide(event)">></button>
-                            <div class="price-tag">₹ 20,000</div>
-                            <div class="circles">
-                                <div class="circle active"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                        <div class="card-property-name">Adani M2K Oyster Grande</div>
-                        <div class="card-property-location">Sector-102A, Gurugram</div>
-                        <div class="card-amenities">
-                            <img src="{{asset('images/home/home-icon.svg')}}">
-                            <div>2 BHK</div>
-                            <div>2100 sqft.</div>  
-                        </div>
-                </div>
-                <div class="card">
-                        <div class="slider">
-                            <div class="slider-images">
-                                <div class="slide active">
-                                    <img src="{{asset('images/home/picture2.png')}}">
-                                </div>
-                                <div class="slide">
-                                    <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                                <div class="slide">
-                                        <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                            </div>  
-                            <button class="previous" onclick="previousSlide(event)"><</button>
-                            <button class="next" onclick="nextSlide(event)">></button>
-                            <div class="price-tag">₹ 20,000</div>
-                            <div class="circles">
-                                <div class="circle active"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                        <div class="card-property-name">Adani M2K Oyster Grande</div>
-                        <div class="card-property-location">Sector-102A, Gurugram</div>
-                        <div class="card-amenities">
-                            <img src="{{asset('images/home/home-icon.svg')}}">
-                            <div>2 BHK</div>
-                            <div>2100 sqft.</div>  
-                        </div>
-                </div>
-                <div class="card">
-                        <div class="slider">
-                            <div class="slider-images">
-                                <div class="slide active">
-                                    <img src="{{asset('images/home/picture2.png')}}">
-                                </div>
-                                <div class="slide">
-                                    <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                                <div class="slide">
-                                        <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                            </div>  
-                            <button class="previous" onclick="previousSlide(event)"><</button>
-                            <button class="next" onclick="nextSlide(event)">></button>
-                            <div class="price-tag">₹ 20,000</div>
-                            <div class="circles">
-                                <div class="circle active"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                        <div class="card-property-name">Adani M2K Oyster Grande</div>
-                        <div class="card-property-location">Sector-102A, Gurugram</div>
-                        <div class="card-amenities">
-                            <img src="{{asset('images/home/home-icon.svg')}}">
-                            <div>2 BHK</div>
-                            <div>2100 sqft.</div>  
-                        </div>
-                </div>
-                <div class="card">
-                        <div class="slider">
-                            <div class="slider-images">
-                                <div class="slide active">
-                                    <img src="{{asset('images/home/picture2.png')}}">
-                                </div>
-                                <div class="slide">
-                                    <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                                <div class="slide">
-                                        <img src="{{asset('images/home/picture.jpg')}}">
-                                </div>
-                            </div>  
-                            <button class="previous" onclick="previousSlide(event)"><</button>
-                            <button class="next" onclick="nextSlide(event)">></button>
-                            <div class="price-tag">₹ 20,000</div>
-                            <div class="circles">
-                                <div class="circle active"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                        <div class="card-property-name">Adani M2K Oyster Grande</div>
-                        <div class="card-property-location">Sector-102A, Gurugram</div>
-                        <div class="card-amenities">
-                            <img src="{{asset('images/home/home-icon.svg')}}">
-                            <div>2 BHK</div>
-                            <div>2100 sqft.</div>  
-                        </div>
-                </div>
+                    </div>
+                @endfor
             </div>
         </div>
         <div class="go-forward" onclick="scrollRecent(event)">></div>
@@ -220,6 +115,20 @@
     <div class="home-about">
         <img src="{{asset('images/home/aboutus.svg')}}" class="desktop">
         <img src="{{asset('images/home/mobileabout.svg')}}" class="mobile">
+    </div>
+
+    {{----------------- Our clients ---------------------}}
+    <div class="our-clients">
+        <div class="client-heading">Our clients</div>
+        <div class="client-slider">
+            <div class="client-card-container">
+                <input type="hidden" id="numberoflogos" value="{{$stats->clientlogolength}}"/>
+                @for($i=0;$i<$stats->clientlogolength;$i++)
+                <img src="/storage/clients/logo{{$i}}.svg">
+                @endfor
+            </div>
+            <script>document.getElementsByClassName('client-card-container')[0].style.width = (150*parseInt(document.getElementById('numberoflogos').value)).toString()+"px"</script>
+        </div>
     </div>
 
     {{-------------- Testimonials ---------------------}}
@@ -240,54 +149,54 @@
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Thank you very much for the help.It has been a pleasant experience talking with you.  
+                            He was really very helpful and patiently understood all our needs. He provided us with whatever help we needed. Five star for his outstanding and professional service.  
                         </div>
-                        <div class="name">John Doe, Businessman</div>
+                        <div class="name">Aditya Jain, Entrepreneur</div>
                     </div>
                     <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Thank you very much for the help.It has been a pleasant experience talking with you.  
+                            Shailender is one of the best dealers I have come across. He was gentle, helpful and ready to go out of the box to get me the flat. He helped me with everything. I feel the brokerage that I paid was worth it.I will reach out to him to buy/rent any property in Gurgaon!  
                         </div>
-                        <div class="name">Sophie Turner, Lawyer</div>
+                        <div class="name">Puneet Kukreja</div>
                     </div>
                     <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Thank you very much for the help.It has been a pleasant experience talking with you.  
+                            I have taken his services after consulting multiple agents. Just to brief:He is very very professional, no Fake lines which 90% agents tell, helped during shifting, fought with society or owner for any wrong commitments or issues, very courteous person, during and after shifting he hasn't mentioned for his fees unlike other people i.e. he is not greedy too. 
                         </div>
-                        <div class="name">Alex Williams, Trader</div>
+                        <div class="name">Dev Vrat</div>
                     </div>
                     <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Thank you very much for the help.It has been a pleasant experience talking with you.  
+                            Wanted a 3BHK+SR appartment, They help me finding out best appartment for me in a very good budget. Thank you Rentiers.in
                         </div>
-                        <div class="name">John Doe, Businessman</div>
+                        <div class="name">Sanjeev Beniwal</div>
                     </div>
                     <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Thank you very much for the help.It has been a pleasant experience talking with you.  
+                            The service is very good. Mr. Shailendra is very helpful and honest guy. He gave me the best deal.
                         </div>
-                        <div class="name">Alex Williams, Trader</div>
+                        <div class="name">Nitin Singh</div>
                     </div>
                     <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Thank you very much for the help.It has been a pleasant experience talking with you.  
+                            He was very polite and understood our needs completely. He literally went out of his way to help us during shifting. I would recommend anyone who wants a property in Gurugram to contact rentiers.in
                         </div>
-                        <div class="name">Sophie Turner, Lawyer</div>
+                        <div class="name">Yash Malik</div>
                     </div>
                     <img src="{{asset('images/home/man1.jpg')}}">
                 </div>

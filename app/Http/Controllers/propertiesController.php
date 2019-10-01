@@ -13,7 +13,11 @@ class propertiesController extends Controller
     public function index()
     {   
         if(Auth::user()!=null){
-            return view('includes/list');
+            if(Auth::user()->member != "Member"){
+                return view('includes/list');
+            }else{
+                return redirect(route('login'))->with('member','login');
+            }
         }else{
             return redirect(route('login'))->with('message','login');
         }

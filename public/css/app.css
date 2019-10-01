@@ -175,7 +175,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 2px;
+  height: 5px;
 }
 
 /* Track */
@@ -187,7 +188,7 @@ body {
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
-  background: #3a6ec9;
+  background: grey;
 }
 
 /* Handle on hover */
@@ -638,6 +639,8 @@ body {
 .slide img {
   max-width: 100%;
   max-height: 100%;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 button {
@@ -749,6 +752,39 @@ button.next {
   }
 }
 
+.client-heading {
+  font-size: 3.5rem;
+  color: #424b5a;
+  margin: 15px auto 15px 40px;
+  font-weight: bold;
+}
+
+.client-slider {
+  max-width: 95vw;
+  margin: 50px auto 10px;
+  height: 200px;
+  overflow: hidden;
+  transition: all 0.6s ease;
+  scroll-behavior: smooth;
+}
+
+@media screen and (max-width: 1120px) {
+  .client-slider {
+    max-width: 95vw;
+    overflow: scroll;
+  }
+}
+
+.client-slider .client-card-container {
+  width: 730px;
+}
+
+.client-slider .client-card-container img {
+  min-width: 120px;
+  max-width: 120px;
+  margin: 20px 10px auto;
+}
+
 .testimonials {
   display: flex;
 }
@@ -820,10 +856,13 @@ button.next {
   font-size: 1.3rem;
   color: #717377;
   padding: 10px 20px;
+  text-align: justify;
 }
 
 .testimonials .right-section .test-cards-container .test-card .test-text .testimonial {
   height: 100px;
+  max-height: 100px;
+  overflow-y: auto;
 }
 
 .testimonials .right-section .test-cards-container .test-card .test-text .name {
@@ -1879,6 +1918,7 @@ footer {
   color: white;
   width: 110px;
   margin: 0px auto;
+  cursor: pointer;
 }
 
 .signup-form .login-submit,

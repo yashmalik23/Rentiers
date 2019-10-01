@@ -326,6 +326,8 @@
     img{
         max-width: 100%;
         max-height: 100%;
+        min-width: 100%;
+        min-height: 100%;
     }
 }
 
@@ -421,6 +423,34 @@ button.next{
     }
 }
 
+//--------------------Our clients
+.client-heading{
+    font-size: 3.5rem;
+    color: $font;
+    margin: 15px auto 15px 40px;
+    font-weight: bold;
+}
+.client-slider{
+    max-width: 95vw;
+    margin: 50px auto 10px;
+    height: 200px;
+    overflow: hidden;
+    transition: all 0.6s ease;
+    scroll-behavior: smooth;
+    @media screen and (max-width: $break-large){
+        max-width: 95vw;
+        overflow: scroll;
+    }
+    .client-card-container{
+        width: 730px;
+        img{
+            min-width: 120px;
+            max-width: 120px;
+            margin: 20px 10px auto;
+        }
+    }
+}
+
 //----------- Testimonials
 .testimonials{
     display: flex;
@@ -477,8 +507,11 @@ button.next{
                    font-size: 1.3rem;
                    color: #717377;
                    padding: 10px 20px;
+                   text-align: justify;
                    .testimonial{
                        height: 100px;
+                       max-height: 100px;
+                       overflow-y: auto;
                    }
                    .name{
                        font-size: 1.5rem;

@@ -146,7 +146,8 @@ body{
     margin-right: 10px;
 }
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 2px;
+    height: 5px;
   }
   
   /* Track */
@@ -156,7 +157,7 @@ body{
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: $main; 
+    background: grey; 
   }
   
   /* Handle on hover */

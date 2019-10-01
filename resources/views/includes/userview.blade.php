@@ -202,6 +202,7 @@
                 @csrf
                 @foreach($props as $prop)
                     <input name="propid" type="number" value="{{$prop->id}}" hidden/>
+                    <input name="propdetails" type="text" value="{{$prop->streetName}},{{$prop->locality}},{{$prop->city}}" hidden/>
                 @endforeach
                 Interested in this property?
                 @if(Auth::user()== null)
