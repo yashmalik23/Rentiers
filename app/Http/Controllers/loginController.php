@@ -37,8 +37,8 @@ class loginController extends Controller
      */
     public function store(Request $request)
     {
-        $check = DB::table('users')->where('email','=',$request->input('email'));
-        if($check != null){
+        $check = DB::table('users')->where('email','=',$request->input('email'))->get();
+        if(count($check)>0){
             return back()->with('error','wrong_details');
         }
         $user = new User;

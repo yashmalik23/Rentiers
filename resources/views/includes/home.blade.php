@@ -26,7 +26,8 @@
     </div>
 
     {{--------------- Search bar -----------------}}
-    <div class="search-container">
+    <form class="search-container" method="POST" action="{{route('normalsearch')}}">
+        @csrf
         <div class="search-bar"> 
             <div class="drop-down-btn">
                 <div class="drop-down-title" onclick="dropdown(event)">GURUGRAM</div>
@@ -34,6 +35,7 @@
                     <li onclick="changeoption(event)">GURUGRAM</li>
                     <li onclick="changeoption(event)">HISAR</li>
                 </ul>
+                <input name="city" type="text" value="GURUGRAM" hidden>
                 <img src="{{asset('images/home/search-down-arrow.svg')}}">
             </div>
             <div class="drop-down-btn">
@@ -42,12 +44,14 @@
                     <li onclick="changeoption(event)">RENT</li>
                     <li onclick="changeoption(event)">BUY</li>
                 </ul>
+                <input name="listedFor" type="text" value="RENT" hidden>
                 <img src="{{asset('images/home/search-down-arrow.svg')}}">
             </div>
-            <input type="text" placeholder="Search..." class="search-input"/>
-            <img src="{{asset('images/home/search.svg')}}" class="search-icon"/>
+            <input type="text" placeholder="Search..." class="search-input" name="search-text"/>
+            <img src="{{asset('images/home/search.svg')}}" class="search-icon" onclick="searchProps()"/>
         </div>
-    </div>
+        <button id="gosearch" type="submit" hidden></button>
+    </form>
 
 
     {{---------------- Recent properties --------------}}
@@ -149,56 +153,50 @@
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            He was really very helpful and patiently understood all our needs. He provided us with whatever help we needed. Five star for his outstanding and professional service.  
+                            They were really helpful and patiently understood all our needs. They provided us with whatever help we needed. Five star for their outstanding and professional service.  
                         </div>
-                        <div class="name">Aditya Jain, Entrepreneur</div>
+                        <div class="name">Aditya Jain</div>
                     </div>
-                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Shailender is one of the best dealers I have come across. He was gentle, helpful and ready to go out of the box to get me the flat. He helped me with everything. I feel the brokerage that I paid was worth it.I will reach out to him to buy/rent any property in Gurgaon!  
+                            Rentiers.in is one of the best dealers I have come across. They were helpful and ready to go out of the box to get me the flat. He helped me with everything. I feel the brokerage that I paid was worth it.I will reach out to them to buy/rent any property.  
                         </div>
                         <div class="name">Puneet Kukreja</div>
                     </div>
-                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            I have taken his services after consulting multiple agents. Just to brief:He is very very professional, no Fake lines which 90% agents tell, helped during shifting, fought with society or owner for any wrong commitments or issues, very courteous person, during and after shifting he hasn't mentioned for his fees unlike other people i.e. he is not greedy too. 
+                            I have taken their services after consulting multiple agents.They are very professional, no fake lines which 90% agents tell, helped during shifting, fought with society or owner for any wrong commitments or issues, very courteous. 
                         </div>
                         <div class="name">Dev Vrat</div>
                     </div>
-                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            Wanted a 3BHK+SR appartment, They help me finding out best appartment for me in a very good budget. Thank you Rentiers.in
+                            I wanted a 3BHK+SR appartment, They helped me finding out the best appartment in a very good budget. Thank you Rentiers.in
                         </div>
                         <div class="name">Sanjeev Beniwal</div>
                     </div>
-                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            The service is very good. Mr. Shailendra is very helpful and honest guy. He gave me the best deal.
+                            The service is very good. Rentiers.in were very helpful and honest. They gave me the best deal.
                         </div>
                         <div class="name">Nitin Singh</div>
                     </div>
-                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
                 <div class="test-card">
                     <div class="test-text">
                         <div class="testimonial">
-                            He was very polite and understood our needs completely. He literally went out of his way to help us during shifting. I would recommend anyone who wants a property in Gurugram to contact rentiers.in
+                            They were very polite and understood our needs completely. They literally went out of their way to help us during shifting. I would recommend anyone who wants a property to contact rentiers.in
                         </div>
                         <div class="name">Yash Malik</div>
                     </div>
-                    <img src="{{asset('images/home/man1.jpg')}}">
                 </div>
             </div>
             <img src="{{asset('images/home/test-down-arrow.svg')}}" onclick="scrollDown(event)" />

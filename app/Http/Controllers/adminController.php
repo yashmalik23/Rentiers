@@ -9,231 +9,172 @@ use DB;
 use Hash;
 use Illuminate\Http\Request;
 
+class checkauth{
+    public $city;
+    public $role;
+
+    public function __construct(){
+        if(Auth::user()!=null){
+            $admin = DB::table('subadmins')->where('email','=',Auth::user()->email)->count();
+            if($admin>0){
+                $admin = DB::table('subadmins')->where('email','=',Auth::user()->email)->get();
+                foreach($admin as $admi){
+                    $this->city= $admi->city;
+                    $this->role= $admi->role;
+                }
+            }else{
+                Auth::logout();
+                return view('admin/includes/login')->with('error','Not an admin or subadmin');
+            }
+        }else{
+            return view('admin/includes/login')->with('error','login_to_continue');
+        }
+    }
+}
+
 class adminController extends Controller
 {
-    public function index(){
-        return view('admin/includes/login');
+    
+    public function dashboard(){
+        $user = new checkauth;
+        if($user->role=="admin"){
+            $members = DB::table('users')->where('member','=','Member')->count();
+            $sellers = DB::table('users')->where('member','=','Seller')->count();
+            $vassets = DB::table('properties')->where('verified','=','1')->count();
+            $uassets = DB::table('properties')->where('verified','=','0')->count();
+            $contacts = requests::count();
+            return view('admin/includes/dashboard')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
+        }else if($user->role == "subadmin"){
+            $members = DB::table('users')->where('member','=','Member')->count();
+            $sellers = DB::table('users')->where('member','=','Seller')->count();
+            $vassets = DB::table('properties')->whereRaw('verified=1 AND city='.$user->city)->count();
+            $uassets = DB::table('properties')->whereRaw('verified=0 AND city='.$user->city)->count();
+            $contacts = requests::count();
+            return view('admin/includes/dashboard')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
+        }        
     }
 
     //Members
     public function members(){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $members = DB::table('users')->where('member','=','Member')->paginate(12);
-                return view('admin/includes/members')->with('members',$members)->with('search',"");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $members = DB::table('users')->where('member','=','Member')->paginate(12);
+        return view('admin/includes/members')->with('members',$members)->with('search',"");
     }
 
     public function membersearch($text){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $members = DB::table('users')->where('member','=','Member')->where('name','like',$text)->paginate(12);
-                return view('admin/includes/members')->with('members',$members)->with('search',$text);
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" || $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $members = DB::table('users')->where('member','=','Member')->where('name','like',$text)->paginate(12);
+        return view('admin/includes/members')->with('members',$members)->with('search',$text);
     }
 
     public function memberdelete(Request $request){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $id = $request->input('id');
-                $member = User::find($id);
-                $member->delete();
-                $props = DB::table('properties')->where('user_id','=',$id);
-                $props->delete();
-                $members = DB::table('users')->where('member','=','Member')->paginate(12);
-                return view('admin/includes/members')->with('members',$members)->with('search',"")->with('delete',"deleted");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $id = $request->input('id');
+        $member = User::find($id);
+        $member->delete();
+        $props = DB::table('properties')->where('user_id','=',$id);
+        $props->delete();
+        $members = DB::table('users')->where('member','=','Member')->paginate(12);
+        return view('admin/includes/members')->with('members',$members)->with('search',"")->with('delete',"deleted");
     }
 
 
     //Sellers
     public function sellers(){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $sellers = DB::table('users')->where('member','=','Seller')->paginate(12);
-                return view('admin/includes/sellers')->with('sellers',$sellers)->with('search',"");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $sellers = DB::table('users')->where('member','=','Seller')->paginate(12);
+        return view('admin/includes/sellers')->with('sellers',$sellers)->with('search',"");
     }
     
     public function sellersearch($text){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $members = DB::table('users')->where('member','=','Seller')->where('name','like',$text)->paginate(12);
-                return view('admin/includes/sellers')->with('sellers',$members)->with('search',$text);
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $members = DB::table('users')->where('member','=','Seller')->where('name','like',$text)->paginate(12);
+        return view('admin/includes/sellers')->with('sellers',$members)->with('search',$text);
+ 
     }
 
     public function sellerdelete(Request $request){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $id = $request->input('id');
-                $member = User::find($id);
-                $member->delete();
-                $props = DB::table('properties')->where('user_id','=',$id);
-                $props->delete();
-                $members = DB::table('users')->where('member','=','Seller')->paginate(12);
-                return view('admin/includes/sellers')->with('sellers',$members)->with('search',"")->with('delete',"deleted");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $id = $request->input('id');
+        $member = User::find($id);
+        $member->delete();
+        $props = DB::table('properties')->where('user_id','=',$id);
+        $props->delete();
+        $members = DB::table('users')->where('member','=','Seller')->paginate(12);
+        return view('admin/includes/sellers')->with('sellers',$members)->with('search',"")->with('delete',"deleted");
     }
     
     public function vassets(){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = DB::table('properties')->where('verified','=',1)->paginate(12);
-                return view('admin/includes/vassets')->with('props', $props)->with('search',"");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        if($user->role=="admin"){
+            $props = DB::table('properties')->where('verified','=',1)->paginate(12);
+            return view('admin/includes/vassets')->with('props', $props)->with('search',"");
+        }else{
+            $props = DB::table('properties')->whereRaw('verified=1 AND city='.$user->city)->paginate(12);
+            return view('admin/includes/vassets')->with('props', $props)->with('search',"");
         }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     //Unverified assets
     public function uassets(){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = DB::table('properties')->where('verified','=',0)->paginate(12);
-                return view('admin/includes/uassets')->with('props', $props)->with('search',"");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        if($user->role=="admin"){
+            $props = DB::table('properties')->where('verified','=',0)->paginate(12);
+            return view('admin/includes/uassets')->with('props', $props)->with('search',"");
+        }else{
+            $props = DB::table('properties')->whereRaw('verified=0 AND city='.$user->city)->paginate(12);
+            return view('admin/includes/uassets')->with('props', $props)->with('search',"");
         }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function requests(){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $requests = DB::table('requests')->paginate(12);
-                return view('admin/includes/requests')->with('requests', $requests)->with('search',"");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $requests = DB::table('requests')->paginate(12);
+        return view('admin/includes/requests')->with('requests', $requests)->with('search',"");
     }
     public function requestsearch($text){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $requests = DB::table('requests')->whereRaw('status like "%'.$text.'%" OR contact like "%'.$text.'%"')->paginate(12);
-                return view('admin/includes/requests')->with('requests', $requests)->with('search',$text);
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $requests = DB::table('requests')->whereRaw('status like "%'.$text.'%" OR contact like "%'.$text.'%"')->paginate(12);
+        return view('admin/includes/requests')->with('requests', $requests)->with('search',$text);
     }
     public function requestdelete(Request $request){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                requests::find($request->input($id))->delete();
-                return back()->with('delete',"deleted");
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        requests::find($request->input($id))->delete();
+        return back()->with('delete',"deleted");
     }
     public function requeststatus(Request $request){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $req = requests::find($request->input('id'));
-                $req->status = $request->input('requeststatus');
-                $req->updated_at = time();
-                $req->save();
-                return back()->with('status','status');
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
-    }
-
-    public function dashboard(){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $members = DB::table('users')->where('member','=','Member')->count();
-                $sellers = DB::table('users')->where('member','=','Seller')->count();
-                $vassets = DB::table('properties')->where('verified','=','1')->count();
-                $uassets = DB::table('properties')->where('verified','=','0')->count();
-                $contacts = requests::count();
-                return view('admin/includes/dashboard')->with('success','logged_in')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
-    }
-
-    public function login(Request $request){
-
-        $user_data = array(
-            'email' => $request->input('email'),
-            'password' => $request->input('password')
-        );
-
-        if(Auth::attempt($user_data)){
-            if($request->input('email') == 'inforentiers@gmail.com'){
-                $members = DB::table('users')->where('member','=','Member')->count();
-                $sellers = DB::table('users')->where('member','=','Seller')->count();
-                $vassets = DB::table('properties')->where('verified','=','1')->count();
-                $uassets = DB::table('properties')->where('verified','=','0')->count();
-                $contacts = requests::count();
-                return view('admin/includes/dashboard')->with('members',$members)->with('sellers',$sellers)->with('vassets',$vassets)->with('uassets',$uassets)->with('contacts',$contacts);
-            }else{
-                return view('admin/includes/login')->with('error','wrong_details');
-            }
-        }else{
-            return view('admin/includes/login')->with('error','wrong_details');
-        }
-    }
-
-    public function logout(){
-        Auth::logout();
-        return redirect(route('adminlogin'));
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $req = requests::find($request->input('id'));
+        $req->status = $request->input('requeststatus');
+        $req->updated_at = time();
+        $req->save();
+        return back()->with('status','status');
     }
 
     public function changepassword(Request $request){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                if($request->input('npassword') != $request->input('cpassword')){
-                    return back()->with('error','password_dont_match');
-                }else if(Hash::check($request->input('opassword'),Auth::user()->password)){
-                    $admin = User::find(1);
-                    $admin->password = Hash::make($request->input('npassword'));
-                    $admin->save();
-                    return back()->with('success','Changed successfully');
-                }
-                return back()->with('error','wrong_current_password');
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        if($request->input('npassword') != $request->input('cpassword')){
+            return back()->with('error','password_dont_match');
+        }else if(Hash::check($request->input('opassword'),Auth::user()->password)){
+            $admin = User::find(1);
+            $admin->password = Hash::make($request->input('npassword'));
+            $admin->save();
+            return back()->with('success','Changed successfully');
         }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
+        return back()->with('error','wrong_current_password');
     }
 
     public function show($id){
@@ -266,42 +207,36 @@ class adminController extends Controller
 
     public function changever(Request $request){
         $id = $request->input('id');
-        if(Auth::user()){
-            if(Auth::user()->email=="inforentiers@gmail.com"){
-                $prop = properties::find($id);
-                $prop->verified = 1;
-                $prop->save();
-                return redirect(route('uassets'))->with('success','success');
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
-        }else{
-            return redirect(route('adminlogin'))->with('timeout',"timed_out");
-        }
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $prop = properties::find($id);
+        $prop->verified = 1;
+        $prop->save();
+        return redirect(route('uassets'))->with('success','success');
     }
 
     public function upropsearch($text){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = properties::whereRaw('verified=0 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
-                return view('admin/includes/uassets')->with('props', $props)->with('search',$text);
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        if($user->role == "admin"){
+            $props = properties::whereRaw('verified=0 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
+            return view('admin/includes/uassets')->with('props', $props)->with('search',$text);
+        }else{
+            $props = properties::whereRaw('verified=0 AND city='.$user->city.' AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
+            return view('admin/includes/uassets')->with('props', $props)->with('search',$text);
         }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
 
     public function vpropsearch($text){
-        if(Auth::user()){
-            if(Auth::user()->email == 'inforentiers@gmail.com'){
-                $props = properties::whereRaw(' verified=1 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
-                return view('admin/includes/vassets')->with('props', $props)->with('search',$text);
-            }else{
-                return redirect(route('adminlogin'))->with('timeout',"timed_out");
-            }
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        if($user->role == "admin"){
+            $props = properties::whereRaw('verified=1 AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
+            return view('admin/includes/vassets')->with('props', $props)->with('search',$text);
+        }else{
+            $props = properties::whereRaw('verified=1 AND city='.$user->city.' AND (`houseNo` like "%'.$text.'%" OR `streetName` like "%'.$text.'%" OR `city` like "%'.$text.'%" OR `locality` like "%'.$text.'%" OR `nearByArea` like "%'.$text.'%")')->paginate(12);
+            return view('admin/includes/vassets')->with('props', $props)->with('search',$text);
         }
-        return redirect(route('adminlogin'))->with('timeout',"timed_out");
     }
     public function uaddimage(Request $request){
         

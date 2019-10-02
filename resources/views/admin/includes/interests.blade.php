@@ -1,7 +1,5 @@
 @extends('admin.layout')
 @section('admin-view')
-    @if(Auth::user() != null)
-        @if (Auth::user()->email == "inforentiers@gmail.com")
             <div class="main-layout">
                 @if(session('delete'))
                     <div class="alert alert-success" role="alert">
@@ -50,10 +48,4 @@
                 </div>
                 <div class="admin-page-links">{{$interests->links()}}</div>
             </div>
-        @else
-            <script>window.location.href="/login"</script>
-        @endif
-    @else
-        <script>window.location.href="/login"</script>
-    @endif
 @endsection

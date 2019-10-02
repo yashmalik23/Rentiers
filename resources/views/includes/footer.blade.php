@@ -1,6 +1,6 @@
 <div class="request-div">
     <div>Reach us</div>
-    <a target="_blank" href=""><img src="{{asset('images/footer/instagram.svg')}}" id='footer-chat-image'></a>
+    <a target="_blank" href="https://www.instagram.com/rentiers.in/"><img src="{{asset('images/footer/instagram.svg')}}" id='footer-chat-image'></a>
     <a target="_blank" href="https://www.facebook.com/rentiersgroup"><img src="{{asset('images/footer/facebook.svg')}}" id='footer-chat-image'></a>
     <img src="{{asset('images/footer/chat.svg')}}" id='footer-chat-image' onclick="togglechat(event)">
     <form class="request-footer-form" method="POST" action="{{ route('requests') }}">

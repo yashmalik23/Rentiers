@@ -7,6 +7,29 @@ use DB;
 use Auth;
 use Illuminate\Http\Request;
 
+
+class checkauth{
+    public $city;
+    public $role;
+
+    public function __construct(){
+        if(Auth::user()!=null){
+            $admin = DB::table('subadmins')->where('email','=',Auth::user()->email)->get();
+            if(count($admin)>0){
+                foreach($admin as $admi){
+                    $this->city= $admi->city;
+                    $this->role= $admi->role;
+                }
+            }else{
+                Auth::logout();
+                return view('admin/includes/login')->with('error','Not an admin or subadmin');
+            }
+        }else{
+            return view('admin/includes/login')->with('error','login_to_continue');
+        }
+    }
+}
+
 class interestController extends Controller
 {
     public function store(Request $request){
@@ -27,40 +50,24 @@ class interestController extends Controller
     }
 
     public function show(){
-        if(Auth::user()!= null){
-            if(Auth::user()->email == "inforentiers@gmail.com"){
-                $interests = DB::table('interests')->paginate(12);
-                return view('admin/includes/interests')->with('interests',$interests)->with('search','');
-            }else{
-                return redirect(route('adminlogin'));
-            }
-        }
-        return redirect(route('adminlogin'));
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $interests = DB::table('interests')->paginate(12);
+        return view('admin/includes/interests')->with('interests',$interests)->with('search','');
     }
 
     public function delete(Request $request){
-        if(Auth::user()!= null){
-            if(Auth::user()->email == "inforentiers@gmail.com"){
-                $int = interests::find($request->input('id'));
-                $int->delete();
-                // $interests = interests::all()->paginate(12);
-                return back()->with('delete','deleted');
-            }else{
-                return redirect(route('adminlogin'));
-            }
-        }
-        return redirect(route('adminlogin'));
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $int = interests::find($request->input('id'));
+        $int->delete();
+        return back()->with('delete','deleted');
     }
 
     public function search($text){
-        if(Auth::user()!= null){
-            if(Auth::user()->email == "inforentiers@gmail.com"){
-                $interests = DB::table('interests')->whereRaw('propdetails like "%'.$text.'%" OR name like "%'.$text.'%"')->paginate(12);
-                return view('admin/includes/interests')->with('interests',$interests)->with('search',$text);
-            }else{
-                return redirect(route('adminlogin'));
-            }
-        }
-        return redirect(route('adminlogin'));
+        $user = new checkauth;
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $interests = DB::table('interests')->whereRaw('propdetails like "%'.$text.'%" OR name like "%'.$text.'%"')->paginate(12);
+        return view('admin/includes/interests')->with('interests',$interests)->with('search',$text);
     }
 }

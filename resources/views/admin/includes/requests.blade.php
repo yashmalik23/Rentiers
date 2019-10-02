@@ -1,7 +1,5 @@
 @extends('admin.layout')
 @section('admin-view')
-    @if(Auth::user() != null)
-        @if (Auth::user()->email == "inforentiers@gmail.com")
             <div class="main-layout">
                 <!-- nav-bar -->
                 <div class="nav-bar">
@@ -85,10 +83,4 @@
                 </div>
                 <div class="admin-page-links">{{$requests->links()}}</div>
             </div>
-        @else
-            <script>window.location.href="/login"</script>
-        @endif
-    @else
-        <script>window.location.href="/login"</script>
-    @endif
 @endsection

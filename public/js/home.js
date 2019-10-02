@@ -9,6 +9,12 @@ function dropdown(e){
 function changeoption(e){
     var text = e.target.textContent;
     e.target.parentElement.previousElementSibling.textContent = text
+
+    let hiddeninput = e.target.parentElement.nextElementSibling;
+    if(hiddeninput != null){
+        hiddeninput.value = e.target.textContent;
+    }
+
     var options = e.target.parentElement;
     if (options.style.display == "none" || options.style.display == ""){
         options.style.display = "block";
@@ -84,4 +90,9 @@ function scrollDown(e){
 function scrollUp(e){
     let slider = e.target.nextElementSibling;
     slider.scrollTop = 0;
+}
+
+function searchProps(){
+    let button = document.getElementById('gosearch');
+    button.click();
 }

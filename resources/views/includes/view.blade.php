@@ -49,7 +49,7 @@
                     </div>
                     <div class="view-prop-main-logo">
                         <img src={{asset('images/search/parking.svg')}}>
-                        <div>{{explode("_",$prop->parking)[0]}} parkings</div>
+                        <div>{{(explode("_",$prop->parking)[0] == "")?NA:explode("_",$prop->parking)[0]}} parkings</div>
                     </div>
                     <div class="view-prop-main-logo">
                         <img src={{asset('images/search/bathtub.svg')}}>
@@ -160,7 +160,7 @@
                     <div class="rest-heading">Features</div>
                     <div class="rest-details-div">
                         <div class="one-feature">
-                            <div class="one-feature-heading">Ameneties: </div>
+                            <div class="one-feature-heading">Amenities: </div>
                             @for ($i = 0; $i < count(str_split($prop->ameneties)); $i++)
                                 @if(str_split($prop->ameneties)[$i]== "1")
                                     <div>{{$ameneties[$i+15-count(str_split($prop->ameneties))]}}, </div>
@@ -179,7 +179,7 @@
                             <div class="one-feature-heading">Tenant preference: </div>
                             @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
                                 @if(str_split($prop->tenant)[$i]== "1")
-                                    <div>{{$tenant[$i+7-count(str_split($prop->tenant))]}}, </div>
+                                    <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}}, </div>
                                 @endif
                             @endfor
                         </div>

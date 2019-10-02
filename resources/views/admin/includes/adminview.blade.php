@@ -45,7 +45,7 @@
                     </div>
                     <div class="view-prop-main-logo">
                         <img src={{asset('images/search/parking.svg')}}>
-                        <div>{{explode("_",$prop->parking)[0]}} parkings</div>
+                        <div>{{(explode("_",$prop->parking)[0] == "")?NA:explode("_",$prop->parking)[0]}} parkings</div>
                     </div>
                     <div class="view-prop-main-logo">
                         <img src={{asset('images/search/bathtub.svg')}}>
@@ -63,14 +63,10 @@
                             <div class="one-feature-heading">More description: </div>
                             <div>{{$prop->propertySecondType}}, {{($prop->propertyThirdType == "None")? "": $prop->propertyThirdType}}</div>
                         </div>
-                        @if(Auth::user() != null)
-                            @if(Auth::user()->email=="inforentiers@gmail.com")
-                                <div class="one-feature">
-                                    <div class="one-feature-heading">Posted by: </div>
-                                    <div>{{$prop->postedBy}} for {{$prop->listedFor}}</div>
-                                </div>
-                            @endif
-                        @endif
+                        <div class="one-feature">
+                            <div class="one-feature-heading">Posted by: </div>
+                            <div>{{$prop->postedBy}} for {{$prop->listedFor}}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="rest-details">
@@ -175,7 +171,7 @@
                             <div class="one-feature-heading">Tenant preference: </div>
                             @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
                                 @if(str_split($prop->tenant)[$i]== "1")
-                                    <div>{{$tenant[$i+7-count(str_split($prop->tenant))]}}, </div>
+                                    <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}}, </div>
                                 @endif
                             @endfor
                         </div>
@@ -188,6 +184,9 @@
             <div class="help-line-1">
                 If you don't know what to do next, you can email us at support@rentiers.in or call us at +91 9414573503.  
             </div>
+            @foreach($props as $prop)
+                <div>Property id {{$prop->id}}</div>
+            @endforeach
             <div>Interested users</div>
             @foreach($interests as $interest)
                 <div class="adminseeinterest">{{$interest->name}},{{$interest->contact}}</div>

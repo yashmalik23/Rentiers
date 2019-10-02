@@ -15,10 +15,10 @@
     <title>Rentiers.in</title>
 </head>
 <body>
-    @if(isset($error))
+    @if(session('error'))
     <div class="alert alert-danger" role="alert">
         <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Error!</strong> Wrong details!
+        <strong>Error!</strong>{{session('error')}}
     </div>
     @endif
     @if(isset($timeout))

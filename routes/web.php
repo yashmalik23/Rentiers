@@ -46,9 +46,9 @@ Route::get('aboutus', array('as'=>'aboutus',function () {
     return view('includes/about');
 }));
 
-Route::get('search', array('as'=>'search',function () {
-    return view('includes/searchResults');
-}));
+Route::get('search', 'searchController@search')->name('searchresults');
+Route::post('normal', 'searchController@normal')->name('normalsearch');
+Route::post('searchfilters', 'searchController@filters')->name('gosearch');
 
 
 //User search and view
@@ -56,8 +56,8 @@ Route::get('property/{id}','searchController@show')->name('userpropview');
 Route::post('interests','interestController@store')->name('addinterest');
 
 //Admin panel
-Route::get('traceadmin', 'adminController@index')->name('adminlogin');
-Route::post('adminlogin', 'adminController@login')->name('tryadminlogin');
+Route::get('traceadmin', 'adminloginController@index')->name('adminlogin');
+Route::post('adminlogin', 'adminloginController@login')->name('tryadminlogin');
 
 Route::get('members', 'adminController@members')->name('members');
 Route::post('memberdelete','adminController@memberdelete')->name('memberdelete');
@@ -88,7 +88,7 @@ Route::get('settings', array('as'=>'password',function () {
     return view('admin/includes/password');
 }));
 Route::post('adminchangepassword','adminController@changepassword')->name('adminchangepassword');
-Route::get('adminlogout','adminController@logout')->name('adminlogout');
+Route::get('adminlogout','adminloginController@logout')->name('adminlogout');
 
 
 //Admin search routes

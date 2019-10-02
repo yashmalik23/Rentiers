@@ -4,7 +4,7 @@
     <div class="field-inputs">
         <div class="line-4">
             <div class="list-form-check-field" id="ameneties">
-                <div class="check-field-label">Ameneties</div>
+                <div class="check-field-label">Amenities</div>
                 @for ($i = 0; $i < count(str_split($prop->ameneties)); $i++)
                     @if(str_split($prop->ameneties)[$i]== "1")
                         <div class="check-option">
@@ -57,8 +57,6 @@
             </div>
         </div>
         <div class="line-4">
-            @if(Auth::user()!= null)
-                @if(Auth::user()->email == "inforentiers@gmail.com")
                     @if(count(explode(",",$prop->ownerdetails))>2)
                         <div class="list-input-field">
                             <label for="ownerDetails1">Owner's name *</label>
@@ -86,12 +84,6 @@
                             <input id="ownerDetails3" class="list-form-input" placeholder="contact" name="ownerDetails3" >
                         </div>
                     @endif
-                @else
-                    <input id="ownerDetails1" class="list-form-input" value="{{Auth::user()->name}}" name="ownerDetails1" hidden />
-                    <input id="ownerDetails2" class="list-form-input" value="{{Auth::user()->email}}" name="ownerDetails2" hidden />
-                    <input id="ownerDetails3" class="list-form-input" value="{{Auth::user()->contact}}" name="ownerDetails3" hidden />
-                @endif
-            @endif
         </div>
     </div>
     <input name="ameneties" type="text" id="ameneties-hidden" hidden>

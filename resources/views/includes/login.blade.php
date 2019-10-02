@@ -3,7 +3,7 @@
 @if(session('error'))
 <div class="alert alert-danger" role="alert">
     <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Error!</strong> Login failed! Wrong details or format.
+    <strong>Error!</strong> Login failed! Email already exists or details are incorrect.
 </div>
 @endif
 @if(session('message'))
