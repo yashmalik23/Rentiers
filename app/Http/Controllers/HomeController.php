@@ -32,8 +32,14 @@ class HomeController extends Controller
         $prop4 = properties::find(explode(",",$stat->recentproperties)[3]);
         $prop5 = properties::find(explode(",",$stat->recentproperties)[4]);
         $prop = [$prop1,$prop2,$prop3, $prop4, $prop5];
+        $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+        $locality = DB::table('suggestions')->find(1)->localities;
+        $projects = DB::table('suggestions')->find(1)->projectNames;
         return view('includes/home')
                 ->with('stats',$stat)
+                ->with('cities',$citie)
+                ->with('localities',$locality)
+                ->with('projects',$projects)
                 ->with('props',$prop)
                 ->with('prop2',$prop2)
                 ->with('prop3',$prop3)

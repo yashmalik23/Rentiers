@@ -22,10 +22,16 @@ class searchController extends Controller
         $furnishing = ["Unfurnished","Fully furnished", "Semi furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
         $sort =["Relevance","Price: low to high","Price: high to low","Date: Newest first"];
+        $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+        $locality = DB::table('suggestions')->find(1)->localities;
+        $projects = DB::table('suggestions')->find(1)->projectNames;
         return view('includes/searchResults')->with('search',$request->input('search-text'))
                                             ->with('props',$props)
                                             ->with('sort',$sort)
                                             ->with('ameneties',$ameneties)
+                                            ->with('cities',$citie)
+                                            ->with('localities',$locality)
+                                            ->with('projects',$projects)
                                             ->with('furnishing',$furnishing)
                                             ->with('configuration',$configuration)
                                             ->with('city',$request->input('city'))
@@ -45,11 +51,17 @@ class searchController extends Controller
         $furnishing = ["Unfurnished","Fully furnished", "Semi furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
         $sort =["Relevance","Price: low to high","Price: high to low","Date: Newest first"];
+        $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+        $locality = DB::table('suggestions')->find(1)->localities;
+        $projects = DB::table('suggestions')->find(1)->projectNames;
         return view('includes/searchResults')->with('search',"")
                                             ->with('props',$props)
                                             ->with('sort',$sort)
                                             ->with('ameneties',$ameneties)
                                             ->with('furnishing',$furnishing)
+                                            ->with('cities',$citie)
+                                            ->with('localities',$locality)
+                                            ->with('projects',$projects)
                                             ->with('configuration',$configuration)
                                             ->with('city','GURUGRAM')
                                             ->with('listedFor','RENT')
@@ -82,6 +94,9 @@ class searchController extends Controller
         $furnishing = ["Unfurnished","Fully furnished", "Semi furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
         $sort =["Relevance","Price: low to high","Price: high to low","Date: Newest first"];
+        $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+        $locality = DB::table('suggestions')->find(1)->localities;
+        $projects = DB::table('suggestions')->find(1)->projectNames;
         $props = DB::table('properties')->paginate(5);
         return back()->with('search',$text)
                     ->with('props',$props)
@@ -89,6 +104,9 @@ class searchController extends Controller
                     ->with('ameneties',$ameneties)
                     ->with('furnishing',$furnishing)
                     ->with('configuration',$configuration)
+                    ->with('cities',$citie)
+                    ->with('localities',$locality)
+                    ->with('projects',$projects)
                     ->with('closeTo',$closeTo)
                     ->with('city',$city)
                     ->with('listedFor',$listedFor)

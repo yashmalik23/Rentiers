@@ -16,10 +16,10 @@ class propertiesController extends Controller
             if(Auth::user()->member != "Member"){
                 return view('includes/list');
             }else{
-                return redirect(route('login'))->with('member','login');
+                return redirect(route('login'))->with('member','login')->with('message','Must be a seller to list properties');
             }
         }else{
-            return redirect(route('login'))->with('message','login');
+            return redirect(route('login'))->with('message','login to continue');
         }
     }
     

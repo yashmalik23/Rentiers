@@ -9,7 +9,7 @@
 @if(session('message'))
 <div class="alert alert-danger" role="alert">
     <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Error!</strong> Login to continue.
+    <strong>Error!</strong> {{session('message')}}.
 </div>
 @endif
 <div class="frontalert alert-danger" id="frontalert">

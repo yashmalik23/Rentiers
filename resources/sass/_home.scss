@@ -142,9 +142,12 @@
     list-style-type: none;
     margin: 30px 0px 0px;
     padding: 0;
+    overflow-y: scroll;
+    max-height: 100px;
+    margin-left: -10px;
     li{
         margin: 0px 0px 0px -10px;
-        padding: 5px 33px;
+        padding: 5px 38px;
         background: white;
         &:hover{
             color: white;
@@ -158,6 +161,8 @@
     list-style-type: none;
     margin: 30px 0px 0px;
     padding: 0;
+    overflow-y: scroll;
+    max-height: 100px;
     li{
         margin: 0px 0px 0px 10px;
         padding: 5px 24px;

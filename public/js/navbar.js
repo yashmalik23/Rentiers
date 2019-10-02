@@ -78,3 +78,33 @@ function checkImages(e){
         }
     }
 }
+
+function addOptions(e, arr, arr2){
+    let list = e.target.nextElementSibling;
+    let text = e.target.value;
+    text = text.toLowerCase();
+    list.innerHTML = "";
+    arr = arr.split(",")
+    arr2 = arr2.split(",")
+    arr = arr.concat(arr2);
+    for(let i in arr){
+        if(arr[i].toLowerCase().indexOf(text)>-1){
+            var newOption = document.createElement("li");
+            newOption.innerHTML = arr[i];
+            newOption.onclick = function (e){
+                changesugg(e);
+            }
+            list.appendChild(newOption);
+        }
+    }
+    list.style.display= "block";
+    if(text == ""){
+        list.style.display = "none";
+    }
+}
+
+function changesugg(e){
+    let target = e.target.parentElement.previousElementSibling;
+    target.value = e.target.textContent;
+    e.target.parentElement.style.display = "none";
+}

@@ -32,8 +32,9 @@
             <div class="drop-down-btn">
                 <div class="drop-down-title" onclick="dropdown(event)">GURUGRAM</div>
                 <ul class="drop-down-options">
-                    <li onclick="changeoption(event)">GURUGRAM</li>
-                    <li onclick="changeoption(event)">HISAR</li>
+                    @foreach($cities as $city)
+                    <li onclick="changeoption(event)">{{$city}}</li>
+                    @endforeach
                 </ul>
                 <input name="city" type="text" value="GURUGRAM" hidden>
                 <img src="{{asset('images/home/search-down-arrow.svg')}}">
@@ -47,7 +48,9 @@
                 <input name="listedFor" type="text" value="RENT" hidden>
                 <img src="{{asset('images/home/search-down-arrow.svg')}}">
             </div>
-            <input type="text" placeholder="Search..." class="search-input" name="search-text"/>
+            <input type="text" placeholder="Search..." class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')"/>
+            <ul class="data-list">
+            </ul>
             <img src="{{asset('images/home/search.svg')}}" class="search-icon" onclick="searchProps()"/>
         </div>
         <button id="gosearch" type="submit" hidden></button>
