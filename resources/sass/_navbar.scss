@@ -53,6 +53,7 @@ body{
             position: absolute;
             display: none;
             margin-left: 433px;
+            z-index: 500;
             li{
                 display: block;
                 background: white;
@@ -176,6 +177,25 @@ body{
     padding: 0;
     margin-top: 30px;
     margin-left: 220px;
+    max-height: 100px;
+    width: 30%;
+    max-width: 150px;
+    display: none;
+    overflow-y: scroll;
+    li{
+        padding: 5px 10px;
+        cursor: pointer;
+        &:hover{
+            background: #3a6ec9;
+            color: white;
+        }
+    }
+}
+.dat-list{
+    position: absolute;
+    background: white;
+    list-style-type: none;
+    padding: 0;
     max-height: 100px;
     width: 30%;
     max-width: 150px;

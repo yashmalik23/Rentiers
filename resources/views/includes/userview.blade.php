@@ -115,12 +115,26 @@
                                     <div>Pooja Room, Servant Room, Study Room</div>
                                 @endif
                             </div>
-                        @else
-                            <div class="one-feature">
-                                <div class="one-feature-heading">Availabilty: </div>
-                                <div>{{$prop->availability}}</div>
-                            </div>
                         @endif
+                        <div class="one-feature">
+                            <div class="one-feature-heading">Availabilty: </div>
+                            <div>{{$prop->availability}}, available from {{$prop->availableFrom}}</div>
+                        </div>
+                        <div class="one-feature">
+                            <div class="one-feature-heading">Inventory: </div>
+                                <div>
+                                    @for ($i = 0; $i < 9; $i++)
+                                        @if(explode(",",$prop->invcounts)[$i] != "0")
+                                            <div> {{explode(",",$prop->invcounts)[$i]}} {{$invcounts[$i]}},</div>
+                                        @endif
+                                    @endfor
+                                    @for ($i = 0; $i <9; $i++)
+                                        @if(str_split($prop->invchecks)[$i]== "1")
+                                            <div>{{$invchecks[$i]}}, </div>
+                                        @endif
+                                    @endfor
+                            </div>
+                        </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Balconies: </div>
                             <div>{{$prop->balconies}}</div>

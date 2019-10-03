@@ -9,9 +9,6 @@
         <strong>Success!</strong> Property listed.
     </div>
     @endif
-    <div class="frontalert alert-danger" id="frontalert">
-        Wrong details
-    </div>
     <script type="text/javascript" src="{{asset('js/listProps/validate.js') }}"></script>
     <div class="list-properties">
         <div class="list-heading">
@@ -70,6 +67,9 @@
             </div>
             <div class="help-line-2">
                 Get your property verified easily. There are more chances of getting applications if you complete all the form fields.
+            </div>
+            <div class="frontalert alert-danger" id="frontalert">
+                Wrong details
             </div>
             <div class="continue-list-button" onclick="validateforms()">Continue</div>
         </div>

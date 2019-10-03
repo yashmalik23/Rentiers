@@ -63,7 +63,17 @@
                             <div class="property-address">{{$prop->locality.", ".$prop->city}}</div>
                             <div class="property-interested-numbers">Interested members : {{($prop->intmembers == "" || $prop->intmembers == null)? 0 :$prop->intmembers}}</div>
                         </div>
-                        <div class="property-footer">Details: {{Auth::user()->email}}, {{Auth::user()->contact}}, {{Auth::user()->name}}</div>
+                        <div class="property-footer">Details:
+                            @if(count(explode(",",$prop->ownerdetails))>2)
+                                @if(explode(",",$prop->ownerdetails)[0] != "" && explode(",",$prop->ownerdetails)[1] != "" && explode(",",$prop->ownerdetails)[2] != "")
+                                {{explode(",",$prop->ownerdetails)[0]}},{{explode(",",$prop->ownerdetails)[1]}},{{explode(",",$prop->ownerdetails)[2]}}
+                                @else
+                                {{Auth::user()->email}}, {{Auth::user()->contact}},{{Auth::user()->name}}
+                                @endif
+                            @else
+                                {{Auth::user()->email}}, {{Auth::user()->contact}},{{Auth::user()->name}}
+                            @endif
+                        </div>
                     </div>
                     @endforeach
                 </div>

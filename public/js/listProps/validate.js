@@ -137,8 +137,7 @@ function handleSubmit(){
         document.getElementById('ageOfProperty-hidden').value = document.getElementById('ageOfProperty').textContent;
         document.getElementById('floor-hidden').value= parseInt(document.getElementById('floor').value);
         document.getElementById('totalFloors-hidden').value= parseInt(document.getElementById('totalFloors').value);
-        document.getElementById('availableFrom-hidden').value= "None"
-        document.getElementById('availability-hidden').value= "None";
+        document.getElementById('availability-hidden').value= document.getElementById('availability').textContent;
 
     }else if(propertyType == "Commercial"){
         document.getElementById('configuration-hidden').value= "Select";
@@ -178,9 +177,29 @@ function handleSubmit(){
         document.getElementById('ageOfProperty-hidden').value = document.getElementById('commageOfProperty').textContent;
         document.getElementById('floor-hidden').value= parseInt(document.getElementById('commfloor').value);
         document.getElementById('totalFloors-hidden').value= parseInt(document.getElementById('commtotalFloors').value);
-        document.getElementById('availableFrom-hidden').value= "None"
         document.getElementById('availability-hidden').value= document.getElementById('commavailabilty').textContent;
     }
+    document.getElementById('availableFrom-hidden').value= document.getElementById('aFrom').value;
+
+    //Inventories
+    let invchecks = document.getElementById('inventory-checks').children;
+    let invchecksString = ""
+    for(let i=0; i<9;i++){
+        let img = invchecks[i].children[0];
+        if(img.src.indexOf('images/listprops/checked.svg')>-1){
+            invchecksString=invchecksString.concat("1");
+        }else{
+            invchecksString=invchecksString.concat("0");
+        }
+    }
+    document.getElementById('invchecks-hidden').value= invchecksString;
+
+    let countoptions = document.getElementsByClassName('count-options')
+    let countString =""
+    for(i=0;i<9;i++){
+        countString = countString+countoptions[i].children[1].value+","
+    }
+    document.getElementById('invcounts-hidden').value = countString;
 
     //features
     let closeTo = document.getElementById('closeTo').children;
@@ -295,6 +314,7 @@ function validateThirdResidentForm(){
     let ageOfProperty = document.getElementById('ageOfProperty');
     let floor = document.getElementById('floor');
     let totalFloors = document.getElementById('totalFloors');
+    let availability = document.getElementById('availability');
 
     if(configuration.textContent == "Select"){
         showModal("Select configuration");
@@ -331,6 +351,9 @@ function validateThirdResidentForm(){
         return false;
     }else if(totalFloors.value == ""){
         showModal("Enter total number of floors");
+        return false;
+    }else if(availability.textContent == "Select"){
+        showModal("Select availability");
         return false;
     }
     return true;

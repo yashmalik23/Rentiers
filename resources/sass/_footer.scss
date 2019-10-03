@@ -65,6 +65,11 @@
         line-height: 30px;
         margin-right: 10px;
     }
+    .request-title{
+        line-height: 25px;
+        padding: 8px 15px;
+        margin-right: 0px;
+    }
 }
 #footer-chat-image{
     width: 30px;
@@ -76,7 +81,7 @@
     display: none;
     position: absolute;
     box-shadow: 0px 0px 60px rgb(80, 67, 112, 0.1);
-    margin: -380px -230px 30px -180px;
+    margin: -400px -230px 30px -180px;
     width: 300px;
     background-color: white;
     .footer-submit{

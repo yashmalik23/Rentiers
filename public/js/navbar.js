@@ -108,3 +108,9 @@ function changesugg(e){
     target.value = e.target.textContent;
     e.target.parentElement.style.display = "none";
 }
+
+function hideOptions(e){
+    setTimeout(function(){
+        e.target.nextElementSibling.style.display = "none" 
+        },500);  
+}

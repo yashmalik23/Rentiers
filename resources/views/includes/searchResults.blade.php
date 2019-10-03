@@ -25,7 +25,7 @@
                     <input name="listedFor" type="text" value="RENT" hidden>
                     <img src="{{asset('images/home/search-down-arrow.svg')}}">
                 </div>
-                <input type="text" value="{{$search}}" placeholder="Search property" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')"/>
+                <input type="text" value="{{$search}}" placeholder="Search property" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
                 <ul class="data-list">
                 </ul>
                 <img src="{{asset('images/home/search.svg')}}" class="search-icon" onclick="checkAllFilters()"/>

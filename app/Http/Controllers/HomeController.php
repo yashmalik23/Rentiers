@@ -40,10 +40,6 @@ class HomeController extends Controller
                 ->with('cities',$citie)
                 ->with('localities',$locality)
                 ->with('projects',$projects)
-                ->with('props',$prop)
-                ->with('prop2',$prop2)
-                ->with('prop3',$prop3)
-                ->with('prop4',$prop4)
-                ->with('prop5',$prop5);
+                ->with('props',$prop);
     }
 }

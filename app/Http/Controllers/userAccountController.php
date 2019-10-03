@@ -40,10 +40,18 @@ class userAccountController extends Controller
         $user = Auth::user();
         $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
+        $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];
+        $inventorycounts = ["Beds","Lights","Fans","ACs","Geysers","TVs","Wardrobes","Exhausts","Sofas"];
         $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","Unmarried Couple","Company Lease"];
         if($user->id != null){
             $props = DB::select('SELECT * from properties where id='.$id);
-            return view('includes/view')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant);
+            return view('includes/view')
+                    ->with('props', $props)
+                    ->with('ameneties',$ameneties)
+                    ->with('closeTo',$closeTo)
+                    ->with('invchecks',$inventorychecks)
+                    ->with('invcounts',$inventorycounts)
+                    ->with('tenant',$tenant);
         }else{
             return view('includes/login');
         }
@@ -54,10 +62,25 @@ class userAccountController extends Controller
         $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $rooms = ["Pooja Room","Servant Room","Study Room"];
+        $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];
+        $inventorycounts = ["Beds","Lights","Fans","ACs","Geysers","TVs","Wardrobes","Exhausts","Sofas"];
         $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple","Company Lease"];
         if($user->id != null){
+            $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+            $locality = DB::table('suggestions')->find(1)->localities;
+            $projects = DB::table('suggestions')->find(1)->projectNames;
             $props = DB::select('SELECT * from properties where id='.$id);
-            return view('includes/edit')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant)->with('rooms', $rooms);
+            return view('includes/edit')
+                        ->with('props', $props)
+                        ->with('ameneties',$ameneties)
+                        ->with('invchecks',$inventorychecks)
+                        ->with('invcounts',$inventorycounts)
+                        ->with('closeTo',$closeTo)
+                        ->with('tenant',$tenant)
+                        ->with('rooms', $rooms)
+                        ->with('cities',$citie)
+                        ->with('localities',$locality)
+                        ->with('projects',$projects);
         }else{
             return view('includes/login');
         }

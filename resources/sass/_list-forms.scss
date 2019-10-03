@@ -116,7 +116,7 @@
                 width: 150px;
                 cursor: pointer;
                 user-select: none;  
-                white-space: nowrap;    
+                white-space: normal;  
             }
             img{
                 margin-left: -40px;
@@ -185,7 +185,7 @@
         }
         .list-input-field{
             display: inline-block;
-            padding: 15px 45px 0px 0px;
+            padding: 15px 44px 0px 0px;
             label{
                 display: block;
                 font-weight: 400;
@@ -328,5 +328,32 @@
         'list-heading'
         'form-area' 
         'help-section';
+    }
+}
+
+//last-minute-changes
+.inventory-options{
+    .inventory-heading{
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 8px 0px;
+    }
+    .inventory-lines{
+        margin: 8px 0px;
+        .count-options{
+            display: inline-flex;
+            width: 110px;
+            margin-right: 5px;
+            div{
+                line-height: 26px;
+            }
+            input{
+                width: 45%;
+                outline: none;
+                margin: 0px 0px 0px auto;
+                border: 1px solid $font;
+                padding: 2px 5px;
+            }
+        }
     }
 }

@@ -65,6 +65,7 @@ body {
   position: absolute;
   display: none;
   margin-left: 433px;
+  z-index: 500;
 }
 
 .nav-links li ul li {
@@ -222,6 +223,28 @@ body {
 }
 
 .data-list li:hover {
+  background: #3a6ec9;
+  color: white;
+}
+
+.dat-list {
+  position: absolute;
+  background: white;
+  list-style-type: none;
+  padding: 0;
+  max-height: 100px;
+  width: 30%;
+  max-width: 150px;
+  display: none;
+  overflow-y: scroll;
+}
+
+.dat-list li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dat-list li:hover {
   background: #3a6ec9;
   color: white;
 }
@@ -720,8 +743,9 @@ button.next {
 
 .card-property-name {
   margin-left: 10px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #424b5a;
+  font-weight: 600;
 }
 
 .card-property-location {
@@ -1142,6 +1166,12 @@ button.next {
   margin-right: 10px;
 }
 
+.request-div .request-title {
+  line-height: 25px;
+  padding: 8px 15px;
+  margin-right: 0px;
+}
+
 #footer-chat-image {
   width: 30px;
   height: 30px;
@@ -1153,7 +1183,7 @@ button.next {
   display: none;
   position: absolute;
   box-shadow: 0px 0px 60px rgba(80, 67, 112, 0.1);
-  margin: -380px -230px 30px -180px;
+  margin: -400px -230px 30px -180px;
   width: 300px;
   background-color: white;
 }
@@ -1538,7 +1568,7 @@ footer {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .list-property-form #form-1 .form-drop-down-options img,
@@ -1700,7 +1730,7 @@ footer {
 .list-property-form #form-4 .list-input-field,
 .list-property-form #form-5 .list-input-field {
   display: inline-block;
-  padding: 15px 45px 0px 0px;
+  padding: 15px 44px 0px 0px;
 }
 
 .list-property-form #form-1 .list-input-field label,
@@ -1896,6 +1926,34 @@ footer {
     grid-template-rows: 0.1fr 1fr 1fr;
     grid-template-areas: "list-heading" "form-area" "help-section";
   }
+}
+
+.inventory-options .inventory-heading {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 8px 0px;
+}
+
+.inventory-options .inventory-lines {
+  margin: 8px 0px;
+}
+
+.inventory-options .inventory-lines .count-options {
+  display: inline-flex;
+  width: 110px;
+  margin-right: 5px;
+}
+
+.inventory-options .inventory-lines .count-options div {
+  line-height: 26px;
+}
+
+.inventory-options .inventory-lines .count-options input {
+  width: 45%;
+  outline: none;
+  margin: 0px 0px 0px auto;
+  border: 1px solid #424b5a;
+  padding: 2px 5px;
 }
 
 .login-heading {

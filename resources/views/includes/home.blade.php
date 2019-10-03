@@ -21,8 +21,8 @@
     {{--------------- Headings -------------------}}
     <div class="title-container"> 
         <div class="main-heading">Making Renting Easy</div>
-        <div class="main-line">Your homes are...... our first priority.</div>
-        <div class="second-line">Welcome to 21st century renting</div>
+        <div class="main-line">Your Homes...... Are Our First Priority.</div>
+        <div class="second-line">Welcome To 21st Century Renting</div>
     </div>
 
     {{--------------- Search bar -----------------}}
@@ -48,7 +48,7 @@
                 <input name="listedFor" type="text" value="RENT" hidden>
                 <img src="{{asset('images/home/search-down-arrow.svg')}}">
             </div>
-            <input type="text" placeholder="Search..." class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')"/>
+            <input type="text" placeholder="Search..." class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
             <ul class="data-list">
             </ul>
             <img src="{{asset('images/home/search.svg')}}" class="search-icon" onclick="searchProps()"/>

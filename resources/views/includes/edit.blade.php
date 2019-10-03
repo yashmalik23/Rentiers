@@ -7,9 +7,6 @@
         <strong>Success!</strong> Property updated.
     </div>
     @endif
-    <div class="frontalert alert-danger" id="frontalert">
-        Wrong details
-    </div>
     @foreach ($props as $prop)
         <div class="list-properties">
             <div class="list-heading">
@@ -71,6 +68,9 @@
                     Get your property verified easily. There are more chances of getting applications if you complete all the form fields.
                 </div>
                 <div class="continue-list-button" onclick="validateforms()">Continue</div>
+                <div class="frontalert alert-danger" id="frontalert">
+                    Wrong details
+                </div>
             </div>
         </div> 
     @endforeach

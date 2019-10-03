@@ -7,6 +7,30 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+
+class checkauth{
+    public $city;
+    public $role;
+
+    public function __construct(){
+        if(Auth::user()!=null){
+            $admin = DB::table('subadmins')->where('email','=',Auth::user()->email)->count();
+            if($admin>0){
+                $admin = DB::table('subadmins')->where('email','=',Auth::user()->email)->get();
+                foreach($admin as $admi){
+                    $this->city= $admi->city;
+                    $this->role= $admi->role;
+                }
+            }else{
+                Auth::logout();
+                return view('admin/includes/login')->with('error','Not an admin or subadmin');
+            }
+        }else{
+            return view('admin/includes/login')->with('error','login_to_continue');
+        }
+    }
+}
+
 class propertiesController extends Controller
 {
     //
@@ -14,7 +38,13 @@ class propertiesController extends Controller
     {   
         if(Auth::user()!=null){
             if(Auth::user()->member != "Member"){
-                return view('includes/list');
+                $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+                $locality = DB::table('suggestions')->find(1)->localities;
+                $projects = DB::table('suggestions')->find(1)->projectNames;
+                return view('includes/list')
+                        ->with('cities',$citie)
+                        ->with('localities',$locality)
+                        ->with('projects',$projects);
             }else{
                 return redirect(route('login'))->with('member','login')->with('message','Must be a seller to list properties');
             }
@@ -60,6 +90,9 @@ class propertiesController extends Controller
         $props->images = "noimage.png,";
         $props->verified = 0;
         $props->ownerdetails = $request->input('ownerDetails');
+        $props->intmembers=0;
+        $props->invchecks = $request->input('invchecks');
+        $props->invcounts = $request->input('invcounts');
         $user = Auth::user();
         if($user){
             $props->user_id = $user->id;
@@ -101,9 +134,13 @@ class propertiesController extends Controller
         $props->inUse = $request->input('inUse');
         $props->verified = 0;
         $props->ownerdetails = $request->input('ownerDetails');
+        $props->intmembers=0;
+        $props->invchecks = $request->input('invchecks');
+        $props->invcounts = $request->input('invcounts');
         $user = Auth::user();
         if($user){
-            if($user->email != "inforentiers@gmail.com"){
+            $admin = new checkauth;
+            if($admin->role!="admin" && $admin->role!="subadmin"){
                 $props->user_id = $user->id;
             }
         }

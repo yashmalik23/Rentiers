@@ -207,6 +207,40 @@
                 </div>
             </div>
         </div>
+        <div class="list-input-field">
+            <label for="aFrom">Available From *</label>
+            <input type="date" id="aFrom" class="list-form-input" value="{{$prop->availableFrom}}"/>
+        </div>
+        <div class="inventory-options">
+            <div class="inventory-heading">Inventory *</div>
+            @for($i=0;$i<9;$i=$i+3)
+                <div class="inventory-lines">
+                    @for($j=0;$j<3;$j++)
+                    <div class="count-options">
+                        <div class="count-option-label">{{$invcounts[$i+$j]}}</div>
+                        <input type="number" class="count-option-value" value="{{explode(",",$prop->invcounts)[$i+$j]}}" min="0"/>
+                    </div>
+                    @endfor
+                </div>
+            @endfor
+            <div class="line-4">
+                <div class="list-form-check-field" id="inventory-checks">
+                    @for($i=0;$i<9;$i++)
+                        @if(str_split($prop->invchecks)[$i]== "1")
+                            <div class="check-option">
+                                <img src="{{asset('images/listprops/checked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                                <div class="check-option-value">{{$invchecks[$i]}}</div>
+                            </div>
+                        @else
+                            <div class="check-option">
+                                <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                                <div class="check-option-value">{{$invchecks[$i]}}</div>
+                            </div>
+                        @endif
+                    @endfor
+                </div>
+            </div>
+        </div>
     </div>
     <input name="configuration" type="text" id="configuration-hidden" value="{{$prop->configuration}}" hidden>
     <input name="area" type="text" id="area-hidden" value="{{$prop->area}}" hidden>

@@ -8,8 +8,9 @@
                 <div class="drop-down-heading" onclick="showdrop(event)" id="city">{{$prop->city}}</div>
                 <img src="{{asset('images/navbar/down-arrow.svg')}}" />
                 <ul class="drop-down-list">
-                    <li onclick="changeoption(event)">Gurugram</li>
-                    <li onclick="changeoption(event)">Hisar</li>
+                    @foreach($cities as $city)
+                    <li onclick="changeoption(event)">{{$city}}</li>
+                    @endforeach
                 </ul>
             </div>
             <input name="city" type="text" hidden value="{{$prop->city}}">
@@ -21,7 +22,9 @@
             </div>
             <div class="list-input-field">
                 <label for="streetName">Street/Project Name *</label>
-                <input id="streetName" class="list-form-input" value="{{$prop->streetName}}" name="streetName">
+                <input id="streetName" class="list-form-input" value="{{$prop->streetName}}" name="streetName"  onkeyup="addlistOptions(event,'{{$projects}}')" onblur="hideOptions(event)" required>
+                <ul class="dat-list">
+                </ul>
             </div>
         </div>
         <div class="line-4">
@@ -31,7 +34,9 @@
             </div>
             <div class="list-input-field">
                 <label for="locality">Locality *</label>
-                <input id="locality" class="list-form-input" value="{{$prop->locality}}" name="locality" required>
+                <input id="locality" class="list-form-input" value="{{$prop->locality}}" name="locality" onkeyup="addlistOptions(event,'{{$localities}}')" onblur="hideOptions(event)" required>
+                <ul class="dat-list">
+                </ul>
             </div>
         </div>
     </div>

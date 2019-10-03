@@ -2,9 +2,10 @@
     <div>Reach us</div>
     <a target="_blank" href="https://www.instagram.com/rentiers.in/"><img src="{{asset('images/footer/instagram.svg')}}" id='footer-chat-image'></a>
     <a target="_blank" href="https://www.facebook.com/rentiersgroup"><img src="{{asset('images/footer/facebook.svg')}}" id='footer-chat-image'></a>
+    <a target="_blank" href="https://twitter.com/RentiersGroup"><img src="{{asset('images/footer/twitter.svg')}}" id='footer-chat-image'></a>
     <img src="{{asset('images/footer/chat.svg')}}" id='footer-chat-image' onclick="togglechat(event)">
     <form class="request-footer-form" method="POST" action="{{ route('requests') }}">
-        <span>Call us @+91 8860050003/4/6 or we will call you</span>
+        <div class="request-title">Call us @+91 8860050003/4/6 from 10AM-7PM IST or we will call you</div>
         @csrf
         <div class="input-field">
             <div class="input-label">Full name *</div>

@@ -110,6 +110,18 @@
                     </div>
                 </div>
             </div>
+            <div class="line-3">
+                <div class="form-drop-down-options">
+                    <div class="drop-down-label">Availability * </div>
+                    <div class="drop-down-heading" onclick="showdrop(event)" id="availability">Select</div>
+                    <img src="{{asset('images/navbar/down-arrow.svg')}}" />
+                    <ul class="drop-down-list">
+                        <li onclick="changeoption(event)">Under Construction</li>
+                        <li onclick="changeoption(event)">Ready to move</li>
+                        <li onclick="changeoption(event)">Launching</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="commercial-options">
             <div class="line-3">
@@ -190,8 +202,99 @@
                 </div>
             </div>
         </div>
+        <div class="list-input-field">
+            <label for="aFrom">Available From *</label>
+            <input type="date" id="aFrom" class="list-form-input"/>
+        </div>
+        <div class="inventory-options">
+            <div class="inventory-heading">Inventory *</div>
+            <div class="inventory-lines">
+                <div class="count-options">
+                    <div class="count-option-label">Beds</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+                <div class="count-options">
+                    <div class="count-option-label">Lights</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+                <div class="count-options">
+                    <div class="count-option-label">Fans</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+            </div>
+            <div class="inventory-lines">
+                <div class="count-options">
+                    <div class="count-option-label">ACs</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+                <div class="count-options">
+                    <div class="count-option-label">Geysers</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+                <div class="count-options">
+                    <div class="count-option-label">TVs</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+            </div>
+            <div class="inventory-lines">
+                <div class="count-options">
+                    <div class="count-option-label">Wardrobes</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+                <div class="count-options">
+                    <div class="count-option-label">Exhausts</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+                <div class="count-options">
+                    <div class="count-option-label">Sofas</div>
+                    <input type="number" class="count-option-value" value="0" min="0"/>
+                </div>
+            </div>
+            <div class="line-4">
+                <div class="list-form-check-field" id="inventory-checks">
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Modular Kitchen</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Fridge</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Stove</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Washing Machine</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Water purifier</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Curtains</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Microwave</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Chimney</div>
+                    </div>
+                    <div class="check-option">
+                        <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                        <div class="check-option-value">Dining Table</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <input name="configuration" type="text" id="configuration-hidden" hidden>
+    <input name="invchecks" type="text" id="invchecks-hidden" hidden>
+    <input name="invcounts" type="text" id="invcounts-hidden" hidden>
     <input name="area" type="text" id="area-hidden" hidden>
     <input name="bathRooms" type="text" id="bathRooms-hidden" hidden>
     <input name="balconies" type="text" id="balconies-hidden" hidden>
