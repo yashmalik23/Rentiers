@@ -9,15 +9,24 @@ class searchController extends Controller
 {
     public function show($id){
         $props = DB::table('properties')->where('id','=',$id)->get();
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
+        $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];
+        $inventorycounts = ["Beds","Lights","Fans","ACs","Geysers","TVs","Wardrobes","Exhausts","Sofas"];
         $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple","Company Lease"];
-        return view('includes/userview')->with('props', $props)->with('ameneties',$ameneties)->with('closeTo',$closeTo)->with('tenant',$tenant);
+        return view('includes/userview')
+            ->with('props', $props)
+            ->with('ameneties',$ameneties)
+            ->with('closeTo',$closeTo)
+            ->with('invchecks',$inventorychecks)
+            ->with('invcounts',$inventorycounts)
+            ->with('tenant',$tenant);
     }
 
     public function normal(Request $request){
+        $text = $request->input('search-text');
         $props = DB::table('properties')->paginate(5);
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $furnishing = ["Unfurnished","Fully furnished", "Semi furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
@@ -25,7 +34,7 @@ class searchController extends Controller
         $citie = explode(",",DB::table('suggestions')->find(1)->cities);
         $locality = DB::table('suggestions')->find(1)->localities;
         $projects = DB::table('suggestions')->find(1)->projectNames;
-        return view('includes/searchResults')->with('search',$request->input('search-text'))
+        return view('includes/searchResults')->with('search',$text)
                                             ->with('props',$props)
                                             ->with('sort',$sort)
                                             ->with('ameneties',$ameneties)
@@ -46,7 +55,7 @@ class searchController extends Controller
     }
     public function search(){
         $props = DB::table('properties')->paginate(5);
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $furnishing = ["Unfurnished","Fully furnished", "Semi furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
@@ -89,7 +98,7 @@ class searchController extends Controller
         $city = $request->input('city');
         $listedFor = $request->input('listedFor');
         $text = $request->input('search-text');
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Chimney","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Wooden floor"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $furnishing = ["Unfurnished","Fully furnished", "Semi furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];

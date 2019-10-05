@@ -143,6 +143,7 @@
             </div>
         </div>
         <div class="search-results">
+            Closest and similar matches to your search
             @foreach($props as $prop)
             <div class="search-result-card">
                 <div class="left-part">

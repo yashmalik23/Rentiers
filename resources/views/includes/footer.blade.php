@@ -31,19 +31,19 @@
     <img class="footer-left" src="{{asset('images/footer/footer-left.svg')}}">
     <ul class="footer-link-columns">
         <li>Rental Properties</li>
-        <li><a href="/property/3">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/3">Godrej Summit</a></li>
-        <li><a href="/property/3">The Meridion</a></li>
-        <li><a href="/property/3">Rental floor in house</a></li>
-        <li><a href="/property/3">Independent floor</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
     </ul>
     <ul class="footer-link-columns">
         <li>Buy Properties</li>
-        <li><a href="/property/3">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/3">Godrej Summit</a></li>
-        <li><a href="/property/3">The Meridion</a></li>
-        <li><a href="/property/3">Rental floor in house</a></li>
-        <li><a href="/property/3">Independent floor</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
     </ul>
     <ul class="footer-link-columns">
         <li>Quick links</li>

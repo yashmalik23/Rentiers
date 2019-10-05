@@ -22,7 +22,7 @@ body {
 .logo {
   display: inline-block;
   padding: 10px 10px 10px 100px;
-  width: 250px;
+  width: 190px;
   cursor: pointer;
 }
 
@@ -165,7 +165,7 @@ body {
 }
 
 .mobile-logo {
-  width: 170px;
+  width: 110px;
   padding-left: 10px;
   cursor: pointer;
 }
@@ -2697,11 +2697,12 @@ footer {
 
 .rest-details .rest-details-div .one-feature {
   display: block;
+  max-width: 95vw;
 }
 
 .rest-details .rest-details-div .one-feature div {
   color: #424b5a;
-  display: inline-flex;
+  display: inline-block;
 }
 
 .rest-details .rest-details-div .one-feature .one-feature-heading {

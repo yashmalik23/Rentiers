@@ -135,9 +135,10 @@
         color: #717377;
         .one-feature{
             display: block;
+            max-width: 95vw;
             div{
                 color: $font;
-                display: inline-flex;
+                display: inline-block;
             }
             .one-feature-heading{
                 color: #717377;

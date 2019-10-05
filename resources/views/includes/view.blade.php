@@ -177,7 +177,7 @@
                             <div class="one-feature-heading">Amenities: </div>
                             @for ($i = 0; $i < count(str_split($prop->ameneties)); $i++)
                                 @if(str_split($prop->ameneties)[$i]== "1")
-                                    <div>{{$ameneties[$i+15-count(str_split($prop->ameneties))]}}, </div>
+                                    <div>{{$ameneties[$i+13-count(str_split($prop->ameneties))]}}, </div>
                                 @endif
                             @endfor
                         </div>

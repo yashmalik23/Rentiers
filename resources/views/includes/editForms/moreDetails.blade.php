@@ -119,6 +119,18 @@
                     @endfor  
                 </div>
             </div>
+            <div class="line-3">
+                <div class="form-drop-down-options">
+                    <div class="drop-down-label">Availability * </div>
+                    <div class="drop-down-heading" onclick="showdrop(event)" id="availability">{{$prop->availability}}</div>
+                    <img src="{{asset('images/navbar/down-arrow.svg')}}" />
+                    <ul class="drop-down-list">
+                        <li onclick="changeoption(event)">Under Construction</li>
+                        <li onclick="changeoption(event)">Ready to move</li>
+                        <li onclick="changeoption(event)">Launching</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="commercial-options">
             <div class="line-3">

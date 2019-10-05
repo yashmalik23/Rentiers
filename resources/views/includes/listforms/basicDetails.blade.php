@@ -10,10 +10,6 @@
             </div>
             <div onclick="changeradio(event)" >
                 <img src="{{asset('images/listprops/radio-empty.svg')}}" />
-                <div class="radio-field-name">Builder</div>
-            </div>
-            <div onclick="changeradio(event)" >
-                <img src="{{asset('images/listprops/radio-empty.svg')}}" />
                 <div class="radio-field-name">Broker</div>
             </div>
         </div>

@@ -39,10 +39,6 @@
                 </div>
                 <div class="check-option">
                     <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
-                    <div class="check-option-value">Chimney</div>
-                </div>
-                <div class="check-option">
-                    <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
                     <div class="check-option-value">Pet friendly</div>
                 </div>
                 <div class="check-option">
@@ -60,10 +56,6 @@
                 <div class="check-option">
                     <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
                     <div class="check-option-value">24*7 water</div>
-                </div>
-                <div class="check-option">
-                    <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
-                    <div class="check-option-value">Wooden Floor</div>
                 </div>
             </div>
         </div>
@@ -137,9 +129,20 @@
                 </div>
             </div>
         </div>
-            <input id="ownerDetails1" class="list-form-input" value="{{Auth::user()->name}}" name="ownerDetails1" hidden />
-            <input id="ownerDetails2" class="list-form-input" value="{{Auth::user()->email}}" name="ownerDetails2" hidden />
-            <input id="ownerDetails3" class="list-form-input" value="{{Auth::user()->contact}}" name="ownerDetails3" hidden />
+        <div class="line-4">
+            <div class="list-input-field">
+                <label for="ownerDetails1">Owner's name *</label>
+                <input id="ownerDetails1" class="list-form-input" value="{{Auth::user()->name}}" name="ownerDetails1" >
+            </div>
+            <div class="list-input-field">
+                <label for="ownerDetails2">Owner's email *  </label>
+                <input id="ownerDetails2" class="list-form-input" value="{{Auth::user()->email}}" name="ownerDetails2" >
+            </div>
+            <div class="list-input-field">
+                <label for="ownerDetails3">Owner's contact* </label>
+                <input id="ownerDetails3" class="list-form-input" value="{{Auth::user()->contact}}" name="ownerDetails3" >
+            </div>
+        </div>
     </div>
     <input name="ameneties" type="text" id="ameneties-hidden" hidden>
     <input name="ownerDetails" type="text" id="ownerss-hidden" hidden>
