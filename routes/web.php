@@ -18,6 +18,7 @@ Route::get('home', 'HomeController@index');
 Route::get('contactus', 'requestsController@index')->name('contactus');
 Route::get('listproperties', 'propertiesController@index')->name('listproperties');
 Route::get('login', 'loginController@index')->name('login');
+Route::post('usemobile','loginController@mobile')->name('usemobile');
 
 
 Route::post('register', 'loginController@store')->name('register');
@@ -29,6 +30,7 @@ Route::post('listprops', 'propertiesController@store');
 Route::post('editprops', 'propertiesController@update')->name('editprops');
 Route::post('deleteprops', 'propertiesController@delete')->name('deleteprops');
 Route::post('addimagetoprop' , 'propertiesController@addimage')->name('addimagetoprop');
+Route::post('changestatus' , 'userAccountController@changestatus')->name('changestatus');
 
 
 Route::get('logout','loginController@logout')->name('logout');
@@ -41,14 +43,18 @@ Route::post('changedetails','userAccountController@changedetails')->name('change
 
 Route::get('images/{id}','userAccountController@images')->name('editimages');
 Route::post('deleteimage','userAccountController@deleteimage')->name('deleteimage');
+Route::post('changeorder','userAccountController@changeOrder')->name('changeorder');
 
 Route::get('aboutus', array('as'=>'aboutus',function () {
     return view('includes/about');
 }));
 
+
+Route::get('viewproject/{id}', 'propertiesController@showProject')->name('viewproject');
+
 Route::get('search', 'searchController@search')->name('searchresults');
-Route::post('normal', 'searchController@normal')->name('normalsearch');
-Route::post('searchfilters', 'searchController@filters')->name('gosearch');
+Route::get('searchresult', 'searchController@normal')->name('normalsearch');
+Route::get('searchfilter', 'searchController@filters')->name('gosearch');
 
 
 //User search and view

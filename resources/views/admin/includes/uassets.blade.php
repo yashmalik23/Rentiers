@@ -1,12 +1,20 @@
 @extends('admin.layout')
 @section('admin-view')
 <script type="text/javascript" src="{{asset('js/user.js') }}"></script>
+<script type="text/javascript" src="{{asset('js/navbar.js') }}"></script>
             <div class="main-layout">
                 <!-- nav-bar -->
                 <div class="nav-bar">
-                    <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleMenu()" />
+                    <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleAdminMenu()" />
                     <span class="dashboard-heading">Pending assets</span>
                 </div>
+                
+                @if(session('succ'))
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> Changed status successfully.
+                </div>
+                @endif
                 @if(isset($success))
                     <div class="alert alert-success" role="alert">
                     <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -45,14 +53,35 @@
                         Wrong details
                     </div>
                     <div class="modal-content">
-                        <div>You can add upto 5 images, the size of each image must be less than 2MB</div>
+                        <div>You can add upto 10 images</div>
                         <form class="image-props" method="POST" action="{{ route('uaddimagetoprop')}}" enctype="multipart/form-data">
                             @csrf
                             <input type="number" id="image-prop" name="id" hidden>
                             <label for="file-field-image">Images</label>
                             <input type="file" id="file-field-image" name="file[]" accept=".jpg,.png" multiple onchange="checkImages(e)">
-                            <button type="submit">Save</button>
-                            <div class="cancel" onclick="closeImageModal()">Cancel</div>
+                            <div id="submitContainer"> 
+                                <button type="submit" style="display:none"></button>
+                                <div class="cancel" onclick="closeImageModal()">Cancel</div>
+                            </div>
+                            <div class="loader" id="loader">
+                                <div class="spinner spinner-1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="sold-modal">
+                    <div class="frontalert alert-danger">
+                        Wrong details
+                    </div>
+                    <div class="modal-content">
+                        <div id="sold-title"></div>
+                        <form class="sold-props" method="POST" action="{{ route('changestatus')}}" enctype="multipart/form-data" >
+                            @csrf
+                            <input type="number" id="sold-prop" name="id" hidden>
+                            <input type="number" id="sold-prop-1" name="use" hidden>
+                            <button type="submit">Yes</button>
+                            <div class="cancel" onclick="closeSold()">No</div>
                         </form>
                     </div>
                 </div>
@@ -65,16 +94,18 @@
                             @else
                                 <img class="card-image-circle" src="/storage/noimage.png"/>
                             @endif
-                            <div class="property-actions">
-                                <a href="/adminedit/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/edit.svg')}}"/></a>
-                                <img class="card-image-cancel" src="{{asset('images/viewprops/close.svg')}}" onclick="showModal(event, {{$prop->id}})" >
-                                <img class="card-image-cancel" src="{{asset('images/viewprops/upload.svg')}}" onclick="showImageModal(event, {{$prop->id}})" >
-                                <a href="/images/{{$prop->id}}"><img class="card-image-edit" src="{{asset('images/viewprops/photo.svg')}}"/></a>
-                            </div>
                             <div class="property-details">
                                 <div class="property-title"><a href="/adminview/{{$prop->id}}">{{$prop->streetName}}</a></div>
                                 <div class="property-address">{{$prop->locality.", ".$prop->city}}</div>
                                 <div class="property-interested-numbers">Interested members : {{($prop->intmembers == "" || $prop->intmembers == null)? 0 :$prop->intmembers}}</div>
+                            
+                                <div class="property-actions">
+                                    <a href="/adminedit/{{$prop->id}}"><img title="Edit" src="{{asset('images/viewprops/document.svg')}}"/></a>
+                                    <img title="Delete" src="{{asset('images/viewprops/delete.svg')}}" onclick="showModal(event, {{$prop->id}})" >
+                                    <img title="Upload images" src="{{asset('images/viewprops/upload.svg')}}" onclick="showImageModal(event, {{$prop->id}})" >
+                                    <a href="/images/{{$prop->id}}"><img title="View images" src="{{asset('images/viewprops/choices.svg')}}"/></a>
+                                    <img title="Property status" src="{{asset('images/viewprops/sold.svg')}}" onclick="showSold(event, {{$prop->id}}, {{$prop->inUse}})" >
+                                </div>
                             </div>
                             <div class="property-footer">Details:
                                 @if(count(explode(",",$prop->ownerdetails))>2)

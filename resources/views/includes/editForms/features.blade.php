@@ -9,12 +9,12 @@
                     @if(str_split($prop->ameneties)[$i]== "1")
                         <div class="check-option">
                             <img src="{{asset('images/listprops/checked.svg')}}" class="check-image" onclick="changecheck(event)" />
-                            <div class="check-option-value">{{$ameneties[$i+13-count(str_split($prop->ameneties))]}}</div>
+                            <div class="check-option-value">{{$ameneties[$i+14-count(str_split($prop->ameneties))]}}</div>
                         </div>
                     @else
                         <div class="check-option">
                             <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
-                            <div class="check-option-value">{{$ameneties[$i+13-count(str_split($prop->ameneties))]}}</div>
+                            <div class="check-option-value">{{$ameneties[$i+14-count(str_split($prop->ameneties))]}}</div>
                         </div>
                     @endif
                 @endfor  

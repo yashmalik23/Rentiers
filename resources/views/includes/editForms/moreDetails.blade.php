@@ -255,6 +255,8 @@
         </div>
     </div>
     <input name="configuration" type="text" id="configuration-hidden" value="{{$prop->configuration}}" hidden>
+    <input name="invchecks" type="text" id="invchecks-hidden" value="{{$prop->invchecks}}" hidden>
+    <input name="invcounts" type="text" id="invcounts-hidden" value="{{$prop->invcounts}}"hidden>
     <input name="area" type="text" id="area-hidden" value="{{$prop->area}}" hidden>
     <input name="bathRooms" type="text" id="bathRooms-hidden" value="{{$prop->bathRooms}}" hidden>
     <input name="balconies" type="text" id="balconies-hidden" value="{{$prop->balconies}}"hidden>

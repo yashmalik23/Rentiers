@@ -57,6 +57,10 @@
                     <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
                     <div class="check-option-value">24*7 water</div>
                 </div>
+                <div class="check-option">
+                    <img src="{{asset('images/listprops/unchecked.svg')}}" class="check-image" onclick="changecheck(event)" />
+                    <div class="check-option-value">Mini theatre</div>
+                </div>
             </div>
         </div>
         <div class="line-4">

@@ -20,7 +20,7 @@
                 </div>
                 <!-- nav-bar -->
                 <div class="nav-bar">
-                    <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleMenu()" />
+                    <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleAdminMenu()" />
                     <span class="dashboard-heading">Sellers</span>
                 </div>
                 <div class="admin-search-bar-container">

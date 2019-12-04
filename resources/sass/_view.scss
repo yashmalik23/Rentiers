@@ -1,3 +1,4 @@
+
 .view-property-header{
     display: inline-flex;
     margin: 10px auto 10px 100px;
@@ -13,16 +14,15 @@
         }
     }
     @media screen and (max-width: $break-large){
-        margin-left: 60px;
+        margin-left: 20px;
         display: block;
     }
 }
-
 .view-slider{
     position: relative;
     margin: 30px auto 20px 100px;
-    width: 60%;
-    min-height: 400px;
+    width: 80%;
+    min-height: 500px;
     overflow: hidden;
     .slide {
         width: 100%;
@@ -36,11 +36,11 @@
         top: 45%;
     }
     button#view-next{
-        margin-left: 97%;
+        margin-left: 98%;
         top: 45%;
     }
     .circles{
-        left: 45%;
+        left: 35%;
     }
     @media screen and (max-width: 1300px){
         width: 70%;
@@ -88,7 +88,7 @@
     }
     
     @media screen and (max-width:950px) {
-        margin-left: 60px;
+        margin-left: 20px;
     }
 }
 .view-property{
@@ -97,7 +97,7 @@
     grid-template-areas: 'viewprop vhelp';
     @media screen and (max-width: 950px){
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 0.2fr;
+        grid-template-rows: 1fr 0.1fr;
         grid-template-areas: 'viewprop' 'vhelp';
     }
 }
@@ -116,7 +116,7 @@
         }
     }
     @media screen and (max-width: $break-large){
-        margin-left: 60px;
+        margin-left: 20px;
     }
     @media screen and (max-width: 600px){
         display: block;
@@ -126,7 +126,7 @@
     display: block;
     margin: 10px auto 10px 100px;
     .rest-heading{
-        font-size: 1.6rem;
+        font-size: 2rem;
         font-weight: 400;
         color: $font;
         display: block;
@@ -145,19 +145,103 @@
                 padding-right: 10px;
             }
         }
+        .svg-feature{
+            max-width: 95vw;
+            .svg-icons{
+                display: inline-block;
+                max-width: 100%;
+                div{
+                    display: inline-block;
+                    width: 90px;
+                    margin-right: 10px;
+                    margin-top: 10px;
+                    img{
+                        max-width: 50px;
+                        margin-left: 25px;
+                    }
+                    div{
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        .more-feature{
+            display: block;
+            max-width: 98vw;
+            margin-top: 20px;
+            div{
+                color: $font;
+                display: inline-block;
+                color: white;
+                padding: 5px 15px;
+                border-top-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+                margin-right: 10px;
+                margin-top: 10px;
+                &:nth-child(3n){
+                    background-color: #5F5AA2;
+                }
+                &:nth-child(3n+1){
+                    background-color: #E49AB0;
+                }&:nth-child(3n+2){
+                    background-color: #4F5D75;
+                }
+            }
+
+            .one-feature-heading{
+                color: #717377;
+                padding-right: 10px;
+                background-color: white;
+                color: #717377;
+                display: block;
+            }
+        }
+        .more-feature-inven{
+            display: block;
+            max-width: 95vw;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            div{
+                color: $font;
+                display: inline-block;
+                color: white;
+                padding: 5px 15px;
+                border-top-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+                margin-right: 10px;
+                margin-top: 10px;
+                &:nth-child(3n){
+                    background-color: #5F5AA2;
+                }
+                &:nth-child(3n+1){
+                    background-color: #E49AB0;
+                }&:nth-child(3n+2){
+                    background-color: #4F5D75;
+                }
+            }
+
+            .one-feature-heading{
+                color: #717377;
+                padding-right: 10px;
+                background-color: white;
+                color: #717377;
+                display: block;
+            }
+        }
     }
     
     @media screen and (max-width: $break-large){
-        margin-left: 60px;
+        margin-left: 20px;
     }
 }
 .interest-form{
     display: block;
     width: 80%;
-    input{
+    .tofill{
         padding: 2px 5px;
         outline: none;
         margin: 5px 0px;
+        display: block;
     }
     button{
         top: 0px;
@@ -171,4 +255,53 @@
         font-weight: 400;
         padding: 5px 10px;
     }
+}
+.tab-slider{
+    width: 80%;
+    max-width: 95vw;
+    height: auto;
+    margin: 10px auto 40px 100px;
+    .tabs-header{
+        display: flex;
+        overflow-x: auto;
+        width: 100%;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        div{
+            padding: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .active{
+            color: white;
+            background-color: $main;
+        }
+    }
+    .tabs-content{
+        min-width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        min-height: 100%;
+        img{
+            max-width: 100%;
+            min-width: 100%;
+            min-height: 100%;
+            max-height: 100%;
+            display: none;
+        }
+        .active{
+            display: block;
+        }
+    }
+    #tab-price-tag{
+        position: relative;
+        background-color: rgb(58, 110, 201, 0.7);
+        color: white;
+        text-align: center;
+        padding: 5px 10px;
+    }
+    @media screen and (max-width: 950px){
+        margin: 30px auto 20px;
+        width: 90%;
+    }
+
 }

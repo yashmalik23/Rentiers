@@ -29,14 +29,7 @@
                     </div>  
                     <button class="previous" onclick="previousSlide(event)" id="view-previous"><</button>
                     <button class="next" onclick="nextSlide(event)" id="view-next">></button>
-                    <div class="circles">
-                        <div class="circle active"></div>
-                        @for($i = 1 ; $i<count(explode(",",$prop->images))-1 ;$i++)
-                            @if(explode(",",$prop->images)[$i] != "")
-                                <div class="circle"></div>
-                            @endif
-                        @endfor
-                    </div>
+                    <div class="price-tag">₹ {{$prop->expectedPrice}}</div>
                 </div>
                 <div class="view-main-details">
                     <div class="view-prop-main-logo">
@@ -68,7 +61,7 @@
                             <div>{{$prop->propertySecondType}}, {{($prop->propertyThirdType == "None")? "": $prop->propertyThirdType}}</div>
                         </div>
                         @if(Auth::user() != null)
-                            @if(Auth::user()->email=="inforentiers@gmail.com")
+                            @if(Auth::user()->email=="admin@rentiers.in")
                                 <div class="one-feature">
                                     <div class="one-feature-heading">Posted by: </div>
                                     <div>{{$prop->postedBy}} for {{$prop->listedFor}}</div>
@@ -114,20 +107,18 @@
                             <div class="one-feature-heading">Availabilty: </div>
                             <div>{{$prop->availability}}, available from {{$prop->availableFrom}}</div>
                         </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Inventory: </div>
-                                <div>
+                        <div class="more-feature-inven">
+                            <span class="one-feature-heading">Inventory: </span>
                                     @for ($i = 0; $i < 9; $i++)
                                         @if(explode(",",$prop->invcounts)[$i] != "0")
-                                            <div> {{explode(",",$prop->invcounts)[$i]}} {{$invcounts[$i]}},</div>
+                                            <div> {{explode(",",$prop->invcounts)[$i]}} {{$invcounts[$i]}}</div>
                                         @endif
                                     @endfor
                                     @for ($i = 0; $i <9; $i++)
                                         @if(str_split($prop->invchecks)[$i]== "1")
-                                            <div>{{$invchecks[$i]}}, </div>
+                                            <div>{{$invchecks[$i]}} </div>
                                         @endif
                                     @endfor
-                            </div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Balconies: </div>
@@ -173,27 +164,32 @@
                 <div class="rest-details">
                     <div class="rest-heading">Features</div>
                     <div class="rest-details-div">
-                        <div class="one-feature">
+                        <div class="svg-feature">
                             <div class="one-feature-heading">Amenities: </div>
-                            @for ($i = 0; $i < count(str_split($prop->ameneties)); $i++)
-                                @if(str_split($prop->ameneties)[$i]== "1")
-                                    <div>{{$ameneties[$i+13-count(str_split($prop->ameneties))]}}, </div>
-                                @endif
-                            @endfor
+                            <div class="svg-icons">
+                                @for ($i = 0; $i < count(str_split($prop->ameneties)); $i++)
+                                    @if(str_split($prop->ameneties)[$i]== "1")
+                                        <div>
+                                            <img src={{asset('images/ameneties/'.($i+1).'.svg')}}>
+                                            <div>{{$ameneties[$i]}}</div>
+                                        </div>
+                                    @endif
+                                @endfor
+                            </div>
                         </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Close To: </div>
+                        <div class="more-feature">
+                            <span class="one-feature-heading">Close To: </span>
                             @for ($i = 0; $i < count(str_split($prop->closeTo)); $i++)
                                 @if(str_split($prop->closeTo)[$i+7-count(str_split($prop->closeTo))]== "1")
-                                    <div>{{$closeTo[$i]}}, </div>
+                                    <div>{{$closeTo[$i]}} </div>
                                 @endif
                             @endfor
                         </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Tenant preference: </div>
+                        <div class="more-feature">
+                            <span class="one-feature-heading">Tenant preference: </span>
                             @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
                                 @if(str_split($prop->tenant)[$i]== "1")
-                                    <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}}, </div>
+                                    <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}}</div>
                                 @endif
                             @endfor
                         </div>

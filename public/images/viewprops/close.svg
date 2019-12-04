@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="14.251" height="14.251" viewBox="0 0 14.251 14.251">
-  <g id="close" transform="translate(-502.601 -121.601)">
-    <rect id="Rectangle_145" data-name="Rectangle 145" width="17.995" height="2.159" transform="translate(504.127 121.601) rotate(45)" fill="#a4afb7"/>
-    <rect id="Rectangle_146" data-name="Rectangle 146" width="17.995" height="2.159" transform="translate(516.852 123.127) rotate(135)" fill="#a4afb7"/>
+<svg id="x-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <circle id="Ellipse_54" data-name="Ellipse 54" cx="10" cy="10" r="10" fill="#e21b1b"/>
+  <path id="Path_849" data-name="Path 849" d="M164.312,148.5l-5.561-5.561-8.5,8.815,5.505,5.505A10,10,0,0,0,164.312,148.5Z" transform="translate(-144.379 -137.353)" fill="#c40606"/>
+  <g id="Group_188" data-name="Group 188" transform="translate(5.49 5.379)">
+    <path id="Path_850" data-name="Path 850" d="M148.9,146.843a.779.779,0,0,1-.553-.229l-7.571-7.572a.781.781,0,0,1,1.1-1.1l7.572,7.572a.781.781,0,0,1-.552,1.333Z" transform="translate(-140.546 -137.709)" fill="#fff"/>
+    <path id="Path_851" data-name="Path 851" d="M141.32,146.84a.781.781,0,0,1-.553-1.333l7.572-7.572a.781.781,0,0,1,1.1,1.1l-7.571,7.572A.779.779,0,0,1,141.32,146.84Z" transform="translate(-140.538 -137.706)" fill="#fff"/>
   </g>
 </svg>

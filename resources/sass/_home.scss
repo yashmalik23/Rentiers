@@ -1,117 +1,78 @@
 // ----------------Title
 .main-slider{
     position: relative;
-    margin: 0px auto 20px;
-    min-width: 87%;
-    max-width: 87%;
-    min-height: 85vh;
+    margin: -60px auto 20px;
+    min-width: 99.9vw;
+    max-width: 99.9vw;
+    min-height: 88vh;
+    max-height: 88vh;
     overflow: hidden;
     .slide {
-        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
         min-height: 100%;
+        max-height: 100%;
         position: absolute;
         img{
-            width: 100%;
+            min-width: 100%;
             min-height: 100%;
+            max-width: 100%;
+            max-height: 100%;
         }
     }
     button#view-previous{
         top: 88%;
-        margin-left: 90%;
-        padding:10px;
-        @media screen and (max-width: 1366px){
-            top: 77%;
-        }
-        @media screen and (max-width: 1150px){
-            top: 70%;
-        }
-        @media screen and (max-width: 800px){
-            top: 80%;
-            margin-left: 85%;
-        }
-        @media screen and (max-width: 600px){
-            top: 70%;
-            padding: 5px;
-        }
+        margin-left: 20px;
+        padding:5px 10px;
     }
     button#view-next{
-        margin-left: 95%;
+        margin-left: 60px;
         top: 88%;
-        padding: 10px;
-        @media screen and (max-width: 1366px){
-            top: 77%;
-        }
-        @media screen and (max-width: 1150px){
-            top: 70%;
-        }
-        @media screen and (max-width: 800px){
-            top: 80%;
-            margin-left: 90%;
-        }
-        @media screen and (max-width: 600px){
-            top: 70%;
-            margin-left: 93%;
-            padding: 5px;
-        }
+        padding: 5px 10px;
     }
-    @media screen and (max-width: 1370px){
-        min-height: 70vh;
+    button#explore{
+        padding: 5px 15px;
+        top: 88%;
+        margin-left: 90vw;
+        font-weight: 300;
+        font-size: 1.7rem;
+    }
+    @media screen and (max-width: 1400px){
+        max-height: 75vh;
+        min-height: 75vh;
+        button#explore{
+            margin-left: 85vw;
+        }
     }
     @media screen and (max-width: $break-large){
-        margin-top: 40px;
-        min-width: 90vw;
-        max-width: 90vw;
-        min-height: 75vh;
-    }
-    @media screen and (max-width: 900px){
+        max-height: 50vh;
         min-height: 50vh;
+        margin-top: 10px;
+        button#explore{
+            margin-left: 80vw;
+        }
     }
-    @media screen and (max-width: 600px){
-        min-height: 30vh;
-        max-height: 30vh;
+    @media screen and (max-width: 800px){
+        max-height: 45vh;
+        min-height: 45vh;
+        margin-top: 10px;
+        button#explore{
+            margin-left: 67vw;
+        }
     }
-}
-.title-container{
-    text-align: center;
-    position: relative;
-    width: 400px;
-    z-index: 500;
-    margin: -450px auto 0px;
-    padding-bottom: 20px;
-    color: white;
-    @media screen and (max-width: 1300px){
-        margin-top: -500px;
-    }
-    @media screen and (max-width: $break-large) {
-        margin-top: -450px;
-        width: 86vw;
-    }
-    @media screen and (max-width: 900px) {
-        margin-top: -450px;
-        width: 86vw;
-    }
-    @media screen and (max-width: 600px) {
-        margin-top: 40px;
-        color: $font;
-        width: 86vw;
-    }
-}
-.main-heading{
-    font-size: 3.5rem;
-    font-weight: bold;
-    padding: 10px;
+    
 }
 
 // ---------------Search bar
 .search-container{
-    margin: 0px auto 0px;
-    width: 600px;
+    margin: -400px auto 0px;
+    width: 800px;
     position: relative;
     z-index: 500;
     display: flex;
     align-items: flex-end;
     @media screen and (max-width: $break-large) {
-        width: 400px;
+        width: 95vw;
         margin-top: 20px;
     }
 }
@@ -119,19 +80,24 @@
     display: flex;
     background-color: white;
     padding: 10px;
-    width: 500px;
-    height: 40px;
+    width: 800px;
+    height: 45px;
+    font-size: 15px;
     margin-left: 50px;
     box-shadow: 0px 0px 60px rgb(80, 67, 112, 0.1);
     @media screen and (max-width: $break-large) {
-        width: 380px;
-        margin: 10px auto 0px;
+        width: 700px;
+        max-width: 95vw;
+        margin: 50px auto 0px;
     }
 }
 .drop-down-btn{
-    display: flex;
+    display: inline-flex;
     cursor: pointer;
     color: #5043ac;
+    &:first-child{
+        min-width: 135px;
+    }
 }
 .drop-down-title{
     padding: 0px 20px;
@@ -145,6 +111,9 @@
     overflow-y: scroll;
     max-height: 100px;
     margin-left: -10px;
+    z-index: 100;
+    line-height: 16px;
+    font-size: 15px;
     li{
         margin: 0px 0px 0px -10px;
         padding: 5px 38px;
@@ -163,6 +132,9 @@
     padding: 0;
     overflow-y: scroll;
     max-height: 100px;
+    z-index: 100;
+    line-height: 16px;
+    font-size: 15px;
     li{
         margin: 0px 0px 0px 10px;
         padding: 5px 24px;
@@ -177,7 +149,7 @@
     outline: none;
     border: none;
     padding: 5px;
-    width: 60%;
+    width: calc(100% - 250px);
     margin: 0px 8px;
 }
 .search-icon{
@@ -204,8 +176,9 @@
 
 // --------------------Recent properties
 .recent-properties{
-    margin-top: 300px;
+    margin-top: 310px;
     display:inline-flex;
+    
     @media screen and (max-width: $break-large){
         display: block;
     }
@@ -213,12 +186,17 @@
         margin-top: 10px;
     }
 }
+#card5, #card6, #card7, #card8, #card9 {
+    display: none;
+}
 .recent-title{
     margin-top: 50px;
     padding: 50px;
+    width: 280px;
     @media screen and (max-width: $break-large){
         padding: 20px;
         margin-top: 160px;
+        width: auto;
     }
     @media screen and (max-width: 600px){
         margin-top: 30px;
@@ -238,9 +216,8 @@
 }
 .recent-line{
     color: #717377;
-    padding: 5px auto 0px;
     width: 180px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     @media screen and (max-width: $break-large){
         width: 85vw;
     }
@@ -259,19 +236,43 @@
 
 // ----------Recent properties slider
 .content-slider{
-    max-width: 78vw;
+    max-width: calc(100vw - 300px);
     margin: 50px auto 10px;
     height: 370px;
-    overflow: hidden;
+    overflow: scroll;
     transition: all 0.6s ease;
     scroll-behavior: smooth;
+    
     @media screen and (max-width: 1400px){
         max-width: 78vw;
     }
     @media screen and (max-width: $break-large){
         max-width: 95vw;
         overflow: scroll;
-        margin-top: 10px;
+        margin-top: 0px;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
+.similar-slider{
+    max-width: calc(100vw - 420px);
+    margin: 10px auto 10px 100px;
+    height: 370px;
+    overflow: scroll;
+    transition: all 0.6s ease;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    @media screen and (max-width: 1400px){
+        max-width: 78vw;
+    }
+    @media screen and (max-width: $break-large){
+        max-width: 95vw;
+        overflow: scroll;
+        margin-top: 0px;
+        margin-left: 20px;
     }
 }
 .go-forward{
@@ -309,8 +310,8 @@
     overflow: hidden;
 }
 .slide {
-    width: 350px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     position: absolute;
     
     // Add transition
@@ -385,7 +386,7 @@ button.next{
 }
 .card-property-location{
     margin-left: 10px;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     color: #717377;
 }
 .card-amenities{
@@ -430,7 +431,7 @@ button.next{
     }
 }
 
-//--------------------Our clients
+//-------------------- Our clients --------------------------//
 .client-heading{
     font-size: 3.5rem;
     color: $font;
@@ -438,27 +439,26 @@ button.next{
     font-weight: bold;
 }
 .client-slider{
-    max-width: 95vw;
-    margin: 50px auto 10px;
-    height: 200px;
-    overflow: hidden;
-    transition: all 0.6s ease;
-    scroll-behavior: smooth;
-    @media screen and (max-width: $break-large){
-        max-width: 95vw;
-        overflow: scroll;
-    }
-    .client-card-container{
-        width: 730px;
+    max-width: 90vw;
+    display: flex;
+    margin: 20px auto 40px;
+    height: auto;
+    line-height: 100px;
+    overflow-x: scroll;
+    .client-card{
         img{
-            min-width: 120px;
-            max-width: 120px;
-            margin: 20px 10px auto;
+            max-width: 90px;
+            margin: 5px 20px;
+        }
+    }
+    @media screen and (max-width: $break-large){
+        &::-webkit-scrollbar {
+            display: none;
         }
     }
 }
 
-//----------- Testimonials
+//---------------------- Testimonials ----------------------------------//
 .testimonials{
     display: flex;
     .left-section{
@@ -478,7 +478,7 @@ button.next{
                     color: $font;
                 }
                 .test-line{
-                    font-size: 1.5rem;
+                    font-size: 1.6rem;
                     color: #717377;
                 }
             }
@@ -511,7 +511,7 @@ button.next{
                 display: grid;
                 grid-template-columns: 1fr;
                 .test-text{
-                   font-size: 1.3rem;
+                   font-size: 1.5rem;
                    color: #717377;
                    padding: 10px 20px;
                    text-align: justify;

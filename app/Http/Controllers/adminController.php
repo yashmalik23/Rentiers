@@ -179,7 +179,7 @@ class adminController extends Controller
 
     public function show($id){
         $user = Auth::user();
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Mini theatre"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];
         $inventorycounts = ["Beds","Lights","Fans","ACs","Geysers","TVs","Wardrobes","Exhausts","Sofas"];
@@ -202,7 +202,7 @@ class adminController extends Controller
 
     public function edit($id){
         $user = Auth::user();
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Mini theatre"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $rooms = ["Pooja Room","Servant Room","Study Room"];
         $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];

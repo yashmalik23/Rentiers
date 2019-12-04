@@ -1,7 +1,7 @@
 <nav class="desktop-nav">
 
     {{-- Desktop Nav bar --}}
-    <img class="logo" src="{{asset('images/navbar/logo.png')}}" onclick="function c(){window.location.href= '/'}; c()">
+    {{-- <img class="logo" src="{{asset('images/navbar/logo.png')}}" onclick="function c(){window.location.href= '/'}; c()"> --}}
     <ul class="nav-links">
         <li><a href="{{ route('home') }}">Home</a></li>
         <li><a href="{{ route('aboutus') }}">About Us</a></li>
@@ -10,7 +10,7 @@
         <li>|</li>
         <li>+91 8860050003</li>
         <li>
-            <img class="icons" src="{{asset('images/navbar/down-arrow.svg')}}" onclick="viewContacts(event)"/>
+            <span onclick="viewContacts(event)" style="cursor:pointer; user-select:none;">▼</span>
             <ul class="contact-numbers">
                 <li>+91 8860050004</li>
                 <li>+91 8860050006</li>
@@ -29,10 +29,10 @@
     {{-- Mobile nav bar --}}
     <div class="man-layout">
         <img class="mobile-menu" src="{{asset('images/navbar/menu.svg')}}" onclick="handleMenu()">
-        <img class="mobile-logo" src="{{asset('images/navbar/logo.png')}}" onclick="function c(){window.location.href= '/'}; c()">
+        {{-- <img class="mobile-logo" src="{{asset('images/navbar/logo.png')}}" onclick="function c(){window.location.href= '/'}; c()"> --}}
         <div class="contact-main">
             <span class="contact-mobile">+91 8860050003</span> 
-            <img class="icons" src="{{asset('images/navbar/down-arrow.svg')}}" onclick="viewContacts(event)"/>
+            <span onclick="viewContacts(event)">▼</span>
             <ul class="contact-numbers">
                 <li>+91 8860050004</li>
                 <li>+91 8860050006</li>

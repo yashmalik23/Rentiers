@@ -87,3 +87,53 @@ function showdrop(e){
         options.style.display= "none";
     }
 }
+
+function changeMobileForm(){
+    let form1 = document.getElementsByClassName('login-form')[0]
+    let form2 = document.getElementsByClassName('signup-form')[0]
+    let form3 = document.getElementsByClassName('mobile-form')[0]
+        
+    form1.style.display = "none"
+    form2.style.display = "none"
+    form3.style.display = "block"
+}
+
+function changeNormal(){
+    let form1 = document.getElementsByClassName('login-form')[0]
+    let form2 = document.getElementsByClassName('signup-form')[0]
+    let form3 = document.getElementsByClassName('mobile-form')[0]
+        
+    form1.style.display = "block"
+    form2.style.display = "none"
+    form3.style.display = "none"
+}
+
+function checkMobile(){
+    
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('mobile-submit', {'size': 'invisible'});
+    var phoneNumber = "+91"+document.getElementById('mobile-number').value
+    var appVerifier = window.recaptchaVerifier;
+    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then(function (confirmationResult) {
+            window.confirmationResult = confirmationResult;
+            document.getElementById('mobile-1').style.display = "none"
+            document.getElementById('mobile-2').style.display = "block"
+            document.getElementById('mobile-submit').style.display = "none"
+            document.getElementById('mobile-submit-2').style.display = "block"
+        }).catch(function (error) {
+            document.getElementById('frontalert').textContent = error
+            showalert()
+            document.getElementById('mobile-submit').style.display = "block"
+            document.getElementById('mobile-submit').textContent = "Send OTP"
+    });
+}
+
+function verifyMobile(){
+    var code = document.getElementById('otp-sent').value;
+    confirmationResult.confirm(code).then(function (result) {
+        document.getElementById('mobile-button').click()
+    }).catch(function (error) {
+        document.getElementById('frontalert').textContent = "Incorrect OTP"
+        showalert()
+    });
+}

@@ -216,7 +216,7 @@ function handleSubmit(){
 
     let ameneties = document.getElementById('ameneties').children;
     let amenetiesString = ""
-    for(let i=1; i<16;i++){
+    for(let i=1; i<15;i++){
         let img = ameneties[i].children[0];
         if(img.src.indexOf('images/listprops/checked.svg')>-1){
             amenetiesString=amenetiesString.concat("1");

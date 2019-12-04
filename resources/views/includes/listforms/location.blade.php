@@ -18,11 +18,11 @@
         <div class="line-4">
             <div class="list-input-field">
                 <label for="houseNo">House/Flat Number *</label>
-                <input id="houseNo" class="list-form-input" placeholder="None"  name="houseNo" required>
+                <input id="houseNo" class="list-form-input" placeholder="Type..."  name="houseNo" required>
             </div>
             <div class="list-input-field">
                 <label for="streetName">Street/Project Name *</label>
-                <input id="streetName" class="list-form-input" placeholder="Street I" name="streetName" onkeyup="addlistOptions(event,'{{$projects}}')" onblur="hideOptions(event)" required>
+                <input id="streetName" class="list-form-input" placeholder="Type..." name="streetName" onkeyup="addlistOptions(event,'{{$projects}}')" onblur="hideOptions(event)" required>
                 <ul class="dat-list">
                 </ul>
             </div>
@@ -30,11 +30,11 @@
         <div class="line-4">
             <div class="list-input-field">
                 <label for="nearByArea">Landmark </label>
-                <input id="nearByArea" class="list-form-input" placeholder="Huda Market" name="nearByArea" >
+                <input id="nearByArea" class="list-form-input" placeholder="Type..." name="nearByArea" >
             </div>
             <div class="list-input-field">
                 <label for="locality">Locality *</label>
-                <input id="locality" class="list-form-input" placeholder="Sec-4" name="locality" onkeyup="addlistOptions(event,'{{$localities}}')" onblur="hideOptions(event)" required>
+                <input id="locality" class="list-form-input" placeholder="Type..." name="locality" onkeyup="addlistOptions(event,'{{$localities}}')" onblur="hideOptions(event)" required>
                 <ul class="dat-list">
                 </ul>
             </div>

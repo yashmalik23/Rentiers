@@ -1,5 +1,29 @@
 @extends('layout')
 @section('views')
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCQ0FIb8oJCycQbiAEq0QhPC08zdsrI0tk",
+    authDomain: "rentiers-104ee.firebaseapp.com",
+    databaseURL: "https://rentiers-104ee.firebaseio.com",
+    projectId: "rentiers-104ee",
+    storageBucket: "rentiers-104ee.appspot.com",
+    messagingSenderId: "15760571105",
+    appId: "1:15760571105:web:e1400e391a3cfa3fcb55a0",
+    measurementId: "G-XE5NHRPKBC"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 @if(session('error'))
 <div class="alert alert-danger" role="alert">
     <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -61,6 +85,7 @@
                         </div> --}}
                     </div>
                     <div class="login-member" onclick="changeForm()" >Already a member? Log in</div>
+                    <div class="login-member" onclick="changeMobileForm()">Use mobile number instead?</div>
                 </div>
                 <div class="signup-submit" onclick="registerUser()" >Sign Up</div>
                 <button type="submit" id="register-button"></button>
@@ -84,9 +109,27 @@
                         </div> --}}
                     </div>
                     <div class="login-member" onclick="changeForm()">Not a member? Sign Up</div>
+                    <div class="login-member" onclick="changeMobileForm()">Use mobile number instead?</div>
                 </div>
                 <div class="login-submit" onclick="checkLogin()">Log In</div>
                 <button type="submit" id="login-button"></button>
+            </form>
+            <form class="mobile-form" method="POST" action="{{ route('usemobile')}}">
+                @csrf
+                <div class="input-field" id="mobile-1">
+                    <div class="input-label">Mobile number *</div>
+                    <input type="number" required name="mobile" id="mobile-number"/>
+                </div>
+                <div class="input-field" id="mobile-2" style="display:none">
+                    <div class="input-label">Enter OTP *</div>
+                    <input type="number" required name="otp" id="otp-sent"/>
+                </div>
+                <div class="signup-options">
+                    <div class="login-member" onclick="changeNormal()">Use email instead?</div>
+                </div>
+                <div class="mobile-submit" id="mobile-submit" onclick="checkMobile()">Send OTP</div>
+                <div class="mobile-submit" id="mobile-submit-2" onclick="verifyMobile()" style="width:100px;display:none;">Verify</div>
+                <button type="submit" id="mobile-button"></button>
             </form>
         </div>
     </div>

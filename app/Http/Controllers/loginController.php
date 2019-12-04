@@ -62,6 +62,33 @@ class loginController extends Controller
         }
         
     }
+    public function mobile(Request $request)
+    {
+        $check = DB::table('users')->where('contact','=',$request->input('mobile'))->get();
+        if(count($check)>0){
+            $user = User::find($check[0]->id) ;
+            Auth::login($user);
+            return redirect('/');
+        }
+        $user = new User;
+        $user->name = "Anonymous";
+        $user->contact = $request->input('mobile');
+        $user->email = 'noemail@mobile.com';
+        $user->password = Hash::make('none');
+        $user->remember_token = str_random(10);
+        $user->member = "Member";
+        $user->save();
+
+        $check = DB::table('users')->where('contact','=',$request->input('mobile'))->get();
+        if(count($check)>0){
+            $user = User::find($check[0]->id);
+            Auth::login($user);
+            return redirect('/');
+        }else{
+            return back()->with('error','wrong_details');
+        }
+        
+    }
 
     public function checklogin(Request $request){
         $user_data = array(

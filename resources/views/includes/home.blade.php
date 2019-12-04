@@ -1,7 +1,21 @@
 @extends('layout')
 @section('views')
+
+
     {{--------------- Home Page ------------------}}
     <script type="text/javascript" src="{{asset('js/home.js') }}"></script>
+    <style>
+        .nav-links> li> a{
+            color: whitesmoke;
+        }
+        .nav-links> li{
+            color: whitesmoke;
+        }
+        .nav-links> li> ul> li{
+            color: white;
+    
+        }
+    </style>
 
     <div class="main-slider">
         <div class="slider-images">
@@ -16,18 +30,13 @@
         </div>  
         <button class="previous" onclick="previousSlideMain(event)" id="view-previous"><</button>
         <button class="next" onclick="nextSlideMain(event)" id="view-next">></button>
+        <input type="number" id="currentProject" value="1" hidden>
+        <button id="explore" onclick="viewProject(event)">KNOW MORE</button>
     </div>    
 
-    {{--------------- Headings -------------------}}
-    <div class="title-container"> 
-        <div class="main-heading">Making Renting Easy</div>
-        <div class="main-line">Your Homes...... Are Our First Priority.</div>
-        <div class="second-line">Welcome To 21st Century Renting</div>
-    </div>
-
     {{--------------- Search bar -----------------}}
-    <form class="search-container" method="POST" action="{{route('normalsearch')}}">
-        @csrf
+    <form class="search-container" method="GET" action="{{route('normalsearch')}}">
+        <!-- @csrf -->
         <div class="search-bar"> 
             <div class="drop-down-btn">
                 <div class="drop-down-title" onclick="dropdown(event)">GURUGRAM</div>
@@ -37,7 +46,7 @@
                     @endforeach
                 </ul>
                 <input name="city" type="text" value="GURUGRAM" hidden>
-                <img src="{{asset('images/home/search-down-arrow.svg')}}">
+                <img src="{{asset('images/home/search-down-arrow.svg')}}" onclick="droparrow(event)">
             </div>
             <div class="drop-down-btn">
                 <div class="drop-down-title" onclick="dropdown(event)">RENT</div>
@@ -46,7 +55,7 @@
                     <li onclick="changeoption(event)">BUY</li>
                 </ul>
                 <input name="listedFor" type="text" value="RENT" hidden>
-                <img src="{{asset('images/home/search-down-arrow.svg')}}">
+                <img src="{{asset('images/home/search-down-arrow.svg')}}" onclick="droparrow(event)">
             </div>
             <input type="text" placeholder="Search..." class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
             <ul class="data-list">
@@ -61,14 +70,14 @@
     <div class="recent-properties">
         <div class="recent-title">
             <img src="{{asset('images/home/recent-head.svg')}}" class="recent-head"/>
-            <div class="recent-heading">Recent Properties</div>
+            <div class="recent-heading">Trending Properties</div>
             <div class="recent-line">You stopped by just in time to see these new properties</div>
             <div class="see-all" onclick="function c(){window.location.href='/search'};c()">View All</div>
         </div>
         <div class="content-slider">
             <div class="card-container">
-                @for($i=0;$i<5;$i++)
-                    <div class="card">
+                @for($i=0;$i<10;$i++)
+                    <div class="card" id="card{{$i}}">
                         <div class="slider">
                             <div class="slider-images">
                                 @if(count(explode(",",$props[$i]->images))>0 && explode(",",$props[$i]->images)[0] != "" && explode(",",$props[$i]->images)[0] != "noimage.png")
@@ -115,7 +124,6 @@
                 @endfor
             </div>
         </div>
-        <div class="go-forward" onclick="scrollRecent(event)">></div>
     </div>
 
     {{-------------- About Us -------------------------}}
@@ -128,14 +136,12 @@
     <div class="our-clients">
         <div class="client-heading">Our clients</div>
         <div class="client-slider">
-            <div class="client-card-container">
-                <input type="hidden" id="numberoflogos" value="{{$stats->clientlogolength}}"/>
-                @for($i=0;$i<$stats->clientlogolength;$i++)
-                <img src="/storage/clients/logo{{$i}}.svg">
-                @endfor
-            </div>
-            <script>document.getElementsByClassName('client-card-container')[0].style.width = (150*parseInt(document.getElementById('numberoflogos').value)).toString()+"px"</script>
-        </div>
+            @for($i=0;$i<$stats->clientlogolength;$i++)
+                <div class="client-card">
+                    <img src="/storage/clients/logo{{$i}}.png">
+                </div>
+            @endfor
+        </div>    
     </div>
 
     {{-------------- Testimonials ---------------------}}

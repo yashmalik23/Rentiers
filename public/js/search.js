@@ -48,11 +48,12 @@ function changeradio(e){
             img.src = 'images/listprops/radio-empty.svg';
         }
     }
+    checkAllFilters()
 }
 
 function changemain(e){
     let filters = document.getElementById('main-filters');
-    if(filters.style.display == "block"){
+    if(filters.style.display != "none"){
         filters.style.display = "none";
         filters.parentElement.style.height = "50px";
         e.target.src = 'images/search/plus.svg';
@@ -66,7 +67,8 @@ function changemain(e){
 function changesub(e){
     let filters = e.target.parentElement.nextElementSibling;
     let input = e.target.previousElementSibling.textContent;
-    if(filters.style.display != "none"){
+    console.log(filters.style.display)
+    if(filters.style.display == "flex" || filters.style.display == "block"){
         filters.style.display = "none";
         e.target.src = 'images/search/plus.svg';
     }else{
@@ -103,7 +105,7 @@ function checkAllFilters(){
     }
     let ameneties = document.getElementById('ameneties-filter').children;
     let amenetiesString = ""
-    for(let i=0; i<15;i++){
+    for(let i=0; i<13;i++){
         let img = ameneties[i].children[0];
         if(img.src.indexOf('/images/listprops/checked.svg')>-1){
             amenetiesString=amenetiesString.concat("1");
@@ -143,4 +145,21 @@ function checkAllFilters(){
 
     let button = document.getElementById('gosearch');
     button.click();
+}
+function nextSlide(e){
+    var slides = e.target.previousElementSibling.previousElementSibling;
+    var currentActiveSlide = slides.querySelector('div.active');
+    if (currentActiveSlide.nextElementSibling != null){
+        currentActiveSlide.classList.remove('active');
+        currentActiveSlide.nextElementSibling.classList.add('active');
+    }
+    
+}
+function previousSlide(e){
+    var slides = e.target.previousElementSibling;
+    var currentActiveSlide = slides.querySelector('div.active');
+    if (currentActiveSlide.previousElementSibling != null){
+        currentActiveSlide.classList.remove('active');
+        currentActiveSlide.previousElementSibling.classList.add('active');
+    }
 }

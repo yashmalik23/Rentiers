@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <script type="text/javascript" src="{{asset('js/navbar.js') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Rentiers.in</title>
+    <title>Your own Property Portal - Rentiers.in</title>
 </head>
 <body>
     <div class="wrap">

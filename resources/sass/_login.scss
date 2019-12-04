@@ -10,7 +10,7 @@
 .login-div{
     display: none;
 }
-.signup-form,.login-form{
+.signup-form,.login-form,.mobile-form{
     grid-area: signup-form;
     width: 50%;
     margin: auto;
@@ -20,7 +20,7 @@
             padding-top: 0px;
         }
     }
-    .signup-submit,.login-submit{
+    .signup-submit,.login-submit, .mobile-submit{
         padding: 8px 30px;
         background-color: $main;
         color: white;
@@ -31,14 +31,17 @@
     .login-submit{
         width: 100px;
     }
+    .mobile-submit{
+        width: 120px;
+    }
     @media screen and (max-width: 800px){
         width: 100%;
     }
     .signup-options{
-        display: flex;
+        display: block;
         width: 75%;
         margin: 10px auto;
-        font-size: 1rem;
+        font-size: 1.5rem;
         font-weight: 600;
         .login-form-check-field{
             .check-option{
@@ -51,8 +54,9 @@
             }
         }
         .login-member{
-            margin: 0px 0px 0px auto;
+            margin: 5px 0px 0px auto;
             cursor: pointer;
+            display: block;
         }
     }
 }
@@ -74,7 +78,7 @@
         grid-template-areas: 'left-login-image' 'signup-form'; 
     }
 }
-.login-form{
+.login-form,.mobile-form{
     display: none;
 }
 .signup-form{

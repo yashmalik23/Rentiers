@@ -14,9 +14,9 @@ class userAccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->id != null){
+        if($user != null){
             $id = $user->id;
-            $props = DB::select('SELECT * from properties where user_id='.$id);
+            $props = DB::select('SELECT * from properties where user_id='.$id.' ORDER BY created_at DESC');
             return view('includes/useraccount')->with('props', $props);
         }else{
             return view('includes/login');
@@ -26,9 +26,9 @@ class userAccountController extends Controller
     public function showaccount($id)
     {
         $user = Auth::user();
-        if($user->id != null){
+        if($user != null){
             if($user->email == "inforentiers@gmail.com"){
-                $props = DB::select('SELECT * from properties where user_id='.$id);
+                $props = DB::select('SELECT * from properties where user_id='.$id.' ORDER BY created_at DESC');
                 return view('admin/includes/adminuseraccount')->with('props', $props);
             }
         }else{
@@ -38,7 +38,7 @@ class userAccountController extends Controller
 
     public function show($id){
         $user = Auth::user();
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Mini theatre"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];
         $inventorycounts = ["Beds","Lights","Fans","ACs","Geysers","TVs","Wardrobes","Exhausts","Sofas"];
@@ -59,7 +59,7 @@ class userAccountController extends Controller
 
     public function edit($id){
         $user = Auth::user();
-        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water"];
+        $ameneties = ["Air-conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","Power backup","Wheelchair friendly","Gated society","24*7 water","Mini theatre"];
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $rooms = ["Pooja Room","Servant Room","Study Room"];
         $inventorychecks = ["Modular Kitchen","Fridge","Stove","Washing Machine","Water purifier","Curtains","Microwave","Chimney","Dining Table"];
@@ -88,12 +88,27 @@ class userAccountController extends Controller
 
     public function images($id){
         $images = explode(",",properties::find($id)->images);
+        $prop = properties::find($id);
         $user = Auth::user();
-        if($user->id != null){
-            return view('includes/viewimages')->with('images',$images)->with('propid',$id);
+        if($user != null){
+            return view('includes/viewimages')->with('images',$images)->with('propid',$id)->with('prop',$prop);
         }else{
             return view('includes/login');
         }
+    }
+
+    public function changeOrder(Request $request){
+        $id=$request->input('id');
+        $arr = explode(",",$request->input('image'));
+        $prop = properties::find($id);
+        $images = explode(",",$prop->images);
+        $string = "";
+        for($i=0;$i<count($arr);$i++){
+            $string = $string.$images[$arr[$i]-1].",";
+        }
+        $prop->images = $string;
+        $prop->save();
+        return redirect(route('useraccount'))->with('order','done');
     }
 
     public function deleteimage(Request $request){
@@ -155,6 +170,17 @@ class userAccountController extends Controller
                 return back()->with('success','Changed successfully');
             }
             return back()->with('error','wrong_current_password');
+        }else{
+            return redirect(route('login'))->with('error','error');
+        }
+    }
+
+    public function changestatus(Request $request){
+        if (Auth::user() != null){
+            $prop = properties::find($request->id);
+            $prop->inUse = $request->use;
+            $prop->save();
+            return back()->with('succ', 'changed');
         }else{
             return redirect(route('login'))->with('error','error');
         }

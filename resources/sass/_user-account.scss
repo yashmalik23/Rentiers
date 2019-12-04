@@ -2,21 +2,36 @@
     grid-area: image1;
     max-width: 100px;
     min-height: 100px;
+    min-width:100px;
+    max-height:100px;
     border-radius: 50px;
-    margin: 50px auto auto;
+    margin: 25px auto auto;
 }
 .property-actions{
-    grid-area: actions;
     margin: 10px 10px auto auto;
     img{
-        padding-right: 10px;
+        padding: 4px;
         cursor: pointer;
-        width: 25px;
+        width: 30px; 
+        margin-right: 2px;
+        &:first-child{
+            background: #044389;
+        }
+        &:nth-child(2){
+            background: crimson;
+        }
+        &:nth-child(3){
+            background: green;
+        }
+        &:nth-child(5){
+            background: orangered;
+        }
     }
 }
 .property-details{
     grid-area: pdetails;
-    margin: 50px auto auto;
+    margin-top: 20px;
+    margin-left: 10px;
     div{
         color: #717377;
     }
@@ -40,14 +55,14 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         height: 200px;
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 1fr 3fr;
         grid-template-rows: 1fr 0.2fr;
         grid-template-areas: 
-        'image1 pdetails actions'
-        'pfooter pfooter pfooter'
+        'image1 pdetails'
+        'pfooter pfooter'
     }
 }
-.delete-modal,.upload-image-modal{
+.delete-modal,.upload-image-modal, .sold-modal{
     position: absolute;
     display: none;
     width: 100%;
@@ -99,19 +114,48 @@
         }
     }
 }
+.order-heading{
+    font-size: 2.5rem;
+    color: $font;
+    width: 95vw;
+    margin-left: 20px;
+}
+.order-sub-title{
+    font-size: 1.5rem;
+    color: $font;
+    width: 95vw;
+    margin-left: 20px;
+}
+.order-images{
+    width: 95vw;
+    input{
+        width: 200px;
+        margin: 10px 10px 10px 20px;
+    }
+    .submit-order{
+        border: 1px solid $main;
+        color: $main;
+        width: 80px;
+        background-color: white;
+        padding: 5px 15px;
+        margin: 0px auto 40px 20px;
+        cursor: pointer;
+    }
+}
 .images-container{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
-    margin: 10px;
     .image-card{
+        display: inline-block;
         height: 200px;
+        margin: 10px 20px;
         img{
             max-width: 100%;
             max-height: 100%;
+            display: inline-block;
         }
         .closeimg{
             cursor: pointer;
-            margin: -100px 0px 0px 5px;
+            width: 30px;
+            margin: -180px 0px 0px -15px;
         }
     }
 }

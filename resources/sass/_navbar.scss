@@ -11,6 +11,8 @@ body{
     line-height: 20px;
     padding: 10px 0px;
     flex-direction: row;
+    position: relative;
+    z-index: 10000;
     @media screen and (max-width: $break-large) {
         display: none;
     }
@@ -38,6 +40,7 @@ body{
     list-style-type: none;
     display: inline;
     margin: auto;
+    font-size: 1.7rem;
     li{
         display: inline;
         padding: 0px 20px;
@@ -52,11 +55,10 @@ body{
             list-style-type: none;
             position: absolute;
             display: none;
-            margin-left: 433px;
+            margin-left: 490px;
             z-index: 500;
             li{
                 display: block;
-                background: white;
             }
             @media screen and (max-width: $break-large){
                 margin-left: 10px;
@@ -125,6 +127,7 @@ body{
             display: none;
             margin: 20px 10px 10px auto;
             padding:0;
+            z-index: 2000;
             li{
                 display: block;
                 background: white;
@@ -176,12 +179,15 @@ body{
     list-style-type: none;
     padding: 0;
     margin-top: 30px;
-    margin-left: 220px;
+    margin-left: 240px;
     max-height: 100px;
     width: 30%;
-    max-width: 150px;
+    max-width: calc(95vw - 260px);
     display: none;
     overflow-y: scroll;
+    z-index: 100;
+    font-size: 16px;
+    line-height: 17px;
     li{
         padding: 5px 10px;
         cursor: pointer;
@@ -210,3 +216,72 @@ body{
         }
     }
 }
+
+.loader {
+    height: 40px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  
+.spinner {
+    width: 30px;
+    height: 30px;
+    background: rgba(77, 124, 254, 0.2);
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+  }
+  
+.spinner:after, .spinner:before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+.spinner-1:after {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    border: 2px solid transparent;
+    border-top-color: #4D7CFE;
+    border-bottom-color: #4D7CFE;
+    -webkit-animation: spinny 1s linear infinite;
+            animation: spinny 1s linear infinite;
+  }
+  
+@-webkit-keyframes spinny {
+    0% {
+      -webkit-transform: rotate(0deg) scale(1);
+              transform: rotate(0deg) scale(1);
+    }
+    50% {
+      -webkit-transform: rotate(45deg) scale(1.2);
+              transform: rotate(45deg) scale(1.2);
+    }
+    100% {
+      -webkit-transform: rotate(360deg) scale(1);
+              transform: rotate(360deg) scale(1);
+    }
+  }
+  
+@keyframes spinny {
+    0% {
+      -webkit-transform: rotate(0deg) scale(1);
+              transform: rotate(0deg) scale(1);
+    }
+    50% {
+      -webkit-transform: rotate(45deg) scale(1.2);
+              transform: rotate(45deg) scale(1.2);
+    }
+    100% {
+      -webkit-transform: rotate(360deg) scale(1);
+              transform: rotate(360deg) scale(1);
+    }
+  }
+  

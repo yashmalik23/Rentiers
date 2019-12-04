@@ -7,7 +7,6 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
-
 class checkauth{
     public $city;
     public $role;
@@ -36,21 +35,24 @@ class propertiesController extends Controller
     //
     public function index()
     {   
-        if(Auth::user()!=null){
-            if(Auth::user()->member != "Member"){
-                $citie = explode(",",DB::table('suggestions')->find(1)->cities);
-                $locality = DB::table('suggestions')->find(1)->localities;
-                $projects = DB::table('suggestions')->find(1)->projectNames;
-                return view('includes/list')
-                        ->with('cities',$citie)
-                        ->with('localities',$locality)
-                        ->with('projects',$projects);
-            }else{
-                return redirect(route('login'))->with('member','login')->with('message','Must be a seller to list properties');
-            }
+        if(Auth::user() != null){
+            $citie = explode(",",DB::table('suggestions')->find(1)->cities);
+            $locality = DB::table('suggestions')->find(1)->localities;
+            $projects = DB::table('suggestions')->find(1)->projectNames;
+            return view('includes/list')
+                    ->with('cities',$citie)
+                    ->with('localities',$locality)
+                    ->with('projects',$projects);   
         }else{
             return redirect(route('login'))->with('message','login to continue');
         }
+    }
+
+    public function showProject($id){
+        // $project = DB::table('projects')->find($id);
+        // return view('includes/viewproject')->with('project',$project);
+        return view('includes/projectview');
+
     }
     
     public function store(Request $request)
@@ -97,7 +99,7 @@ class propertiesController extends Controller
         if($user){
             $props->user_id = $user->id;
             $props->save();
-            return back()->with('property','added_successfully');
+            return route('useraccount')->with('property','added_successfully');
         }else{
             $props->save();
             return view('includes/login');
@@ -164,8 +166,26 @@ class propertiesController extends Controller
         return back()->with('delete',"deleted successfully")->with('props', $props);
     }
 
+    // Compress image
+    public static function compressImage($source, $destination, $quality) {
+
+        $info = getimagesize($source);
+
+        if ($info['mime'] == 'image/jpeg') 
+            $image = imagecreatefromjpeg($source);
+
+        elseif ($info['mime'] == 'image/gif') 
+            $image = imagecreatefromgif($source);
+
+        elseif ($info['mime'] == 'image/png') 
+            $image = imagecreatefrompng($source);
+
+        imagejpeg($image, $destination, $quality);
+
+    }
+
+
     public function addimage(Request $request){
-        
         $user = Auth::user();
         $id = $request->input('id');
         $props = properties::find($id);
@@ -179,7 +199,8 @@ class propertiesController extends Controller
                 $filename = pathinfo($file, PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
                 $nameToStore = $filename."_".time().".".$extension;
-                $path = $file->storeAs("public/".$id, $nameToStore);   
+                $location = "storage/".$id."/".$nameToStore;
+                self::compressImage($file,$location,50);
                 $string = $string.$nameToStore.","; 
             }
         }
@@ -189,6 +210,6 @@ class propertiesController extends Controller
 
         $id = $user->id;
         $props = DB::select('SELECT * from properties where user_id='.$id);
-        return back()->with('image',"added");
+        return back()->with('image','added');
     }
 }

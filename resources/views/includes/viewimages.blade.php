@@ -20,15 +20,28 @@
                     </form>
                 </div>
             </div>
+            <div class="frontalert alert-danger" id="frontalert">
+                Wrong details
+            </div>
+            <div class="order-heading">Order of images</div>
+            <div class="order-sub-title">Type the position separated by commas to change the order of images. Include all the images to proceed further</div>
+            <form method="POST" class="order-images" action={{route('changeorder')}}>
+                @csrf
+                <input type="text" hidden value="{{$propid}}" name='id'>
+                <input type="text" value='' placeholder='1,4,3,2' name="image"/> 
+                <div class="submit-order" onclick="checkOrder(event, {{ count($images)}})">Change</div>
+                <button type='submit' id='change-order-images' hidden></button>
+            </form>
             <div class="images-container">
-                @foreach($images as $image)
-                @if($image != "" && $image != "noimage.png")
-                    <div class="image-card">
-                        <img src="/storage/{{$propid}}/{{$image}}">
-                        <img src="/images/viewprops/close.svg"  class="closeimg" onclick="showModal(event, {{$propid}}, '{{$image}}')">
-                    </div>
-                @endif
-                @endforeach
+                @for($i=0;$i< count($images)-1;$i++)
+                    @if($images[$i] != "" && $images[$i] != "noimage.png")
+                        <div class="image-card">
+                            <img src="/storage/{{$propid}}/{{$images[$i]}}">
+                            <img src="/images/viewprops/close.png"  class="closeimg" onclick="showIModal(event, {{$propid}}, '{{$images[$i]}}')">
+                            <div class="image-number">Image number - {{$i+1}}</div>
+                        </div>
+                    @endif
+                @endfor
             </div>
     @endif
 

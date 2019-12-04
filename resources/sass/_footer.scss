@@ -13,12 +13,12 @@
     li{
         a{
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             text-decoration: none;
         }
         &:nth-child(1){
             a{
-                font-size: 1.5rem;
+                font-size: 1.7rem;
                 font-weight: 800;
                 color: white;
             }
@@ -50,7 +50,7 @@
 .copyright{
     grid-area: copyright;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: auto auto 0px;
 }
 .request-div{ 

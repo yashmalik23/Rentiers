@@ -46,10 +46,10 @@ window.setTimeout(function() {
         $(this).remove(); 
     });
 }, 2000);
+
 function showalert(){
     let alert = document.getElementsByClassName('frontalert')[0];
     if(alert != null){
-        console.log(alert.style.display);
         if(alert.style.display =="none" || alert.style.display == ""){
             alert.style.display="block";
             alert.style.opacity = 1;
@@ -62,22 +62,27 @@ function showalert(){
 
 function checkImages(e){
     let input = e.target;
+    
     if(input.files){
-        if(input.files.length>5){
-            document.getElementById('frontalert').textContent = "More than 5 files are not allowed";
+        if(input.files.length>10){
+            document.getElementById('frontalert').textContent = "More than 10 files are not allowed";
             showalert()
             e.target.value = "";
+            return
         }else{
             for(let i=0; i<input.files.length; i++){
-                if(input.files[i].size> 2097152){
-                    document.getElementById('frontalert').textContent = "One of the file is greater than 2MB";
+                if(input.files[i].size> 5242880){
+                    document.getElementById('frontalert').textContent = "One of the file is greater than 5MB";
                     showalert()
                     e.target.value = "";
+                    return
                 }
             }
+            e.target.nextElementSibling.children[0].click()
         }
     }
 }
+
 
 function addOptions(e, arr, arr2){
     let list = e.target.nextElementSibling;

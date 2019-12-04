@@ -5,13 +5,6 @@ function nextSlide(e){
         currentActiveSlide.classList.remove('active');
         currentActiveSlide.nextElementSibling.classList.add('active');
     }
-
-    var circles = e.target.nextElementSibling;
-    var currentActiveCircle = circles.querySelector("div.active");
-    if (currentActiveCircle.nextElementSibling != null){
-        currentActiveCircle.classList.remove('active');
-        currentActiveCircle.nextElementSibling.classList.add('active');
-    }
     
 }
 function previousSlide(e){
@@ -21,10 +14,24 @@ function previousSlide(e){
         currentActiveSlide.classList.remove('active');
         currentActiveSlide.previousElementSibling.classList.add('active');
     }
-    var circles = e.target.nextElementSibling.nextElementSibling;
-    var currentActiveCircle = circles.querySelector("div.active");
-    if (currentActiveCircle.previousElementSibling != null){
-        currentActiveCircle.classList.remove('active');
-        currentActiveCircle.previousElementSibling.classList.add('active');
-    }
 }
+
+function changeTab(e, index, price){
+    let slides = e.target.parentElement.nextElementSibling;
+    var currentActiveSlide = slides.querySelector('img.active');
+    if (currentActiveSlide != null){
+        currentActiveSlide.classList.remove('active');
+        slides.children[index].classList.add('active');
+    }
+    var tabs = e.target.parentElement;
+    currentActiveSlide = tabs.querySelector('div.active');
+    if (currentActiveSlide != null){
+        currentActiveSlide.classList.remove('active');
+        e.target.classList.add('active');
+    }
+
+    document.getElementById('tab-price-tag').textContent = price;
+}
+
+
+

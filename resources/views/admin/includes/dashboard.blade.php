@@ -4,7 +4,7 @@
         <div class="main-layout">
             <!-- nav-bar -->
             <div class="nav-bar">
-                <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleMenu()" />
+                <img src="/images/menu.svg" alt="menu" class="dashboard-icon" onclick="handleAdminMenu()" />
                 <span class="dashboard-heading">Dashboard</span>
             </div>
             {{-- quick links --}}

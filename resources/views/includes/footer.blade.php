@@ -31,26 +31,26 @@
     <img class="footer-left" src="{{asset('images/footer/footer-left.svg')}}">
     <ul class="footer-link-columns">
         <li>Rental Properties</li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/16" target="_blank">Tata Gurgaon Gateway</a></li>
+        <li><a href="/property/6" target="_blank">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/11" target="_blank">Raheja Atharva</a></li>
+        <li><a href="/property/13" target="_blank">Puri Emerald Bay</a></li>
+        <li><a href="/property/15" target="_blank">Experion The Heartsong</a></li>
     </ul>
     <ul class="footer-link-columns">
         <li>Buy Properties</li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
-        <li><a href="/property/6">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/19" target="_blank">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/20" target="_blank">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/21" target="_blank">Adani M2K Oyster Grande</a></li>
+        <li><a href="/property/22" target="_blank">Godrej Summit</a></li>
+        <li><a href="/property/22" target="_blank">Godrej Summit</a></li>
     </ul>
     <ul class="footer-link-columns">
         <li>Quick links</li>
-        <li><a href="/aboutus">About Us</a></li>
-        <li><a href="/contactus">Contact Us</a></li>
-        <li><a href="/listproperties">List property</a></li>
-        <li><a href="/">Home</a></li>
+        <li><a href="/aboutus" target="_blank">About Us</a></li>
+        <li><a href="/contactus" target="_blank">Contact Us</a></li>
+        <li><a href="/listproperties" target="_blank">List property</a></li>
+        <li><a href="/" >Home</a></li>
         <li><a href="/search">Search</a></li>
     </ul>
     <div class="copyright"> Copyright © 2019 by Rentiers.in, Gurugram, Haryana, India</div>

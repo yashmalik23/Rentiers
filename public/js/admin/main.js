@@ -1,4 +1,4 @@
-function handleMenu() {
+function handleAdminMenu() {
     var menu = document.getElementById("side-nav");
     var main = document.getElementsByClassName("main-layout")[0];
 

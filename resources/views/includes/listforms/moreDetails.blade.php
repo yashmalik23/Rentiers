@@ -33,31 +33,31 @@
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="superArea">Area (Super Area) *</label>
-                    <input type="number" id="superArea" class="list-form-input" placeholder="1900">
+                    <input type="number" id="superArea" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="carpetArea">Area (Carpet Area) *</label>
-                    <input type="number" id="carpetArea" class="list-form-input" placeholder="100">
+                    <input type="number" id="carpetArea" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="bathRooms">Bathrooms *</label>
-                    <input type="number" id="bathRooms" class="list-form-input" placeholder="1">
+                    <input type="number" id="bathRooms" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="balconies">Balconies *</label>
-                    <input type="number" id="balconies" class="list-form-input" placeholder="1">
+                    <input type="number" id="balconies" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="coveredParking">Parking (Covered) *</label>
-                    <input type="number" id="coveredParking" class="list-form-input" placeholder="1">
+                    <input type="number" id="coveredParking" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="openParking">Parking (Open) *</label>
-                    <input type="number" id="openParking" class="list-form-input" placeholder="1">
+                    <input type="number" id="openParking" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-3">
@@ -86,11 +86,11 @@
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="floor">Floor *</label>
-                    <input type="number" id="floor" class="list-form-input" placeholder="8">
+                    <input type="number" id="floor" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="totalFloors">Total floors *</label>
-                    <input type="number" id="totalFloors" class="list-form-input" placeholder="21">
+                    <input type="number" id="totalFloors" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-4">
@@ -151,31 +151,31 @@
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="commsuperArea">Area (Super Area) *</label>
-                    <input type="number" id="commsuperArea" class="list-form-input" placeholder="1900">
+                    <input type="number" id="commsuperArea" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="commcarpetArea">Area (Carpet Area) *</label>
-                    <input type="number" id="commcarpetArea" class="list-form-input" placeholder="100">
+                    <input type="number" id="commcarpetArea" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="commbathRooms">Bathrooms *</label>
-                    <input type="number" id="commbathRooms" class="list-form-input" placeholder="1">
+                    <input type="number" id="commbathRooms" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="commbalconies">Balconies *</label>
-                    <input type="number" id="commbalconies" class="list-form-input" placeholder="1">
+                    <input type="number" id="commbalconies" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-4">
                 <div class="list-input-field">
                     <label for="commfloor">Floor *</label>
-                    <input type="number" id="commfloor" class="list-form-input" placeholder="8">
+                    <input type="number" id="commfloor" class="list-form-input" placeholder="0">
                 </div>
                 <div class="list-input-field">
                     <label for="commtotalFloors">Total floors *</label>
-                    <input type="number" id="commtotalFloors" class="list-form-input" placeholder="21">
+                    <input type="number" id="commtotalFloors" class="list-form-input" placeholder="0">
                 </div>
             </div>
             <div class="line-3">
