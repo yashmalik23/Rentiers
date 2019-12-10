@@ -8,6 +8,12 @@
             <strong>Success!</strong> Image deleted successfully. {{session('delete')}}
         </div>
         @endif
+        @if(session('order'))
+            <div class="alert alert-success" role="alert">
+            <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success!</strong> Order changed successfully.
+        </div>
+        @endif
             <div class="delete-modal">
                 <div class="modal-content">
                     <div>Are you sure you want to delete this image?</div>
@@ -23,12 +29,12 @@
             <div class="frontalert alert-danger" id="frontalert">
                 Wrong details
             </div>
-            <div class="order-heading">Order of images</div>
-            <div class="order-sub-title">Type the position separated by commas to change the order of images. Include all the images to proceed further</div>
+            <div class="order-heading">Make cover photo</div>
+            <div class="order-sub-title">Type the image number you want to make cover photo</div>
             <form method="POST" class="order-images" action={{route('changeorder')}}>
                 @csrf
                 <input type="text" hidden value="{{$propid}}" name='id'>
-                <input type="text" value='' placeholder='1,4,3,2' name="image"/> 
+                <input type="number" min="0" value='0' name="image"/> 
                 <div class="submit-order" onclick="checkOrder(event, {{ count($images)}})">Change</div>
                 <button type='submit' id='change-order-images' hidden></button>
             </form>

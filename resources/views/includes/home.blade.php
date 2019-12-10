@@ -16,7 +16,17 @@
     
         }
     </style>
-
+    
+    @if(Auth::user() == null)
+        <script>document.body.classList.add('stop-scrolling')</script>
+        <div class="modal-background show">
+        </div>
+        <div id="modal-zoom-in" class="modal show edit">
+            <h4>Please login to continue your browsing without any interruptions</h4>
+            <a href="/login" class="login-modal-button">LogIn/SignUp</a>
+            <img src="{{asset('images/home/modalclose.svg')}}" id="modalclose" onclick="closeHomeModal()"/>
+        </div>
+    @endif
     <div class="main-slider">
         <div class="slider-images">
             <div class="slide active">
@@ -57,7 +67,7 @@
                 <input name="listedFor" type="text" value="RENT" hidden>
                 <img src="{{asset('images/home/search-down-arrow.svg')}}" onclick="droparrow(event)">
             </div>
-            <input type="text" placeholder="Search..." class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
+            <input type="text" placeholder="Search location or project name" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
             <ul class="data-list">
             </ul>
             <img src="{{asset('images/home/search.svg')}}" class="search-icon" onclick="searchProps()"/>

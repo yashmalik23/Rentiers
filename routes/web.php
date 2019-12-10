@@ -17,12 +17,13 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@index');
 Route::get('contactus', 'requestsController@index')->name('contactus');
 Route::get('listproperties', 'propertiesController@index')->name('listproperties');
+Route::get('allprojects', 'propertiesController@all')->name('allprojects');
 Route::get('login', 'loginController@index')->name('login');
-Route::post('usemobile','loginController@mobile')->name('usemobile');
 
 
 Route::post('register', 'loginController@store')->name('register');
 Route::post('login','loginController@checklogin');
+Route::post('reset','loginController@reset');
 Route::post('requests','requestsController@store')->name('requests');
 
 

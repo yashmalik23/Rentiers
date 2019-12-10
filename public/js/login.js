@@ -10,7 +10,7 @@ function changecheck(e){
     }
 }
 function changeForm(){
-    let signup = document.getElementsByClassName('signup-form')[0];
+    let signup = document.getElementsByClassName('signup1')[0];
     let login = document.getElementsByClassName('login-form')[0];
 
     if(signup.style.display != "none"){
@@ -23,18 +23,38 @@ function changeForm(){
 }
 
 function registerUser(){
-    let data = {};
-    let form = document.getElementsByClassName('signup-form')[0].children;
-    let fields = ["name","contact","email","password","confirm","signupas"];
-    for(i=1;i<7;i++){
-        let child = form[i].children[1];
-        data[fields[i-1]] = child.value;
-    }
-    let val = validate(data);
-    if (val == true){ 
-        let button = document.getElementById('register-button');
-        button.click();
-    }
+    var code = document.getElementById('otp-sent').value;
+    confirmationResult.confirm(code).then(function (result) {
+        document.getElementById('register-button').click()
+    }).catch(function (error) {
+        document.getElementById('frontalert').textContent = error
+        showalert()
+    });
+    
+}
+
+function sendMail(){
+    document.getElementById('mobile-button').click()
+}
+
+function emailPassword(){
+    let signup = document.getElementsByClassName('signup1')[0];
+    let login = document.getElementsByClassName('login-form')[0];
+    let mobile = document.getElementsByClassName('mobile-form')[0];
+    
+    signup.style.display = "none";
+    login.style.display = "none";
+    mobile.style.display = "block";
+}
+
+function backToLogin(){
+    let signup = document.getElementsByClassName('signup1')[0];
+    let login = document.getElementsByClassName('login-form')[0];
+    let mobile = document.getElementsByClassName('mobile-form')[0];
+    
+    signup.style.display = "none";
+    login.style.display = "block";
+    mobile.style.display = "none";
 }
 
 function checkLogin(){
@@ -43,17 +63,12 @@ function checkLogin(){
 }
 
 function validate(data){
-    let mem = document.getElementById('membercheck').textContent;
     if(data["password"] != data["confirm"]){
         document.getElementById('frontalert').textContent = "Password doesn't match"
         showalert()
         return false
     }else if(data["name"] == "" || data["contact"] == "" || data["email"] == ""){
         document.getElementById('frontalert').textContent = "Fill the details please"
-        showalert()
-        return false
-    }else if(mem != "Member" && mem != "Seller"){
-        document.getElementById('frontalert').textContent = "Fill the form"
         showalert()
         return false
     }
@@ -88,52 +103,42 @@ function showdrop(e){
     }
 }
 
-function changeMobileForm(){
-    let form1 = document.getElementsByClassName('login-form')[0]
-    let form2 = document.getElementsByClassName('signup-form')[0]
-    let form3 = document.getElementsByClassName('mobile-form')[0]
-        
-    form1.style.display = "none"
-    form2.style.display = "none"
-    form3.style.display = "block"
-}
-
-function changeNormal(){
-    let form1 = document.getElementsByClassName('login-form')[0]
-    let form2 = document.getElementsByClassName('signup-form')[0]
-    let form3 = document.getElementsByClassName('mobile-form')[0]
-        
-    form1.style.display = "block"
-    form2.style.display = "none"
-    form3.style.display = "none"
-}
 
 function checkMobile(){
-    
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('mobile-submit', {'size': 'invisible'});
-    var phoneNumber = "+91"+document.getElementById('mobile-number').value
-    var appVerifier = window.recaptchaVerifier;
-    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then(function (confirmationResult) {
-            window.confirmationResult = confirmationResult;
-            document.getElementById('mobile-1').style.display = "none"
-            document.getElementById('mobile-2').style.display = "block"
-            document.getElementById('mobile-submit').style.display = "none"
-            document.getElementById('mobile-submit-2').style.display = "block"
-        }).catch(function (error) {
-            document.getElementById('frontalert').textContent = error
-            showalert()
-            document.getElementById('mobile-submit').style.display = "block"
-            document.getElementById('mobile-submit').textContent = "Send OTP"
-    });
-}
-
-function verifyMobile(){
-    var code = document.getElementById('otp-sent').value;
-    confirmationResult.confirm(code).then(function (result) {
-        document.getElementById('mobile-button').click()
-    }).catch(function (error) {
-        document.getElementById('frontalert').textContent = "Incorrect OTP"
-        showalert()
-    });
+    document.getElementsByClassName('loader')[0].style.display = "block"
+    document.getElementsByClassName('signup-options')[0].style.display = "none"
+    document.getElementsByClassName('signup-submit')[0].style.display = "none"
+    let data = {};
+    let form = document.getElementsByClassName('signup1')[0].children;
+    let fields = ["name","contact","email","password","confirm"];
+    for(i=0;i<5;i++){
+        if(i != 1){
+            let child = form[i].children[1];
+            data[fields[i]] = child.value;
+        }else{
+            let child = form[i].children[2];
+            data[fields[i]] = child.value;
+        }
+    }
+    let val = validate(data);
+    if (val == true){ 
+        window.recaptchaVerifier = null
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('number', {'size': 'invisible'});
+        var phoneNumber = document.getElementById('code').value+document.getElementById('number').value
+        var appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then(function (confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                document.getElementsByClassName('loader')[0].style.display = "none"
+                document.getElementsByClassName('signup1')[0].style.display = "none"
+                document.getElementsByClassName('signup2')[0].style.display = "block"
+            }).catch(function (error) {
+                document.getElementById('frontalert').textContent = error
+                showalert()
+        });
+    }else{
+        document.getElementsByClassName('loader')[0].style.display = "none"
+        document.getElementsByClassName('signup-options')[0].style.display = "block"
+        document.getElementsByClassName('signup-submit')[0].style.display = "block"
+    }
 }

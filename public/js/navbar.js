@@ -62,9 +62,12 @@ function showalert(){
 
 function checkImages(e){
     let input = e.target;
-    
+    document.getElementById('loader').style.display = "block"
+    document.getElementById('submitContainer').style.display = "none"
     if(input.files){
         if(input.files.length>10){
+            document.getElementById('loader').style.display = "none"
+            document.getElementById('submitContainer').style.display = "block"
             document.getElementById('frontalert').textContent = "More than 10 files are not allowed";
             showalert()
             e.target.value = "";
@@ -73,12 +76,14 @@ function checkImages(e){
             for(let i=0; i<input.files.length; i++){
                 if(input.files[i].size> 5242880){
                     document.getElementById('frontalert').textContent = "One of the file is greater than 5MB";
+                    document.getElementById('loader').style.display = "none"
+                    document.getElementById('submitContainer').style.display = "block"
                     showalert()
                     e.target.value = "";
                     return
                 }
             }
-            e.target.nextElementSibling.children[0].click()
+            e.target.nextElementSibling.nextElementSibling.children[0].click()
         }
     }
 }

@@ -67,7 +67,7 @@ body {
   list-style-type: none;
   position: absolute;
   display: none;
-  margin-left: 490px;
+  margin-left: 444px;
   z-index: 500;
 }
 
@@ -175,7 +175,21 @@ body {
 
 .user-name {
   line-height: 40px;
+  width: 40px;
   margin-right: 10px;
+  background: #F72C25;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.user-name a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.9rem;
+}
+
+.user-name a:hover {
+  text-decoration: none;
 }
 
 ::-webkit-scrollbar {
@@ -256,7 +270,9 @@ body {
 }
 
 .loader {
+  display: none;
   height: 40px;
+  width: 100%;
   justify-content: center;
   align-items: center;
 }
@@ -268,6 +284,7 @@ body {
   border-radius: 50%;
   position: relative;
   display: inline-block;
+  margin-left: 46%;
 }
 
 .spinner:after,
@@ -318,9 +335,160 @@ body {
   }
 }
 
+.edit {
+  background-color: #044389;
+}
+
+.success {
+  background-color: green;
+}
+
+.reject {
+  background-color: crimson;
+}
+
+.extra {
+  background-color: blueviolet;
+}
+
+#modal-zoom-in {
+  top: 40%;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+#modal-zoom-in.show {
+  z-index: 10000;
+  transform: translate(-50%, -50%) scale(1);
+  height: 200px;
+  max-width: 80vw;
+  width: 800px;
+  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-background {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(69, 69, 69, 0.7);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-background.show {
+  z-index: 10000;
+  height: auto;
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-animation: fadein 0.8s;
+          animation: fadein 0.8s;
+}
+
+.modal-background.hide {
+  -webkit-animation: fadeout 0.8s;
+          animation: fadeout 0.8s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.modal {
+  position: absolute;
+  padding: 35px;
+  box-shadow: 0px 0px 8px 0px #333;
+  color: #fff;
+  text-align: left;
+  transform-style: preserve-3d;
+}
+
+.login-modal-button {
+  text-decoration: none;
+  background: white;
+  border: 1px solid #3a6ec9;
+  color: #3a6ec9;
+  width: 100px;
+  line-height: 50px;
+  height: 50px;
+  padding: 10px 10px;
+  font-size: 1.5rem;
+  margin-top: 30px;
+}
+
+.login-modal-button:hover {
+  text-decoration: none;
+  color: #3a6ec9;
+}
+
+#modalclose {
+  width: 30px;
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  cursor: pointer;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+#apply-filters {
+  background: #3a6ec9;
+  margin: 0;
+  position: relative;
+  top: 15px;
+  font-size: 1.6rem;
+  padding: 5px 25px;
+  text-align: center;
+  margin-left: 43px;
+}
+
 .main-slider {
   position: relative;
-  margin: -60px auto 20px;
+  margin: -62px auto 20px;
   min-width: 99.9vw;
   max-width: 99.9vw;
   min-height: 88vh;
@@ -2033,6 +2201,39 @@ footer {
   padding-top: 0px;
 }
 
+.signup-form .signup2,
+.login-form .signup2,
+.mobile-form .signup2 {
+  display: none;
+}
+
+.signup-form .input-field-1,
+.login-form .input-field-1,
+.mobile-form .input-field-1 {
+  padding: 5px 0px;
+  margin: 5px auto;
+  width: 75%;
+}
+
+.signup-form .input-field-1 input,
+.login-form .input-field-1 input,
+.mobile-form .input-field-1 input {
+  display: inline-block;
+  width: 83%;
+}
+
+.signup-form .input-field-1 input#code,
+.login-form .input-field-1 input#code,
+.mobile-form .input-field-1 input#code {
+  width: 15%;
+}
+
+.signup-form .input-field-1 input#code1,
+.login-form .input-field-1 input#code1,
+.mobile-form .input-field-1 input#code1 {
+  width: 15%;
+}
+
 .signup-form .signup-submit,
 .signup-form .login-submit,
 .signup-form .mobile-submit,
@@ -2100,6 +2301,7 @@ footer {
   margin: 5px 0px 0px auto;
   cursor: pointer;
   display: block;
+  color: #3a6ec9;
 }
 
 .left-login-image {
@@ -2195,14 +2397,16 @@ footer {
 }
 
 .details-container .detail-form-container {
-  width: 49%;
-  display: inline-block;
-  padding-left: 20px;
+  text-align: center;
+  margin: 10px auto;
 }
 
 .details-container .detail-form-container input {
   display: block;
-  margin: 5px auto auto 0px;
+  margin: 5px auto;
+  width: 400px;
+  max-width: 90vw;
+  height: 40px;
 }
 
 .details-container .detail-form-container button {
@@ -2810,7 +3014,7 @@ footer {
 
 .rest-details .rest-heading {
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: bold;
   color: #424b5a;
   display: block;
 }

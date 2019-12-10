@@ -27,7 +27,7 @@ class userAccountController extends Controller
     {
         $user = Auth::user();
         if($user != null){
-            if($user->email == "inforentiers@gmail.com"){
+            if($user->email == "admin@rentiers.in"){
                 $props = DB::select('SELECT * from properties where user_id='.$id.' ORDER BY created_at DESC');
                 return view('admin/includes/adminuseraccount')->with('props', $props);
             }
@@ -99,16 +99,15 @@ class userAccountController extends Controller
 
     public function changeOrder(Request $request){
         $id=$request->input('id');
-        $arr = explode(",",$request->input('image'));
+        $num = intval($request->input('image'));
         $prop = properties::find($id);
         $images = explode(",",$prop->images);
-        $string = "";
-        for($i=0;$i<count($arr);$i++){
-            $string = $string.$images[$arr[$i]-1].",";
-        }
-        $prop->images = $string;
+        $val = $images[$num-1];
+        $images[$num-1] = $images[0];
+        $images[0] = $val;
+        $prop->images = join(',',$images);
         $prop->save();
-        return redirect(route('useraccount'))->with('order','done');
+        return back()->with('order','done');
     }
 
     public function deleteimage(Request $request){
@@ -142,7 +141,6 @@ class userAccountController extends Controller
 
     public function changepassword(Request $request){
         if(Auth::user()){
-            if(Auth::user()->email != 'inforentrs@gmail.com'){
                 if($request->input('npassword') != $request->input('cpassword')){
                     return back()->with('error','password_dont_match');
                 }else if(Hash::check($request->input('opassword'),Auth::user()->password)){
@@ -152,9 +150,6 @@ class userAccountController extends Controller
                     return back()->with('success','Changed successfully');
                 }
                 return back()->with('error','wrong_current_password');
-            }else{
-                return redirect(route('login'))->with('timeout',"timed_out");
-            }
         }
         return redirect(route('login'))->with('timeout',"timed_out");
     }
@@ -186,3 +181,13 @@ class userAccountController extends Controller
         }
     }
 }
+
+// <form class="detail-form-container" method="POST" action="{{ route('changedetails')}}">
+//                 @csrf
+//                 <h3>Change Details</h3>
+//                 <input type="text" name="email" value="{{Auth::user()->email}}" required/>
+//                 <input type="text" name="name" value="{{Auth::user()->name}}" required/>
+//                 <input type="text" name="contact" value="{{Auth::user()->contact}}" required/>
+//                 <input type="password" name="opassword" id="user_name" placeholder="Current password" required/><br>
+//                 <button>Change</button>
+//             </form>

@@ -5,6 +5,7 @@ use App\properties;
 use DB;
 use Illuminate\Http\Request;
 use Auth;
+use vendor\autoload;
 
 
 use App\Mail\TestEmail;
@@ -24,9 +25,17 @@ class searchController extends Controller
             $inventorycounts = ["Beds","Lights","Fans","ACs","Geysers","TVs","Wardrobes","Exhausts","Sofas"];
             $tenant = ["Family","Employed (Salaried)","Self-employed","Bachelors(Boys)","Bachelorette(Girls)","Married Couple","unmarried Couple","Company Lease"];
             
-            // $data = ['message' => $user->email.' has visited property number '.$id.' having details House No '.$props[0]->houseNo.' and location '.$props[0]->streetName ];
+            if($user->email != "admin@rentiers.in"){
+                $data = ['message' => $user->name.', '.$user->contact.', '.$user->email.' has visited property number '.$id.' having details House No '.$props[0]->houseNo.' and location '.$props[0]->streetName ];
+                $email = new \SendGrid\Mail\Mail(); 
+                $email->setFrom("rentiersalerts@gmail.com", "Rentiers Gurgaon");
+                $email->setSubject($user->name.', '.$user->contact." visited this property today!");
+                $email->addTo("rentiersalerts@gmail.com", "Rentiers Gurgaon");
+                $email->addContent("text/plain", $data['message']);
+                $sendgrid = new \SendGrid($this->key);
+                $response = $sendgrid->send($email);
+            }
 
-            // \Mail::to('yashmalik23@gmail.com')->send(new TestEmail($data));
             return view('includes/userview')
                     ->with('props', $props)
                     ->with('ameneties',$ameneties)
@@ -63,7 +72,7 @@ class searchController extends Controller
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $furnishing = ["Unfurnished","Semi furnished", "Fully furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
-        $sort =["Relevance","Price: low to high","Price: high to low","Date: Newest first"];
+        $sort =["By search text","Price: low to high","Price: high to low","Date: Newest first"];
         $citie = explode(",",DB::table('suggestions')->find(1)->cities);
         $locality = DB::table('suggestions')->find(1)->localities;
         $projects = DB::table('suggestions')->find(1)->projectNames;
@@ -92,7 +101,7 @@ class searchController extends Controller
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $furnishing = ["Unfurnished","Semi furnished", "Fully furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
-        $sort =["Relevance","Price: low to high","Price: high to low","Date: Newest first"];
+        $sort =["By search text","Price: low to high","Price: high to low","Date: Newest first"];
         $citie = explode(",",DB::table('suggestions')->find(1)->cities);
         $locality = DB::table('suggestions')->find(1)->localities;
         $projects = DB::table('suggestions')->find(1)->projectNames;
@@ -139,7 +148,7 @@ class searchController extends Controller
         $closeTo = ["Metro station","Main Road","Hospital","School","Bus stand","Railway Station","Market"];
         $furnishing = ["Unfurnished","Semi furnished", "Fully furnished"];
         $configuration = ["1BHK","2BHK","3BHK","4BHK","5BHK",">5BHK"];
-        $sort =["Relevance","Price: low to high","Price: high to low","Date: Newest first"];
+        $sort =["By search text","Price: low to high","Price: high to low","Date: Newest first"];
         $citie = explode(",",DB::table('suggestions')->find(1)->cities);
         $locality = DB::table('suggestions')->find(1)->localities;
         $projects = DB::table('suggestions')->find(1)->projectNames;

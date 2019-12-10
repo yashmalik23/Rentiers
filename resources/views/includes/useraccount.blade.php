@@ -27,12 +27,6 @@
             <strong>Success!</strong> Property added successfully.
         </div>
         @endif
-        @if(session('order'))
-            <div class="alert alert-success" role="alert">
-            <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Success!</strong> Order changed successfully.
-        </div>
-        @endif
             <div class="delete-modal">
                 <div class="modal-content">
                     <div>Are you sure you want to delete this property?</div>
@@ -55,13 +49,13 @@
                         <input type="number" id="image-prop" name="id" hidden>
                         <label for="file-field-image">Images</label>
                         <input type="file" id="file-field-image" name="file[]" accept=".jpg,.png,.jpeg" multiple onchange="checkImages(event)">
-                        <div id="submitContainer"> 
-                            <button type="submit" style="display:none"></button>
-                            <div class="cancel" onclick="closeImageModal()">Cancel</div>
-                        </div>
                         <div class="loader" id="loader">
                             <div class="spinner spinner-1">
                             </div>
+                        </div>
+                        <div id="submitContainer"> 
+                            <button type="submit" style="display:none"></button>
+                            <div class="cancel" id="image-cancel" onclick="closeImageModal()">Cancel</div>
                         </div>
                     </form>
                 </div>
@@ -94,7 +88,7 @@
                         <div class="property-details">
                             <div class="property-title"><a href="/useraccount/{{$prop->id}}">{{$prop->streetName}}</a></div>
                             <div class="property-address">{{$prop->locality.", ".$prop->city}}</div>
-                            <div class="property-interested-numbers">Interested members : {{($prop->intmembers == "" || $prop->intmembers == null)? 0 :$prop->intmembers}}</div>
+                            <div class="property-interested-numbers">ID : {{$prop->id}} , Date : {{date("d-m-Y", strtotime($prop->created_at))}}</div>
                             <div class="property-actions">
                                 <a href="/useraccountedit/{{$prop->id}}"><img alt="Edit" title="Edit" src="{{asset('images/viewprops/document.svg')}}"/></a>
                                 <img title="Delete" src="{{asset('images/viewprops/delete.svg')}}" onclick="showModal(event, {{$prop->id}})" >

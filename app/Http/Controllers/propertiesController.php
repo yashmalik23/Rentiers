@@ -32,7 +32,8 @@ class checkauth{
 
 class propertiesController extends Controller
 {
-    //
+    private $key = "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";
+    
     public function index()
     {   
         if(Auth::user() != null){
@@ -48,10 +49,36 @@ class propertiesController extends Controller
         }
     }
 
+    public function all(){
+        $props = DB::table('projects')->get();
+        return view('includes/viewallprojects')->with('props',$props);
+    }
+
     public function showProject($id){
-        // $project = DB::table('projects')->find($id);
-        // return view('includes/viewproject')->with('project',$project);
-        return view('includes/projectview');
+        $user = Auth::user();
+        if(Auth::user() != null){
+            if($user->email != "admin@rentiers.in"){
+                $data = ['message' => $user->name.', '.$user->contact.', '.$user->email.' has visited project number '.$id ];
+                $email = new \SendGrid\Mail\Mail(); 
+                $email->setFrom("rentiersalerts@gmail.com", "Rentiers Gurgaon");
+                $email->setSubject($user->name.', '.$user->contact." visited this project today!");
+                $email->addTo("rentiersalerts@gmail.com", "Rentiers Gurgaon");
+                $email->addContent("text/plain", $data['message']);
+                $sendgrid = new \SendGrid($this->key);
+                $response = $sendgrid->send($email);
+            }
+            $project = DB::table('projects')->find($id);
+            $proj = [];
+            for($i =0 ;$i<count(explode(',',$project->suggest));$i++){
+                $temp = DB::table('projects')->find(explode(',',$project->suggest)[$i]);
+                array_push($proj,$temp);
+            }
+
+            $amen = ["Air conditioners","Swimming Pool","Sports Arena","Parks","Gym","Intercom","Lifts","Visitor's parking","Pet friendly","24*7 power backup","Wheelchair friendly","Gated Society","24*7 water","Mini theatre"];
+            return view('includes/projectview')->with('project',$project)->with('amen',$amen)->with('sugg',$proj);
+        }else{
+            return redirect(route('login'))->with('message','login to continue');
+        }
 
     }
     
@@ -99,7 +126,7 @@ class propertiesController extends Controller
         if($user){
             $props->user_id = $user->id;
             $props->save();
-            return route('useraccount')->with('property','added_successfully');
+            return redirect(route('useraccount'))->with('property','added_successfully');
         }else{
             $props->save();
             return view('includes/login');
@@ -189,6 +216,10 @@ class propertiesController extends Controller
         $user = Auth::user();
         $id = $request->input('id');
         $props = properties::find($id);
+        $dir = 'storage/'.$id;
+        if ( is_dir($dir) == false){
+            mkdir($dir);
+        }
         if($props->images == "noimage.png,"){
             $string = "";
         }else{

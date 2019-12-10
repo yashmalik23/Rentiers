@@ -36,9 +36,9 @@
                     <img src="{{asset('images/home/search-down-arrow.svg')}}">
                 </div>
                 @if(session('search'))
-                <input type="text" value="{{session('search')}}" placeholder="Search property" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
+                <input type="text" value="{{session('search')}}" placeholder="Search location or project name" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
                 @else
-                <input type="text" value="{{$search}}" placeholder="Search property" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
+                <input type="text" value="{{$search}}" placeholder="Search location or project name" class="search-input" name="search-text" onkeyup="addOptions(event,'{{$localities}}','{{$projects}}')" onblur="hideOptions(event)"/>
                 @endif
                 <ul class="data-list">
                 </ul>
@@ -234,6 +234,7 @@
                         </div>
                     @endif
                 </div>
+                <button id="apply-filters" onclick="checkAllFilters()">Apply</button>
             </div>
         </div>
         <div class="search-results">
@@ -370,7 +371,7 @@
                     </div>
                     <div class="right-part">
                         <div class="rest-details-name"><a href="/property/{{$prop->id}}">{{$prop->streetName}}</a></div>
-                        <div class="rest-details-text">{{$prop->locality}},{{$prop->city}}</div>
+                        <div class="rest-details-text" style="font-weight:bold;font-size:1.5rem">{{$prop->locality}},{{$prop->city}}</div>
                         <div class="rest-details-text">
                             @if ($prop->furnishing == "10")
                                 Semi furnished

@@ -64,8 +64,8 @@ class adminController extends Controller
 
     public function membersearch($text){
         $user = new checkauth;
-        if($user->role != "admin" || $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
-        $members = DB::table('users')->where('member','=','Member')->where('name','like',$text)->paginate(12);
+        if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
+        $members = DB::table('users')->where('member','=','Member')->where('name','like','%'.$text.'%')->paginate(12);
         return view('admin/includes/members')->with('members',$members)->with('search',$text);
     }
 
@@ -93,7 +93,7 @@ class adminController extends Controller
     public function sellersearch($text){
         $user = new checkauth;
         if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
-        $members = DB::table('users')->where('member','=','Seller')->where('name','like',$text)->paginate(12);
+        $members = DB::table('users')->where('member','=','Seller')->where('name','like','%'.$text.'%')->paginate(12);
         return view('admin/includes/sellers')->with('sellers',$members)->with('search',$text);
  
     }
@@ -114,10 +114,10 @@ class adminController extends Controller
         $user = new checkauth;
         if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
         if($user->role=="admin"){
-            $props = DB::table('properties')->where('verified','=',1)->paginate(12);
+            $props = DB::table('properties')->where('verified','=',1)->orderBy('created_at', 'DESC')->paginate(12);
             return view('admin/includes/vassets')->with('props', $props)->with('search',"");
         }else{
-            $props = DB::table('properties')->whereRaw('verified=1 AND city='.$user->city)->paginate(12);
+            $props = DB::table('properties')->whereRaw('verified=1 AND city='.$user->city)->orderBy('created_at', 'DESC')->paginate(12);
             return view('admin/includes/vassets')->with('props', $props)->with('search',"");
         }
     }
@@ -127,7 +127,7 @@ class adminController extends Controller
         $user = new checkauth;
         if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
         if($user->role=="admin"){
-            $props = DB::table('properties')->where('verified','=',0)->paginate(12);
+            $props = DB::table('properties')->where('verified','=',0)->orderBy('created_at', 'DESC')->paginate(12);
             return view('admin/includes/uassets')->with('props', $props)->with('search',"");
         }else{
             $props = DB::table('properties')->whereRaw('verified=0 AND city='.$user->city)->paginate(12);
@@ -150,7 +150,7 @@ class adminController extends Controller
     public function requestdelete(Request $request){
         $user = new checkauth;
         if($user->role != "admin" && $user->role != "subadmin"){return redirect(route('adminlogin'))->with('error','not admin or subadmin');}
-        requests::find($request->input($id))->delete();
+        requests::find($request->input('id'))->delete();
         return back()->with('delete',"deleted");
     }
     public function requeststatus(Request $request){

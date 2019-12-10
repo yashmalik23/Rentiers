@@ -6,7 +6,14 @@
             @foreach ($props as $prop)
                 <div class="view-property-header">
                     <div class="view-nearByArea">{{$prop->streetName}}</div>
-                    <div class="view-locality">{{$prop->locality}}, {{$prop->city}}</div>
+                    <div class="view-locality">
+                    @if (isset(Auth::user()->email))
+                        @if(Auth::user()->email == "admin@rentiers.in")
+                        {{$prop->houseNo}}
+                        @endif
+                    @endif
+                    {{$prop->locality}}, {{$prop->city}}
+                    </div>
                 </div>
                 <div class="view-slider">
                     <div class="slider-images">
@@ -185,14 +192,16 @@
                                 @endif
                             @endfor
                         </div>
-                        <div class="more-feature">
-                            <span class="one-feature-heading">Tenant preference: </span>
-                            @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
-                                @if(str_split($prop->tenant)[$i]== "1")
-                                    <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}}</div>
-                                @endif
-                            @endfor
-                        </div>
+                        @if ($prop->listedFor == "Rent")
+                            <div class="more-feature">
+                                <span class="one-feature-heading">Tenant preference: </span>
+                                @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
+                                    @if(str_split($prop->tenant)[$i]== "1")
+                                        <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}}</div>
+                                    @endif
+                                @endfor
+                            </div>
+                        @endif
                     </div>
                 </div>
             @endforeach

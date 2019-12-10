@@ -10,44 +10,35 @@
     <div class="view-property">
         <div class="view-property-details">
                 <div class="view-property-header">
-                    <div class="view-nearByArea">Adani M2K Oyster Grande</div>
-                    <div class="view-locality">Sector-102A, Gurugram</div>
+                    <div class="view-nearByArea">{{$project->projectName}}</div>
+                    <div class="view-locality">{{$project->streetName}}, {{$project->city}}</div>
                 </div>
                 <div class="view-slider">
                     <div class="slider-images">
+                        @for($i=0; $i< count(explode(',',$project->images)); $i++)
                         <div class="slide active">
-                            <img src="/storage/main/picture0.jpg">
+                            <img src="/storage/projects/{{$project->id}}/{{explode(',',$project->images)[$i]}}">
                         </div>
-                        <div class="slide">
-                            <img src="/storage/main/picture1.jpg">
-                        </div>
-                        <div class="slide">
-                            <img src="/storage/main/picture2.jpg">
-                        </div>
-                        <div class="slide">
-                            <img src="/storage/main/picture3.jpg">
-                        </div>
-                        <div class="slide">
-                            <img src="/storage/main/picture4.jpg">
-                        </div>
+                        @endfor
                     </div>  
                     <button class="previous" onclick="previousSlide(event)" id="view-previous"><</button>
                     <button class="next" onclick="nextSlide(event)" id="view-next">></button>
+                    <div class="price-tag">₹ {{$project->basePrice}}</div>
                 </div>
                 <div class="rest-details">
                     <div class="rest-heading">Basic Details</div>
                     <div class="rest-details-div">
                         <div class="one-feature">
                             <div class="one-feature-heading">Project Type: </div>
-                            <div>Residential</div>
+                            <div>{{$project->projectType}}</div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Configurations: </div>
-                            <div>3BHKs, 4BHKs and 5 BHKs</div>
+                            <div>{{$project->configurations}}</div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">New booking base price: </div>
-                            <div>₹ 95.43 lacs to ₹ 4.81 cr</div>
+                            <div>₹ {{$project->basePrice}}</div>
                         </div>
                     </div>
                 </div>
@@ -56,40 +47,23 @@
                     <div class="rest-details-div">
                         <div class="one-feature">
                             <div class="one-feature-heading">Number of towers: </div>
-                            <div>8</div>
+                            <div>{{$project->towers}}</div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Number of floors: </div>
-                            <div>21</div>
+                            <div>{{$project->floors}}</div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Number of units:</div>
-                            <div>500</div>
+                            <div>{{$project->units}}</div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Total project area:</div>
-                            <div>19.23 acres (77.2k sq. m.)</div>
+                            <div>{{$project->area}}</div>
                         </div>
                         <div class="one-feature">
                             <div class="one-feature-heading">Open Area:</div>
-                            <div>87%</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="rest-details">
-                    <div class="rest-heading">Phases</div>
-                    <div class="rest-details-div">
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Phase I: </div>
-                            <div>Jun 2017,Ready to move, 8 towers (3BHK, 4BHK and 5 BHK) , RERA status (Registered)</div>
-                        </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Phase II: </div>
-                            <div>Aug 2019,Ready to move, 1 tower (3BHK, 4BHK and 5 BHK) , RERA status (Registered)</div>
-                        </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Phase III: </div>
-                            <div>Sep 2024,Under construction, 1 tower (3BHK, 4BHK and 5 BHK) , RERA status (Registered)</div>
+                            <div>{{$project->openArea}}</div>
                         </div>
                     </div>
                 </div>
@@ -98,31 +72,27 @@
                 </div>
                 <div class="tab-slider">
                     <div class="tabs-header">
-                        <div class="tabs active" onclick="changeTab(event,0, '₹93.4 lacs')" >3BHK</div>
-                        <div class="tabs" onclick="changeTab(event,1, '₹1.6 crore')">4BHK</div>
-                        <div class="tabs" onclick="changeTab(event,2,'₹2.3 crore')">5BHK</div>
-                        <div class="tabs" onclick="changeTab(event,3,'₹4 crore')">6BHK</div>
+                        <div class="tabs active" onclick="changeTab(event,0, '₹ {{explode(',',$project->floorPrices)[0]}}')" >{{explode(',',$project->floorPlanHeads)[0]}}</div>
+                        @for($i=1;$i<count(explode(',',$project->floorPlanHeads));$i++)
+                            <div class="tabs" onclick="changeTab(event,{{$i}}, '₹ {{explode(',',$project->floorPrices)[$i]}}')">{{explode(',',$project->floorPlanHeads)[$i]}}</div>
+                        @endfor
                     </div>
                     <div class="tabs-content">
-                        <img class="tabcontent active" src="/storage/main/picture1.jpg" />
-                        <img class="tabcontent" src="/storage/main/picture2.jpg" />
-                        <img class="tabcontent" src="/storage/main/picture3.jpg" />
-                        <img class="tabcontent" src="/storage/main/picture4.jpg" />
+                        <img class="tabcontent active" src="/storage/projects/{{$project->id}}/{{explode(',',$project->floorPlanImages)[0]}}" />
+                        @for($i=1;$i<count(explode(',',$project->floorPlanImages));$i++)
+                            <img class="tabcontent" src="/storage/projects/{{$project->id}}/{{explode(',',$project->floorPlanImages)[$i]}}" />
+                        @endfor
                     </div>
-                    <div id="tab-price-tag">₹93.4 lacs</div>
+                    <div id="tab-price-tag">₹{{explode(',',$project->floorPrices)[0]}}</div>
                 </div>
                 <div class="rest-details">
                     <div class="rest-heading">Locality information</div>
                     <div class="rest-details-div">
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Oyster Grande in Sector-102 Gurgaon, Gurgaon by Adani M2K Projects LLP is a residential project. The project offers Apartment with perfect combination of contemporary architecture and features to provide comfortable living.</div>
-                        </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">The Apartment are of the following configurations: 3BHK, 4BHK and 5BHK. The size of the Apartment ranges in between 156.91 Sq. mt and 676.61 Sq. mt. Oyster Grande price ranges from 92.79 Lacs to 4.80 Cr.</div>
-                        </div>
-                        <div class="one-feature">
-                            <div class="one-feature-heading">Oyster Grande offers facilities such as Gymnasium and Lift. It also has amenities like Badminton court, Basketball court, Lawn tennis court and Swimming pool. It also offers services like Community hall.</div>
-                        </div>
+                        @for($i=0;$i<count(explode('#',$project->localityInfo));$i++)
+                            <div class="one-feature">
+                                <div class="one-feature-heading">{{explode('#',$project->localityInfo)[$i]}}</div>
+                            </div>
+                        @endfor
                     </div>
                 </div>
                 <div class="rest-details">
@@ -131,86 +101,39 @@
                         <div class="svg-feature">
                             <div class="one-feature-heading">Amenities: </div>
                             <div class="svg-icons">
-                                <div>
-                                    <img src="/images/ameneties/1.svg">
-                                    <div>Air conditioners</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/2.svg">
-                                    <div>Swimming pool</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/3.svg">
-                                    <div>Sports Arena</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/4.svg">
-                                    <div>Parks</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/5.svg">
-                                    <div>Gym</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/6.svg">
-                                    <div>Intercom</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/7.svg">
-                                    <div>Lifts</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/8.svg">
-                                    <div>Visitor's parking</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/9.svg">
-                                    <div>Pet friendly</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/10.svg">
-                                    <div>24*7 power backup</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/11.svg">
-                                    <div>Wheelchair friendly</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/12.svg">
-                                    <div>Gated society</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/13.svg">
-                                    <div>24*7 water</div>
-                                </div>
-                                <div>
-                                    <img src="/images/ameneties/14.svg">
-                                    <div>Mini theatrer</div>
-                                </div>
+                                @for($i=1;$i<=count(str_split($project->amenities));$i++)
+                                @if(str_split($project->amenities)[$i-1] == 1)
+                                    <div>
+                                        <img src="/images/ameneties/{{$i}}.svg">
+                                        <div>{{$amen[$i-1]}}</div>
+                                    </div>
+                                @endif
+                                @endfor
                             </div>
                         </div>
                         <div class="more-feature">
                             <span class="one-feature-heading">Lifestyle: </span>
-                            <div>Aerobics</div>
-                            <div>Badminton</div>
-                            <div>Basketball</div>
-                            <div>Cricket</div>
+                            @for($i=0;$i<count(explode(',',$project->lifestyle));$i++)
+                                <div>{{explode(',',$project->lifestyle)[$i]}}</div>
+                            @endfor
                         </div>
                         <div class="more-feature">
                             <span class="one-feature-heading">Security: </span>
-                            <div>24*7 security</div>
-                            <div>CCTV camera</div>
-                            <div>Changing area</div>
-                            <div>Gated society</div>
-                            <div>Property staff</div>
-                            <div>Security cabin</div>
+                            @for($i=0;$i<count(explode(',',$project->security));$i++)
+                                <div>{{explode(',',$project->security)[$i]}}</div>
+                            @endfor
                         </div>
                         <div class="more-feature">
                             <span class="one-feature-heading">Services: </span>
-                            <div>ATM</div>
-                            <div>Cafeteria</div>
-                            <div>Salon</div>
-                            <div>Shopping centre</div>
+                            @for($i=0;$i<count(explode(',',$project->services));$i++)
+                                <div>{{explode(',',$project->services)[$i]}}</div>
+                            @endfor
+                        </div>
+                        <div class="more-feature">
+                            <span class="one-feature-heading">Others: </span>
+                            @for($i=0;$i<count(explode(',',$project->others));$i++)
+                                <div>{{explode(',',$project->others)[$i]}}</div>
+                            @endfor
                         </div>
                     </div>
                 </div>
@@ -223,24 +146,20 @@
                             <div class="card">
                                 <div class="slider">
                                     <div class="slider-images">
+                                    @for($j=0; $j< count(explode(',',$sugg[$i]->images)); $j++)
                                         <div class="slide active">
-                                            <img src="/storage/main/picture1.jpg">
+                                            <img src="/storage/projects/{{$sugg[$i]->id}}/{{explode(',',$sugg[$i]->images)[$j]}}">
                                         </div>
-                                        <div class="slide">
-                                            <img src="/storage/main/picture2.jpg">
-                                        </div>
-                                        <div class="slide">
-                                            <img src="/storage/main/picture2.jpg">
-                                        </div>
+                                    @endfor
                                     </div>  
                                     <button class="previous" onclick="previousSlide(event)"><</button>
                                     <button class="next" onclick="nextSlide(event)">></button>
                                 </div>
-                                <div class="card-property-name"><a href="/property/" >Adani M2K Oyster Grande</a></div>
-                                <div class="card-property-location">Sector 102A, Gurugram</div>
+                                <div class="card-property-name"><a href="/property/" >{{$sugg[$i]->projectName}}</a></div>
+                                <div class="card-property-location">{{$sugg[$i]->streetName}}, {{$sugg[$i]->city}}</div>
                                 <div class="card-amenities">
                                     <img src="{{asset('images/home/home-icon.svg')}}"/>
-                                    <div>3BHK, 4BHK and 5BHKs</div>
+                                    <div>{{$sugg[$i]->configurations}}</div>
                                 </div>
                             </div>
                         @endfor
@@ -253,5 +172,6 @@
                 If you don't know what to do next, you can email us at support@rentiers.in or call us at +91 8860050003/4/6.  
             </div>
         </div>
+
     </div>
 @endsection

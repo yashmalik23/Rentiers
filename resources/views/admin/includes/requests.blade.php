@@ -20,7 +20,7 @@
                 @endif
                 <div class="delete-modal">
                     <div class="modal-content">
-                        <div>Are you sure you want to delete this user?</div>
+                        <div>Are you sure you want to delete this request?</div>
                         <form class="delete-props" method="POST" action="{{ route('requestdelete')}}">
                             @csrf
                             <input type="number" id="member-user-delete" name="id" hidden>

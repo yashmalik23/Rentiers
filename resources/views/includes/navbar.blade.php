@@ -6,7 +6,7 @@
         <li><a href="{{ route('home') }}">Home</a></li>
         <li><a href="{{ route('aboutus') }}">About Us</a></li>
         <li><a href="{{ route('contactus') }}">Contact Us</a></li>
-        <li><a href="{{ route('listproperties') }}">List your property</a></li>
+        <li><a href="{{ route('allprojects') }}">All projects</a></li>
         <li>|</li>
         <li>+91 8860050003</li>
         <li>
@@ -18,9 +18,11 @@
         </li>
     </ul>
     @if (isset(Auth::user()->email))
-        <div class="user-name"><a href="{{ route('useraccount') }}"> {{Auth::user()->name}}</a></div>
+        <div class="user-name"><a href="{{ route('useraccount') }}"> {{str_split(Auth::user()->name)[0]}}</a></div>
+        <div class="login"><a href="{{ route('listproperties') }}">List property</a></div>
         <div class="login"><a href="{{ route('logout') }}">Log Out</a></div>
     @else
+    <div class="login"><a href="{{ route('listproperties') }}">List property</a></div>
     <div class="login"><a href="{{ route('login') }}">Login/SignUp</a></div>
     @endif
 </nav>
@@ -44,6 +46,7 @@
         <li><a href="{{ route('aboutus') }}">About Us</a></li>
         <li><a href="{{ route('contactus') }}">Contact Us</a></li>
         <li><a href="{{ route('listproperties') }}">List your property</a></li>
+        <li><a href="{{ route('allprojects') }}">All projects</a></li>
         @if (isset(Auth::user()->email))
             <li><a href="{{ route('useraccount') }}"> {{Auth::user()->name}}</a></li>
             <li><div class="mobile-login"><a href="{{ route('logout') }}">Log Out</a></div></li>

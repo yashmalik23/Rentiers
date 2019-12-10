@@ -31,10 +31,10 @@
                     @foreach ($members as $member)
                         <div class="user-card">
                             <div class="user-card-text">
-                                <div class="user-card-name"><a href="/adminuseraccount/{{$member->id}}">{{$member->name}}</a></div>
+                                <div class="user-card-name">{{$member->name}}</div>
                                 <div class="user-info-group">
                                     <img src="{{asset('/images/admin/phone.svg')}}">
-                                    <div>+91 {{$member->contact}}</div>
+                                    <div>{{$member->contact}}</div>
                                 </div>
                                 <div class="user-info-group">
                                     <img src="{{asset('/images/admin/email.svg')}}">

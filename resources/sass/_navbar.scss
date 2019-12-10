@@ -55,7 +55,7 @@ body{
             list-style-type: none;
             position: absolute;
             display: none;
-            margin-left: 490px;
+            margin-left: 444px;
             z-index: 500;
             li{
                 display: block;
@@ -147,7 +147,19 @@ body{
 }
 .user-name{
     line-height: 40px;
+    width: 40px;
     margin-right: 10px;
+    background: #F72C25;
+    border-radius: 20px;
+    text-align: center;
+    a{ 
+        text-decoration: none;
+        color: white;
+        font-size: 1.9rem;
+        &:hover{
+            text-decoration: none;
+        }
+    }
 }
 ::-webkit-scrollbar {
     width: 2px;
@@ -218,7 +230,9 @@ body{
 }
 
 .loader {
+    display: none;
     height: 40px;
+    width: 100%;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -234,6 +248,7 @@ body{
     border-radius: 50%;
     position: relative;
     display: inline-block;
+    margin-left: 46%;
   }
   
 .spinner:after, .spinner:before {
@@ -285,3 +300,116 @@ body{
     }
   }
   
+.edit{
+    background-color: #044389;
+}
+.success{
+    background-color: green;
+}
+.reject{
+    background-color: crimson;
+}
+.extra{
+    background-color: blueviolet;
+  }
+// Modals
+#modal-zoom-in {
+    top: 40%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  }
+#modal-zoom-in.show {
+    z-index: 10000;
+    transform: translate(-50%, -50%) scale(1);
+    height: 200px;
+    max-width: 80vw;
+    width: 800px;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+  
+.modal-background {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(69, 69, 69, 0.7);
+    opacity: 0;
+    pointer-events: none;
+  }
+.modal-background.show {
+    z-index: 10000;
+    height: auto;
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    animation: fadein 0.8s;
+  }
+.modal-background.hide {
+    animation: fadeout 0.8s;
+  }
+@keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+@keyframes fadeout {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+.modal {
+    position: absolute;
+    padding: 35px;
+    box-shadow: 0px 0px 8px 0px #333;
+    color: #fff;
+    text-align: left;
+    transform-style: preserve-3d;
+  }
+.login-modal-button{
+    text-decoration: none;
+    background: white;
+    border: 1px solid $main;
+    color: $main;
+    width: 100px;
+    line-height: 50px;
+    height: 50px;
+    padding: 10px 10px;
+    font-size: 1.5rem;
+    margin-top: 30px;
+    &:hover{
+        text-decoration: none;
+        color: $main;
+    }
+}
+#modalclose{
+    width: 30px;
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    cursor: pointer;
+}
+.stop-scrolling { 
+    height: 100%; 
+    overflow: hidden; 
+} 
+
+#apply-filters{
+    background: $main;
+    margin: 0;
+    position: relative;
+    top: 15px;
+    font-size: 1.6rem;
+    padding: 5px 25px;
+    text-align: center;
+    margin-left: 43px;
+}

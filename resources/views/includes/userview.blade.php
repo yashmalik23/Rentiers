@@ -1,5 +1,6 @@
 @extends('layout')
 @section('views')
+
     @if(session('success'))
     <div class="alert alert-success" role="alert">
         <button type="button" class="close alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -184,7 +185,7 @@
                                     @if(str_split($prop->ameneties)[$i]== "1")
                                         <div>
                                             <img src={{asset('images/ameneties/'.($i+1).'.svg')}}>
-                                            <div>{{$ameneties[$i+13-count(str_split($prop->ameneties))]}}</div>
+                                            <div>{{$ameneties[$i+14-count(str_split($prop->ameneties))]}}</div>
                                         </div>
                                     @endif
                                 @endfor
@@ -198,14 +199,16 @@
                                 @endif
                             @endfor
                         </div>
-                        <div class="more-feature">
-                            <span class="one-feature-heading">Tenant preference: </span>
-                            @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
-                                @if(str_split($prop->tenant)[$i]== "1")
-                                    <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}} </div>
-                                @endif
-                            @endfor
-                        </div>
+                        @if ($prop->listedFor == "Rent")
+                            <div class="more-feature">
+                                <span class="one-feature-heading">Tenant preference: </span>
+                                @for ($i = 0; $i < count(str_split($prop->tenant)); $i++)
+                                    @if(str_split($prop->tenant)[$i]== "1")
+                                        <div>{{$tenant[$i+8-count(str_split($prop->tenant))]}} </div>
+                                    @endif
+                                @endfor
+                            </div>
+                        @endif
                     </div>
                 </div>
             @endforeach

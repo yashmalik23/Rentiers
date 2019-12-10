@@ -27,12 +27,7 @@
                     </div>  
                     <button class="previous" onclick="previousSlide(event)" id="view-previous"><</button>
                     <button class="next" onclick="nextSlide(event)" id="view-next">></button>
-                    <div class="circles">
-                        <div class="circle active"></div>
-                        @for($i =1 ; $i<count(explode(",",$prop->images))-1 ;$i++ )
-                            <div class="circle"></div>
-                        @endfor
-                    </div>
+                    
                 </div>
                 <div class="view-main-details">
                     <div class="view-prop-main-logo">
@@ -200,10 +195,6 @@
             </div>
             @foreach($props as $prop)
                 <div>Property id {{$prop->id}}</div>
-            @endforeach
-            <div>Interested users</div>
-            @foreach($interests as $interest)
-                <div class="adminseeinterest">{{$interest->name}},{{$interest->contact}}</div>
             @endforeach
             @foreach($props as $prop)
                 @if($prop->verified == 0)

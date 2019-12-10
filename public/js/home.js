@@ -137,11 +137,19 @@ function automate(){
         slides.children[0].classList.add('active');
     }
 }
-// window.setInterval(function(){
-//     automate()
-//   }, 3000);
+
+window.setInterval(function(){
+    automate()
+  }, 3000);
+
 
 function viewProject(e){
     let project = e.target.previousElementSibling.value;
     window.location.href = "/viewproject/"+project
+}
+
+function closeHomeModal(){
+    document.body.classList.remove('stop-scrolling')
+    document.getElementById('modal-zoom-in').className = "modal hide"
+    document.getElementsByClassName('modal-background')[0].className = "modal-background hide"
 }

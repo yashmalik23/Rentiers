@@ -90,7 +90,7 @@
                             <div class="property-details">
                                 <div class="property-title"><a href="/adminview/{{$prop->id}}">{{$prop->streetName}}</a></div>
                                 <div class="property-address">{{$prop->locality.", ".$prop->city}}</div>
-                                <div class="property-interested-numbers">Interested members : {{($prop->intmembers == "" || $prop->intmembers == null)? 0 :$prop->intmembers}}</div>
+                                <div class="property-interested-numbers">ID : {{$prop->id}} , Date : {{date("d-m-Y", strtotime($prop->created_at))}}</div>
                                 
                                 <div class="property-actions">
                                     <a href="/adminedit/{{$prop->id}}"><img title="Edit" src="{{asset('images/viewprops/document.svg')}}"/></a>

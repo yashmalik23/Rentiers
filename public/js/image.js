@@ -16,17 +16,11 @@ function closeModal(){
 function checkOrder(e, count){
     let button = document.getElementById('change-order-images')
     let order = e.target.previousElementSibling;
-    let num = order.value.split(",")
-    if (num.length == count-1 && count > 1){
-        for(i=1;i<count;i++){
-            if (num.indexOf(String(i))<0){
-                showModal('Image numbers are incorrect')
-                return
-            }
-        }
+    let num = parseInt(order.value)
+    if (num > 0 && num <count){
         button.click()
     }else{
-        showModal('Incorrect count of number of images')
+        showModal('Image doesn\'t exist')
     }
 
 }

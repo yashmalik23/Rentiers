@@ -13,15 +13,7 @@
     </div>
     @endif
         <div class="details-container">
-            <form class="detail-form-container" method="POST" action="{{ route('changedetails')}}">
-                @csrf
-                <h3>Change Details</h3>
-                <input type="text" name="email" value="{{Auth::user()->email}}" required/>
-                <input type="text" name="name" value="{{Auth::user()->name}}" required/>
-                <input type="text" name="contact" value="{{Auth::user()->contact}}" required/>
-                <input type="password" name="opassword" id="user_name" placeholder="Current password" required/><br>
-                <button>Change</button>
-            </form>
+            
             <form class="detail-form-container" method="POST" action="{{ route('changepassword')}}">
                 @csrf
                 <h3>Change Password</h3>
