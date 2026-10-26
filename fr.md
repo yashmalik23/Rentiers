@@ -167,6 +167,7 @@
         class="cs-enbd-stepup-frame"
         title="3-D Secure verification"
         (load)="onStepUpFrameLoad()"
+        sandbox="allow-forms allow-scripts allow-same-origin allow-pointer-lock allow-popups"
         allow="payment *; publickey-credentials-get *; publickey-credentials-create *">
       </iframe>
     </div>
