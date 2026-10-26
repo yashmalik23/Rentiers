@@ -92,6 +92,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   private challengePerformanceObserver: PerformanceObserver | null = null;
   private challengeMessageListener: ((event: MessageEvent) => void) | null = null;
   private componentDestroying = false;
+  private readonly threeDsDebug = new URLSearchParams(window.location.search).get('debug3ds') === '1';
+  private threeDsTrace: Array<Record<string, unknown>> = [];
+  private threeDsSnapshotTimer: ReturnType<typeof setTimeout> | null = null;
 
   private sdkScript: HTMLScriptElement | null = null;
   private checkoutClient: { destroy?: () => void } | null = null;
@@ -357,9 +360,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.stepUpModalRef = this.ngbModal.open(this.stepUpModal, {
       size: 'xl',
       centered: true,
-      // No visible close control: backdrop tap or Escape invokes the cancel callback.
-      backdrop: true,
-      keyboard: true,
+      // The customer can exit only through the issuer's in-iframe challenge controls.
+      backdrop: 'static',
+      keyboard: false,
       windowClass: 'cs-enbd-stepup-window'
     });
     const modalRef = this.stepUpModalRef;
@@ -406,10 +409,20 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.removeStepUpMessageListener();
     this.challengeMessageListener = (event: MessageEvent) => {
       const frame = this.getStepUpFrame();
+      const data = event.data as { type?: string; correlationId?: string } | null;
+      if (data?.type === 'cybs-3ds-return' || event.source === frame?.contentWindow) {
+        this.traceThreeDs('callback-message', {
+          expectedType: data?.type === 'cybs-3ds-return',
+          origin: event.origin,
+          originMatches: event.origin === window.location.origin,
+          sourceMatches: event.source === frame?.contentWindow,
+          correlationPresent: typeof data?.correlationId === 'string',
+          correlationMatches: data?.correlationId === this.stepUpCorrelationId
+        });
+      }
       if (event.origin !== window.location.origin || event.source !== frame?.contentWindow) {
         return;
       }
-      const data = event.data as { type?: string; correlationId?: string } | null;
       if (data?.type !== 'cybs-3ds-return' || data.correlationId !== this.stepUpCorrelationId) {
         return;
       }
@@ -429,6 +442,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   onStepUpFrameLoad(): void {
     this.stepUpFrameLoadCount++;
     const frame = this.getStepUpFrame();
+    this.traceThreeDs('iframe-load', { count: this.stepUpFrameLoadCount, connected: frame?.isConnected });
     if (!frame?.contentWindow) {
       this.challengeFrameAccessError = 'Step-up iframe or contentWindow is unavailable.';
       return;
@@ -439,6 +453,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
         return;
       }
       const path = frameUrl.pathname.replace(/\/+$/, '');
+      this.traceThreeDs('iframe-readable', { url: this.sanitizeDiagnosticUrl(frameUrl.href) });
       this.challengeFrameAccessError = '';
       if (frameUrl.origin === window.location.origin) {
         this.lastSameOriginFramePath = path;
@@ -453,6 +468,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
         this.challengeSawCrossOriginNavigation = true;
       }
     } catch (error) {
+      this.traceThreeDs('iframe-unreadable', {
+        errorName: error instanceof Error ? error.name : 'Unknown'
+      });
       this.challengeSawCrossOriginNavigation = true;
       this.challengeFrameAccessError = error instanceof Error
         ? `${error.name}: ${error.message}`
@@ -461,6 +479,23 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private startThreeDsDiagnostics(): void {
+    this.threeDsTrace = [];
+    this.traceThreeDs('challenge-start', {
+      userAgent: navigator.userAgent,
+      online: navigator.onLine,
+      secureContext: window.isSecureContext,
+      pageOrigin: window.location.origin,
+      viewport: `${window.innerWidth}x${window.innerHeight}`
+    });
+    if (this.threeDsDebug) {
+      this.threeDsSnapshotTimer = setTimeout(() => {
+        if (this.stepUpModalRef && !this.stepUpCompletionStarted) {
+          this.traceThreeDs('pending-at-60s');
+          this.recordThreeDsNetworkEntries();
+          this.reportThreeDsCallbackFailure('3ds-debug-pending', 'Diagnostic snapshot; not a final authentication result.');
+        }
+      }, 60_000);
+    }
     this.challengeErrorListener = event => {
       this.challengeBrowserErrors.push(JSON.stringify({
         type: 'window.error',
@@ -549,6 +584,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       lastSameOriginFramePath: this.lastSameOriginFramePath || 'unavailable',
       iframeAccessError: this.challengeFrameAccessError || 'none',
       browserErrors: this.challengeBrowserErrors,
+      debugTrace: this.threeDsTrace,
       callbackNetworkEntries: this.challengeNetworkEntries,
       browser: {
         userAgent: navigator.userAgent,
@@ -574,6 +610,10 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   private completeStepUpChallenge(): void {
     if (this.stepUpCompletionStarted) {
       return;
+    }
+    this.traceThreeDs('callback-accepted');
+    if (this.threeDsDebug) {
+      this.reportThreeDsCallbackFailure('3ds-debug-return', 'Diagnostic snapshot; challenge returned.');
     }
     this.stepUpCompletionStarted = true;
     this.removeChallengeListener();
@@ -623,12 +663,52 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     }
   }
 
+  private traceThreeDs(stage: string, details: Record<string, unknown> = {}): void {
+    if (!this.threeDsDebug) return;
+    const entry = { stage, elapsedMs: Date.now() - this.challengeStartedAt, ...details };
+    this.threeDsTrace.push(entry);
+    this.threeDsTrace = this.threeDsTrace.slice(-40);
+    console.info('[3DS]', entry);
+  }
+
+  // Diagnostic decoding only; never trust these claims as authentication proof.
+  private stepUpJwtMetadata(token: string): Record<string, unknown> {
+    try {
+      const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      const claims = JSON.parse(atob(part.padEnd(Math.ceil(part.length / 4) * 4, '=')));
+      const payload = claims.Payload && typeof claims.Payload === 'object' ? claims.Payload : {};
+      const returnUrl = claims.ReturnUrl ?? claims.ReturnURL ?? payload.ReturnUrl ?? payload.ReturnURL;
+      return {
+        decoded: true,
+        returnUrlFound: typeof returnUrl === 'string' && returnUrl.length > 0,
+        returnUrl: typeof returnUrl === 'string' && returnUrl
+          ? this.sanitizeDiagnosticUrl(returnUrl) : null,
+        expiresInSeconds: typeof claims.exp === 'number'
+          ? Math.floor(claims.exp - Date.now() / 1000) : null
+      };
+    } catch {
+      return { decoded: false };
+    }
+  }
+
   private submitStepUpForm(): void {
     const form = document.getElementById('enbd-stepup-form') as HTMLFormElement | null;
     if (!form) {
       this.showResultError();
       return;
     }
+    const frame = this.getStepUpFrame();
+    this.traceThreeDs('step-up-post', {
+      action: this.sanitizeDiagnosticUrl(form.action),
+      method: form.method,
+      target: form.target,
+      targetMatches: form.target === frame?.name,
+      frameCount: document.querySelectorAll('iframe[name="enbd-stepup-frame"]').length,
+      frameConnected: frame?.isConnected,
+      sandbox: frame?.getAttribute('sandbox'),
+      jwtInputMatches: form.querySelector<HTMLInputElement>('input[name="JWT"]')?.value === this.stepUpAccessToken,
+      jwtMetadata: this.stepUpJwtMetadata(this.stepUpAccessToken)
+    });
     form.submit();
   }
 
@@ -646,6 +726,10 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private stopThreeDsDiagnostics(): void {
+    if (this.threeDsSnapshotTimer) {
+      clearTimeout(this.threeDsSnapshotTimer);
+      this.threeDsSnapshotTimer = null;
+    }
     if (this.challengeErrorListener) {
       window.removeEventListener('error', this.challengeErrorListener);
       this.challengeErrorListener = null;
@@ -676,12 +760,19 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private storedValidate(): void {
+    this.traceThreeDs('stored-validation-start');
     this.http.post<any>(endpointUrl(Endpoints.CYBERSOURCE_ENBD_STORED_VALIDATE), {
       cardId: String(this.selectedCardId),
       transactionId: this.storedTransactionId,
       authenticationTransactionId: this.storedAuthTxnId
     }).subscribe({
       next: response => {
+        this.traceThreeDs('stored-validation-response', {
+          success: response?.success,
+          status: response?.status,
+          authenticationStatus: response?.authenticationStatus,
+          cavvPresent: !!response?.cavv
+        });
         this.storedCavv = response?.cavv || '';
         this.storedXid = response?.xid || '';
         this.storedDsTxnId = response?.directoryServerTransactionId || '';
@@ -689,7 +780,13 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
         this.storedUcafCollectionIndicator = response?.ucafCollectionIndicator || '';
         this.storedAuthorize();
       },
-      error: () => this.showResultError()
+      error: response => {
+        this.traceThreeDs('stored-validation-http-error', { status: response?.status });
+        if (this.threeDsDebug) {
+          this.reportThreeDsCallbackFailure('3ds-debug-validation', 'Validation request failed.');
+        }
+        this.showResultError();
+      }
     });
   }
 
