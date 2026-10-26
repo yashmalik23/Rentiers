@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { faChevronDown, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,6 +33,12 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
 
   @Input() account: Account;
   @Output() completed = new EventEmitter<void>();
+  /** Emitted when the issuer returns from the challenge; this is not the ACS button click itself. */
+  @Output() threeDsSubmitted = new EventEmitter<void>();
+  /** Emitted when the customer presses the merchant-owned Cancel button in the challenge modal. */
+  @Output() threeDsCancelled = new EventEmitter<void>();
+  /** Adapter hook only; the standard cross-origin ACS iframe does not expose its Resend OTP click. */
+  @Output() threeDsResendOtp = new EventEmitter<void>();
   @ViewChild(DepositFormComponent) depositForm: DepositFormComponent;
   @ViewChild('cardDropdown') cardDropdown: ElementRef;
   @ViewChild('cardDeposit') cardDeposit: ElementRef<HTMLElement>;
@@ -58,7 +63,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   selectedCardId: number | null = null;
 
   stepUpAccessToken = '';
-  safeStepUpUrl: SafeResourceUrl | null = null;
+  stepUpUrl = '';
+  /** Random one-time value sent as CyberSource MD and echoed by the same-origin return page. */
+  stepUpCorrelationId = '';
 
   private storedTransactionId = '';
   private storedAuthTxnId = '';
@@ -83,6 +90,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   private challengeErrorListener: ((event: ErrorEvent) => void) | null = null;
   private challengeRejectionListener: ((event: PromiseRejectionEvent) => void) | null = null;
   private challengePerformanceObserver: PerformanceObserver | null = null;
+  private challengeMessageListener: ((event: MessageEvent) => void) | null = null;
 
   private sdkScript: HTMLScriptElement | null = null;
   private checkoutClient: { destroy?: () => void } | null = null;
@@ -96,8 +104,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     private modal: ModalService,
     private ngbModal: NgbModal,
     private http: HttpClient,
-    private zone: NgZone,
-    private sanitizer: DomSanitizer
+    private zone: NgZone
   ) {
     if (this.core.getFromBaseModel('baseModel.countryOfResidence.isoCode') === 'AE') {
       this.currencies.push('AED');
@@ -213,7 +220,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.modal.showProcessing();
     // Preferred debit rail; BE may remap to CREDIT_CARD_NG when ENBD_DEBIT_CARDS is off
     Object.assign(dto, { provider: 'ENBD_CARD' });
-    if (this.selectedCardId) {
+    if (this.selectedCardId !== null) {
       // Signal to EnbdDepositHandler to skip Unified Checkout session and run setup+enroll inline instead
       dto.cybersourceEnbd = { ...(dto.cybersourceEnbd || {}), cardId: this.selectedCardId, browserFields: this.collectBrowserFields() };
     }
@@ -263,7 +270,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
           return;
         }
         this.transaction = response;
-        if (this.selectedCardId && response.transactionId) {
+        if (this.selectedCardId !== null && response.transactionId) {
           this.handleStoredCardExecuteResponse(response);
         } else if (response.provider === 'ENBD_CARD'
             || response.cybersourceEnbd?.captureContextJwt) {
@@ -323,9 +330,15 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
 
   private showChallenge(stepUpUrl: string, accessToken: string): void {
     this.sdkLoading = false;
-    this.safeStepUpUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stepUpUrl);
+    if (!this.isHttpsStepUpUrl(stepUpUrl) || !accessToken) {
+      this.showResultError();
+      return;
+    }
+    // Bind the HTTPS URL normally so Angular's URL sanitizer remains active.
+    this.stepUpUrl = stepUpUrl;
     this.stepUpUrlForDiagnostics = this.sanitizeDiagnosticUrl(stepUpUrl);
     this.stepUpAccessToken = accessToken;
+    this.stepUpCorrelationId = this.createStepUpCorrelationId();
     this.stepUpCompletionStarted = false;
     this.removeChallengeListener();
     this.stepUpFrameLoadCount = 0;
@@ -338,6 +351,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.challengeNetworkEntries = [];
     this.challengeNetworkEntryStartTimes = new Set<number>();
     this.startThreeDsDiagnostics();
+    this.startStepUpMessageListener();
     this.stepUpModalRef = this.ngbModal.open(this.stepUpModal, {
       size: 'xl',
       centered: true,
@@ -372,6 +386,40 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     });
   }
 
+  private createStepUpCorrelationId(): string {
+    const bytes = new Uint8Array(16);
+    if (window.crypto?.getRandomValues) {
+      window.crypto.getRandomValues(bytes);
+      return Array.from(bytes, value => value.toString(16).padStart(2, '0')).join('');
+    }
+    // Correlation only, not authentication. Supports older embedded mobile browsers.
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  }
+
+  private startStepUpMessageListener(): void {
+    this.removeStepUpMessageListener();
+    this.challengeMessageListener = (event: MessageEvent) => {
+      const frame = this.getStepUpFrame();
+      if (event.origin !== window.location.origin || event.source !== frame?.contentWindow) {
+        return;
+      }
+      const data = event.data as { type?: string; correlationId?: string } | null;
+      if (data?.type !== 'cybs-3ds-return' || data.correlationId !== this.stepUpCorrelationId) {
+        return;
+      }
+      // The return page signal is not proof of authentication. Server-side validation follows.
+      this.zone.run(() => this.completeStepUpChallenge());
+    };
+    window.addEventListener('message', this.challengeMessageListener);
+  }
+
+  private removeStepUpMessageListener(): void {
+    if (this.challengeMessageListener) {
+      window.removeEventListener('message', this.challengeMessageListener);
+      this.challengeMessageListener = null;
+    }
+  }
+
   onStepUpFrameLoad(): void {
     this.stepUpFrameLoadCount++;
     const frame = this.getStepUpFrame();
@@ -388,7 +436,11 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       this.challengeFrameAccessError = '';
       if (frameUrl.origin === window.location.origin) {
         this.lastSameOriginFramePath = path;
-        if (this.challengeSawCrossOriginNavigation || path.endsWith('/3ds-callback')) {
+        // /3ds-callback must accept CyberSource's POST, persist TransactionId against
+        // this payment, then serve a same-origin page that postMessages
+        // { type: 'cybs-3ds-return', correlationId: MD } to the parent. The iframe
+        // load is only a fallback signal; the backend must validate the persisted ID.
+        if (path.endsWith('/3ds-callback')) {
           this.completeStepUpChallenge();
         }
       } else {
@@ -519,10 +571,36 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     }
     this.stepUpCompletionStarted = true;
     this.removeChallengeListener();
+    this.threeDsSubmitted.emit();
     this.view = 'CHECKOUT';
     this.sdkLoading = true;
     this.closeStepUpModal();
     this.storedValidate();
+  }
+
+  /** Close the modal and notify the host; cancel any pending attempt server-side from the listener if required. */
+  cancelStepUpChallenge(): void {
+    if (!this.stepUpModalRef || this.stepUpCompletionStarted) {
+      return;
+    }
+    this.stepUpCompletionStarted = true;
+    this.removeChallengeListener();
+    this.closeStepUpModal();
+    this.backToForm();
+    this.threeDsCancelled.emit();
+  }
+
+  /** Call only from a provider-specific event if your 3DS integration exposes OTP resend. */
+  notifyThreeDsResendOtp(): void {
+    this.threeDsResendOtp.emit();
+  }
+
+  private isHttpsStepUpUrl(value: string): boolean {
+    try {
+      return new URL(value).protocol === 'https:';
+    } catch {
+      return false;
+    }
   }
 
   private submitStepUpForm(): void {
@@ -539,6 +617,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private removeChallengeListener(): void {
+    this.removeStepUpMessageListener();
     if (this.challengeTimeout) {
       clearTimeout(this.challengeTimeout);
       this.challengeTimeout = null;
@@ -571,6 +650,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       this.stepUpModalRef.close();
       this.stepUpModalRef = null;
     }
+    this.stepUpUrl = '';
+    this.stepUpAccessToken = '';
+    this.stepUpCorrelationId = '';
   }
 
   private storedValidate(): void {
@@ -620,6 +702,8 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       browserUserAgent:    navigator.userAgent,
       browserJavaEnabled:  String(typeof (navigator as any).javaEnabled === 'function' && (navigator as any).javaEnabled()),
       browserAcceptHeader: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      browserAcceptContent: 'all',
+      browserJavascriptEnabled: 'true',
       browserTZ:           String(new Date().getTimezoneOffset())
     };
   }
@@ -708,8 +792,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.removeSdkScript();
     this.removeChallengeListener();
     this.dismissStepUpModal();
-    this.safeStepUpUrl = null;
+    this.stepUpUrl = '';
     this.stepUpAccessToken = '';
+    this.stepUpCorrelationId = '';
   }
 
   onDone(): void {
