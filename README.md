@@ -91,6 +91,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   private challengeRejectionListener: ((event: PromiseRejectionEvent) => void) | null = null;
   private challengePerformanceObserver: PerformanceObserver | null = null;
   private challengeMessageListener: ((event: MessageEvent) => void) | null = null;
+  private componentDestroying = false;
 
   private sdkScript: HTMLScriptElement | null = null;
   private checkoutClient: { destroy?: () => void } | null = null;
@@ -116,6 +117,7 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.componentDestroying = true;
     if (this.scrollTimer) {
       clearTimeout(this.scrollTimer);
       this.scrollTimer = null;
@@ -355,8 +357,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.stepUpModalRef = this.ngbModal.open(this.stepUpModal, {
       size: 'xl',
       centered: true,
-      backdrop: 'static',
-      keyboard: false,
+      // No visible close control: backdrop tap or Escape invokes the cancel callback.
+      backdrop: true,
+      keyboard: true,
       windowClass: 'cs-enbd-stepup-window'
     });
     const modalRef = this.stepUpModalRef;
@@ -366,9 +369,12 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
           this.stepUpModalRef = null;
         }
       },
-      () => {
+      reason => {
         if (this.stepUpModalRef === modalRef) {
           this.stepUpModalRef = null;
+          if (!this.componentDestroying) {
+            this.handleStepUpModalDismiss();
+          }
         }
       }
     );
@@ -576,6 +582,20 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.sdkLoading = true;
     this.closeStepUpModal();
     this.storedValidate();
+  }
+
+  private handleStepUpModalDismiss(): void {
+    if (this.stepUpCompletionStarted) {
+      return;
+    }
+    this.stepUpCompletionStarted = true;
+    this.removeChallengeListener();
+    this.stepUpUrl = '';
+    this.stepUpAccessToken = '';
+    this.stepUpCorrelationId = '';
+    this.sdkLoading = false;
+    this.view = 'FORM';
+    this.threeDsCancelled.emit();
   }
 
   /** Close the modal and notify the host; cancel any pending attempt server-side from the listener if required. */
