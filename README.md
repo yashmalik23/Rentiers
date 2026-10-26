@@ -1,42 +1,821 @@
-Goal
-Keep the customer on the current checkout page during payment and any 3-D Secure challenge. Do not navigate the top-level page to a CyberSource URL or open a new tab/window for step-up authentication.
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { faChevronDown, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
-Please inspect the existing code and implement this in the project’s current framework and coding style.
+import { Account } from 'cp/src/app/models/account';
+import { CyberSourceEnbdCard, Transaction } from 'cp/src/app/models/deposits';
+import { dialogConfig, endpointUrl, params } from 'cp/src/app/models/common';
+import { Endpoints } from 'cp/src/app/models/constants';
+import { CoreService } from 'cp/src/app/services/core.service';
+import { DepositService } from 'cp/src/app/services/deposit.service';
+import { ModalService } from 'cp/src/app/services/modal.service';
+import { DepositFormComponent } from '../deposit-form/deposit-form.component';
 
-1. Identify the current payment flow
-- Find the checkout UI, saved-card handling, CyberSource API calls, and any code that redirects to a 3DS URL or listens for a `3ds-callback`.
-- Identify whether we use Unified Checkout, Flex/Microform, TMS tokens, or a custom Payer Authentication flow.
-- Check the CyberSource SDK/API version and existing backend endpoints before changing anything.
-- Do not expose CyberSource REST credentials or signing keys in frontend code.
+type View = 'FORM' | 'CHECKOUT' | 'SUCCESS' | 'PENDING' | 'ERROR';
 
-2. Prefer Unified Checkout’s embedded flow if compatible
-- If this integration uses Unified Checkout and the saved-card/token setup is supported, have the backend create the CyberSource session/capture context.
-- Set `targetOrigins` to the exact HTTPS origin of our checkout application.
-- Configure the complete mandate with the existing payment operation (`AUTH` or `CAPTURE`, as appropriate) and `consumerAuthentication: "3DS"`. Keep the existing TMS/saved-card configuration where compatible.
-- In the frontend, initialize `VAS.UnifiedCheckout(sessionJWT)` and mount checkout in embedded mode inside the current checkout page.
-- Use the SDK’s documented completion result/promise to update the UI. Do not add a top-level redirect or manually open the step-up URL.
-- Let Unified Checkout handle its Payer Authentication calls when this configuration supports the selected saved-card method.
+interface ThreeDsNetworkDiagnostic {
+  url: string;
+  initiatorType: string;
+  responseStatus: number | null;
+  durationMs: number;
+  transferSize: number;
+  encodedBodySize: number;
+  decodedBodySize: number;
+}
 
-3. Verify saved-card compatibility before implementing
-- Determine the exact token type used by our saved cards and confirm that the selected Unified Checkout flow accepts it.
-- Do not assume that the Flex `/tokens` endpoint is a checkout or 3DS endpoint. It tokenizes encrypted card data; CyberSource says it is not designed for browser use. Use the project’s existing supported Microform or Unified Checkout flow as applicable.
-- If our current saved-card tokens cannot be used with Unified Checkout, stop and report the specific incompatibility and the required CyberSource-supported alternative. Do not silently replace or migrate stored tokens.
+@Component({
+  selector: 'cp-debit-card-deposit',
+  templateUrl: './debit-card-deposit.component.html',
+  styleUrls: ['./debit-card-deposit.component.scss']
+})
+export class DebitCardDepositComponent implements OnInit, OnDestroy {
 
-4. If we must keep a custom Payer Authentication flow
-- Keep the checkout route loaded and display the step-up challenge in an iframe/modal iframe using the CyberSource-provided `stepUpUrl` and JWT as a form POST, following CyberSource’s Payer Authentication documentation.
-- Set the challenge return URL to a publicly reachable HTTPS endpoint on our domain. It must not resolve to localhost, a private IP, or an internal hostname.
-- Have that endpoint receive the challenge result and notify the parent checkout page using a narrowly scoped, origin-checked `postMessage`, or let the frontend query our backend.
-- Have the backend perform CyberSource authentication validation and authorization. Never treat a frontend message alone as proof of successful authentication.
-- Do not try to read or manipulate CyberSource’s cross-origin iframe contents.
+  @Input() account: Account;
+  @Output() completed = new EventEmitter<void>();
+  @ViewChild(DepositFormComponent) depositForm: DepositFormComponent;
+  @ViewChild('cardDropdown') cardDropdown: ElementRef;
+  @ViewChild('cardDeposit') cardDeposit: ElementRef<HTMLElement>;
+  @ViewChild('stepUpModal', { static: true }) stepUpModal: TemplateRef<unknown>;
 
-5. Add robust status and error handling
-- Show loading, challenge-required, success, failure, cancellation, and timeout states without unloading the checkout page.
-- Prevent duplicate authorization if the callback/message is received more than once.
-- Verify the final payment status with our backend/CyberSource response.
-- Log useful errors without logging PAN, CVV, secrets, or full payment tokens.
+  readonly HEADER = 'label.deposit.uae.cards.continue';
+  /** true = embedded (paymentSelection + paymentScreen); false = sidebar single container. */
+  readonly useEmbeddedCheckout = true;
 
-6. Verify the implementation
-- Test frictionless authentication, a challenge-required transaction, authentication failure/cancellation, and callback timeout.
-- Confirm the checkout page does not navigate or open another window during 3DS.
-- Check Chrome DevTools for Local Network Access, CORS, iframe, or blocked-navigation errors.
-- Report which flow was implemented, the files changed, required CyberSource configuration, and any saved-token compatibility issue. Do not invent unsupported SDK methods; use the project’s installed SDK version and CyberSource’s documentation.
+  currencies: string[] = ['USD'];
+  cybersourceEnbdCards: CyberSourceEnbdCard[] = [];
+  cardsLoading = false;
+  deletingCardId: number | null = null;
+  transaction: Transaction;
+  view: View = 'FORM';
+  sdkLoading = false;
+  paymentId = '';
+  deleteIcon = faTrashCan;
+  chevronIcon = faChevronDown;
+  dropdownOpen = false;
+
+  selectedCardId: number | null = null;
+
+  stepUpAccessToken = '';
+  safeStepUpUrl: SafeResourceUrl | null = null;
+
+  private storedTransactionId = '';
+  private storedAuthTxnId = '';
+  private storedCavv = '';
+  private storedXid = '';
+  private storedDsTxnId = '';
+  private storedCommerceIndicator = '';
+  private storedUcafCollectionIndicator = '';
+  private stepUpModalRef: NgbModalRef | null = null;
+  private challengeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private stepUpCompletionStarted = false;
+  private stepUpFrameLoadCount = 0;
+  private lastSameOriginFramePath = '';
+  private challengeSawCrossOriginNavigation = false;
+  private challengeStartedAt = 0;
+  private challengePerformanceStartedAt = 0;
+  private stepUpUrlForDiagnostics = '';
+  private challengeFrameAccessError = '';
+  private challengeBrowserErrors: string[] = [];
+  private challengeNetworkEntries: ThreeDsNetworkDiagnostic[] = [];
+  private challengeNetworkEntryStartTimes = new Set<number>();
+  private challengeErrorListener: ((event: ErrorEvent) => void) | null = null;
+  private challengeRejectionListener: ((event: PromiseRejectionEvent) => void) | null = null;
+  private challengePerformanceObserver: PerformanceObserver | null = null;
+
+  private sdkScript: HTMLScriptElement | null = null;
+  private checkoutClient: { destroy?: () => void } | null = null;
+  private checkoutInstance: { destroy?: () => void } | null = null;
+  private paymentOptionsResizeObserver: ResizeObserver | null = null;
+  private scrollTimer: ReturnType<typeof setTimeout> | null = null;
+
+  constructor(
+    private core: CoreService,
+    private depositService: DepositService,
+    private modal: ModalService,
+    private ngbModal: NgbModal,
+    private http: HttpClient,
+    private zone: NgZone,
+    private sanitizer: DomSanitizer
+  ) {
+    if (this.core.getFromBaseModel('baseModel.countryOfResidence.isoCode') === 'AE') {
+      this.currencies.push('AED');
+    }
+  }
+
+  ngOnInit(): void {
+    this.fetchCybersourceEnbdCards();
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollTimer) {
+      clearTimeout(this.scrollTimer);
+      this.scrollTimer = null;
+    }
+    this.destroyCheckout();
+    this.removeSdkScript();
+    this.removeChallengeListener();
+    this.dismissStepUpModal();
+  }
+
+  get selectedCard(): CyberSourceEnbdCard | null {
+    return this.cybersourceEnbdCards.find(c => c.id === this.selectedCardId) ?? null;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.dropdownOpen && this.cardDropdown && !this.cardDropdown.nativeElement.contains(event.target)) {
+      this.dropdownOpen = false;
+    }
+  }
+
+  toggleDropdown(): void {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  selectCard(card: CyberSourceEnbdCard | null): void {
+    this.selectedCardId = card?.id ?? null;
+    this.dropdownOpen = false;
+  }
+
+  onContinue(): void {
+    this.depositForm?.onSubmit();
+  }
+
+  get canContinue(): boolean {
+    return !!this.depositForm?.canSubmit;
+  }
+
+  cardBrandIcon(card: CyberSourceEnbdCard): string {
+    const type = (card.cardType || '').toLowerCase();
+    if (type.includes('visa')) {
+      return 'assets/img/deposits/deposit-drop-visa.png';
+    }
+    if (type.includes('master')) {
+      return 'assets/img/deposits/deposit-drop-mastercard.png';
+    }
+    return 'assets/img/deposits/deposit-drop-other.png';
+  }
+
+  deleteCreditCardConfirm(card: CyberSourceEnbdCard): void {
+    if (this.deletingCardId !== null) {
+      return;
+    }
+    const config: dialogConfig = {
+      headerClass: 'text-capitalize',
+      okBtnCaption: 'label.credit.card.delete.button',
+      cancelBtn: true,
+      cancelBtnCaption: 'label.cancel'
+    };
+    this.modal.showInfo('label.credit.card.delete.confirm', 'label.credit.card.delete.button', config)
+      .then(() => this.deleteCybersourceEnbdCard(card.id));
+  }
+
+  private fetchCybersourceEnbdCards(): void {
+    this.cardsLoading = true;
+    this.depositService.cybersourceEnbdCards().subscribe({
+      next: cards => {
+        this.cybersourceEnbdCards = cards;
+        this.selectedCardId = cards.find(c => c.isDefaultCard)?.id ?? cards[0]?.id ?? null;
+        this.cardsLoading = false;
+      },
+      error: response => {
+        this.cardsLoading = false;
+        this.modal.showErrorResponse(response, undefined, this.HEADER);
+      }
+    });
+  }
+
+  private deleteCybersourceEnbdCard(cardId: number): void {
+    this.deletingCardId = cardId;
+    this.depositService.deleteCybersourceEnbdCard(cardId).subscribe({
+      next: response => {
+        this.deletingCardId = null;
+        if (!response?.success) {
+          this.modal.showError('label.error.unexpected', 'label.credit.card.delete.button');
+          return;
+        }
+        if (this.selectedCardId === cardId) {
+          this.selectedCardId = null;
+        }
+        this.fetchCybersourceEnbdCards();
+        this.modal.showInfo('label.operation.completed.successfully', 'label.success', {icon: 'success'});
+      },
+      error: response => {
+        this.deletingCardId = null;
+        this.modal.showErrorResponse(response, undefined, 'llabel.credit.card.delete.button');
+      }
+    });
+  }
+
+  startTransaction(dto: Transaction): void {
+    this.modal.showProcessing();
+    // Preferred debit rail; BE may remap to CREDIT_CARD_NG when ENBD_DEBIT_CARDS is off
+    Object.assign(dto, { provider: 'ENBD_CARD' });
+    if (this.selectedCardId) {
+      // Signal to EnbdDepositHandler to skip Unified Checkout session and run setup+enroll inline instead
+      dto.cybersourceEnbd = { ...(dto.cybersourceEnbd || {}), cardId: this.selectedCardId, browserFields: this.collectBrowserFields() };
+    }
+    this.depositService.startTransaction(dto).subscribe({
+      next: response => {
+        this.modal.hideProcessing();
+        if (response.success) {
+          this.transaction = response;
+          this.showCbuaePopup()
+            .then(() => this.runExecuteTransaction())
+            .catch(() => undefined);
+        } else {
+          this.modal.showError(response.message, this.HEADER);
+        }
+      },
+      error: response => this.modal.showErrorResponse(response, undefined, this.HEADER)
+    });
+  }
+
+  private showCbuaePopup(): Promise<void> {
+    const popupConfig: dialogConfig = {
+      icon: 'alert-circle',
+      iconSizePx: 36,
+      okBtnCaption: 'label.modal.ok',
+      okBtnSuccess: true,
+      cancelBtn: false,
+      closeBtn: false,
+      escape: true,
+      dismissable: true,
+      windowClass: 'info deposit-cbuae-popup',
+      bodyTextSmall: 'label.deposit.cbuae.popup.note'
+    };
+    return this.modal.showInfo(
+      'label.deposit.cbuae.popup.body',
+      'label.deposit.cbuae.popup.title',
+      popupConfig
+    );
+  }
+
+  private runExecuteTransaction(): void {
+    this.modal.showProcessing();
+    this.depositService.executeTransaction(this.transaction).subscribe({
+      next: response => {
+        this.modal.hideProcessing();
+        if (!response.success) {
+          this.modal.showError(response.message, this.HEADER);
+          return;
+        }
+        this.transaction = response;
+        if (this.selectedCardId && response.transactionId) {
+          this.handleStoredCardExecuteResponse(response);
+        } else if (response.provider === 'ENBD_CARD'
+            || response.cybersourceEnbd?.captureContextJwt) {
+          this.openEnbdCheckout(response);
+        } else {
+          this.assignToHostedPage(response);
+        }
+      },
+      error: response => this.modal.showErrorResponse(response, undefined, this.HEADER)
+    });
+  }
+
+  private openEnbdCheckout(transaction: Transaction): void {
+    if (!transaction.cybersourceEnbd?.captureContextJwt || !transaction.cybersourceEnbd?.clientLibrary) {
+      this.modal.showError(transaction.message || 'label.error.unexpected', this.HEADER);
+      return;
+    }
+    this.view = 'CHECKOUT';
+    this.scrollStepIntoView();
+    this.sdkLoading = true;
+    this.loadSdk(transaction.cybersourceEnbd.clientLibrary, transaction.cybersourceEnbd.captureContextJwt);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Stored-card repeat-payment flow (AFT + 3DS + DM).
+  // Setup + enrollment ran inside executeTransaction(); challenged and pending enrollments
+  // continue through validate, while successful authentication can authorize immediately.
+  // ---------------------------------------------------------------------------
+
+  private handleStoredCardExecuteResponse(response: Transaction): void {
+    this.storedTransactionId = response.transactionId!;
+    this.storedAuthTxnId = response.cybersourceEnbd?.authenticationTransactionId || '';
+
+    if (response.cybersourceEnbd?.enrollStatus === 'AUTHENTICATION_SUCCESSFUL') {
+      this.storedCavv = response.cybersourceEnbd.cavv || '';
+      this.storedXid = response.cybersourceEnbd.xid || '';
+      this.storedDsTxnId = response.cybersourceEnbd.directoryServerTransactionId || '';
+      this.storedCommerceIndicator = response.cybersourceEnbd.commerceIndicator || '';
+      this.storedUcafCollectionIndicator = response.cybersourceEnbd.ucafCollectionIndicator || '';
+      this.view = 'CHECKOUT';
+      this.sdkLoading = true;
+      this.storedAuthorize();
+      return;
+    }
+
+    const stepUpUrl = response.cybersourceEnbd?.stepUpUrl;
+    const accessToken = response.cybersourceEnbd?.accessToken;
+
+    if (response.cybersourceEnbd?.challengeRequired === 'Y' && stepUpUrl && accessToken) {
+      this.showChallenge(stepUpUrl, accessToken);
+    } else {
+      this.view = 'CHECKOUT';
+      this.sdkLoading = true;
+      this.storedValidate();
+    }
+  }
+
+  private showChallenge(stepUpUrl: string, accessToken: string): void {
+    this.sdkLoading = false;
+    this.safeStepUpUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stepUpUrl);
+    this.stepUpUrlForDiagnostics = this.sanitizeDiagnosticUrl(stepUpUrl);
+    this.stepUpAccessToken = accessToken;
+    this.stepUpCompletionStarted = false;
+    this.removeChallengeListener();
+    this.stepUpFrameLoadCount = 0;
+    this.lastSameOriginFramePath = '';
+    this.challengeSawCrossOriginNavigation = false;
+    this.challengeStartedAt = Date.now();
+    this.challengePerformanceStartedAt = performance.now();
+    this.challengeFrameAccessError = '';
+    this.challengeBrowserErrors = [];
+    this.challengeNetworkEntries = [];
+    this.challengeNetworkEntryStartTimes = new Set<number>();
+    this.startThreeDsDiagnostics();
+    this.stepUpModalRef = this.ngbModal.open(this.stepUpModal, {
+      size: 'xl',
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+      windowClass: 'cs-enbd-stepup-window'
+    });
+    const modalRef = this.stepUpModalRef;
+    modalRef.result.then(
+      () => {
+        if (this.stepUpModalRef === modalRef) {
+          this.stepUpModalRef = null;
+        }
+      },
+      () => {
+        if (this.stepUpModalRef === modalRef) {
+          this.stepUpModalRef = null;
+        }
+      }
+    );
+
+    this.challengeTimeout = setTimeout(() => {
+      this.recordThreeDsNetworkEntries();
+      this.reportThreeDsCallbackFailure('3ds-callback-timeout', 'Timed out waiting for the 3DS callback.');
+      this.zone.run(() => this.showResultError());
+    }, 5 * 60 * 1000);
+
+    setTimeout(() => {
+      if (this.stepUpModalRef) {
+        this.submitStepUpForm();
+      }
+    });
+  }
+
+  onStepUpFrameLoad(): void {
+    this.stepUpFrameLoadCount++;
+    const frame = this.getStepUpFrame();
+    if (!frame?.contentWindow) {
+      this.challengeFrameAccessError = 'Step-up iframe or contentWindow is unavailable.';
+      return;
+    }
+    try {
+      const frameUrl = new URL(frame.contentWindow.location.href);
+      if (frameUrl.protocol === 'about:') {
+        return;
+      }
+      const path = frameUrl.pathname.replace(/\/+$/, '');
+      this.challengeFrameAccessError = '';
+      if (frameUrl.origin === window.location.origin) {
+        this.lastSameOriginFramePath = path;
+        if (this.challengeSawCrossOriginNavigation || path.endsWith('/3ds-callback')) {
+          this.completeStepUpChallenge();
+        }
+      } else {
+        this.challengeSawCrossOriginNavigation = true;
+      }
+    } catch (error) {
+      this.challengeSawCrossOriginNavigation = true;
+      this.challengeFrameAccessError = error instanceof Error
+        ? `${error.name}: ${error.message}`
+        : String(error);
+    }
+  }
+
+  private startThreeDsDiagnostics(): void {
+    this.challengeErrorListener = event => {
+      this.challengeBrowserErrors.push(JSON.stringify({
+        type: 'window.error',
+        message: event.message,
+        filename: this.sanitizeDiagnosticUrl(event.filename),
+        line: event.lineno,
+        column: event.colno,
+        stack: event.error instanceof Error ? event.error.stack : undefined
+      }).slice(0, 3000));
+      this.challengeBrowserErrors = this.challengeBrowserErrors.slice(-10);
+    };
+    this.challengeRejectionListener = event => {
+      const reason = event.reason;
+      this.challengeBrowserErrors.push(JSON.stringify({
+        type: 'unhandledrejection',
+        message: reason instanceof Error ? reason.message : String(reason),
+        stack: reason instanceof Error ? reason.stack : undefined
+      }).slice(0, 3000));
+      this.challengeBrowserErrors = this.challengeBrowserErrors.slice(-10);
+    };
+    window.addEventListener('error', this.challengeErrorListener);
+    window.addEventListener('unhandledrejection', this.challengeRejectionListener);
+
+    if (typeof PerformanceObserver !== 'undefined') {
+      try {
+        this.challengePerformanceObserver = new PerformanceObserver(list => {
+          this.addThreeDsNetworkEntries(list.getEntries());
+        });
+        this.challengePerformanceObserver.observe({ entryTypes: ['resource'] });
+      } catch (error) {
+        this.challengeBrowserErrors.push(`PerformanceObserver unavailable: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+  }
+
+  private addThreeDsNetworkEntries(entries: PerformanceEntry[]): void {
+    for (const entry of entries) {
+      if (entry.entryType !== 'resource') {
+        continue;
+      }
+      const url = this.sanitizeDiagnosticUrl(entry.name);
+      if (!url.toLowerCase().includes('3ds-callback')
+          || entry.startTime < this.challengePerformanceStartedAt
+          || this.challengeNetworkEntryStartTimes.has(entry.startTime)) {
+        continue;
+      }
+      this.challengeNetworkEntryStartTimes.add(entry.startTime);
+      const resource = entry as PerformanceResourceTiming & { responseStatus?: number };
+      this.challengeNetworkEntries.push({
+        url,
+        initiatorType: resource.initiatorType,
+        responseStatus: typeof resource.responseStatus === 'number' ? resource.responseStatus : null,
+        durationMs: Math.round(resource.duration),
+        transferSize: resource.transferSize,
+        encodedBodySize: resource.encodedBodySize,
+        decodedBodySize: resource.decodedBodySize
+      });
+    }
+    this.challengeNetworkEntries = this.challengeNetworkEntries.slice(-10);
+  }
+
+  private recordThreeDsNetworkEntries(): void {
+    this.addThreeDsNetworkEntries(performance.getEntriesByType('resource'));
+  }
+
+  private sanitizeDiagnosticUrl(value: string): string {
+    try {
+      const url = new URL(value, window.location.origin);
+      return `${url.origin}${url.pathname}`;
+    } catch {
+      return value.split(/[?#]/, 1)[0];
+    }
+  }
+
+  private reportThreeDsCallbackFailure(source: string, message: string): void {
+    const diagnosticLog = {
+      source,
+      elapsedMs: Date.now() - this.challengeStartedAt,
+      transactionId: this.storedTransactionId,
+      authenticationTransactionId: this.storedAuthTxnId,
+      enrollStatus: this.transaction?.cybersourceEnbd?.enrollStatus || '',
+      challengeRequired: this.transaction?.cybersourceEnbd?.challengeRequired || '',
+      stepUpUrl: this.stepUpUrlForDiagnostics,
+      iframeLoadCount: this.stepUpFrameLoadCount,
+      challengeSawCrossOriginNavigation: this.challengeSawCrossOriginNavigation,
+      lastSameOriginFramePath: this.lastSameOriginFramePath || 'unavailable',
+      iframeAccessError: this.challengeFrameAccessError || 'none',
+      browserErrors: this.challengeBrowserErrors,
+      callbackNetworkEntries: this.challengeNetworkEntries,
+      browser: {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        online: navigator.onLine,
+        screen: `${window.screen.width}x${window.screen.height}`,
+        viewport: `${window.innerWidth}x${window.innerHeight}`
+      },
+      limitations: 'Iframe navigation response body and POST data are not readable by the parent page. Network response status is included only when exposed by Resource Timing.'
+    };
+    const stackTrace = JSON.stringify(diagnosticLog);
+    this.http.post(endpointUrl(Endpoints.ERROR_LOG), {
+      message: `${message} | ${source}`,
+      stackTrace,
+      userAgent: navigator.userAgent,
+      url: `${window.location.origin}${window.location.pathname}`,
+    }).subscribe({
+      error: error => console.error('Failed to send 3DS callback diagnostic', error)
+    });
+  }
+
+  private completeStepUpChallenge(): void {
+    if (this.stepUpCompletionStarted) {
+      return;
+    }
+    this.stepUpCompletionStarted = true;
+    this.removeChallengeListener();
+    this.view = 'CHECKOUT';
+    this.sdkLoading = true;
+    this.closeStepUpModal();
+    this.storedValidate();
+  }
+
+  private submitStepUpForm(): void {
+    const form = document.getElementById('enbd-stepup-form') as HTMLFormElement | null;
+    if (!form) {
+      this.showResultError();
+      return;
+    }
+    form.submit();
+  }
+
+  private getStepUpFrame(): HTMLIFrameElement | null {
+    return document.getElementById('enbd-stepup-frame') as HTMLIFrameElement | null;
+  }
+
+  private removeChallengeListener(): void {
+    if (this.challengeTimeout) {
+      clearTimeout(this.challengeTimeout);
+      this.challengeTimeout = null;
+    }
+    this.stopThreeDsDiagnostics();
+  }
+
+  private stopThreeDsDiagnostics(): void {
+    if (this.challengeErrorListener) {
+      window.removeEventListener('error', this.challengeErrorListener);
+      this.challengeErrorListener = null;
+    }
+    if (this.challengeRejectionListener) {
+      window.removeEventListener('unhandledrejection', this.challengeRejectionListener);
+      this.challengeRejectionListener = null;
+    }
+    this.challengePerformanceObserver?.disconnect();
+    this.challengePerformanceObserver = null;
+  }
+
+  private dismissStepUpModal(): void {
+    if (this.stepUpModalRef) {
+      this.stepUpModalRef.dismiss();
+      this.stepUpModalRef = null;
+    }
+  }
+
+  private closeStepUpModal(): void {
+    if (this.stepUpModalRef) {
+      this.stepUpModalRef.close();
+      this.stepUpModalRef = null;
+    }
+  }
+
+  private storedValidate(): void {
+    this.http.post<any>(endpointUrl(Endpoints.CYBERSOURCE_ENBD_STORED_VALIDATE), {
+      cardId: String(this.selectedCardId),
+      transactionId: this.storedTransactionId,
+      authenticationTransactionId: this.storedAuthTxnId
+    }).subscribe({
+      next: response => {
+        this.storedCavv = response?.cavv || '';
+        this.storedXid = response?.xid || '';
+        this.storedDsTxnId = response?.directoryServerTransactionId || '';
+        this.storedCommerceIndicator = response?.commerceIndicator || '';
+        this.storedUcafCollectionIndicator = response?.ucafCollectionIndicator || '';
+        this.storedAuthorize();
+      },
+      error: () => this.showResultError()
+    });
+  }
+
+  private storedAuthorize(): void {
+    this.http.post<any>(endpointUrl(Endpoints.CYBERSOURCE_ENBD_STORED_AUTHORIZE), {
+      cardId: String(this.selectedCardId),
+      transactionId: this.storedTransactionId,
+      cavv: this.storedCavv,
+      xid: this.storedXid,
+      directoryServerTransactionId: this.storedDsTxnId,
+      commerceIndicator: this.storedCommerceIndicator,
+      ucafCollectionIndicator: this.storedUcafCollectionIndicator
+    }).subscribe({
+      next: response => {
+        this.sdkLoading = false;
+        this.paymentId = response?.id || '';
+        this.view = response?.success ? 'SUCCESS' : 'ERROR';
+        this.closeStepUpModal();
+      },
+      error: () => this.showResultError()
+    });
+  }
+
+  private collectBrowserFields(): Record<string, string> {
+    return {
+      browserScreenWidth:  String(window.screen.width),
+      browserScreenHeight: String(window.screen.height),
+      browserColorDepth:   String(window.screen.colorDepth),
+      browserLanguage:     navigator.language || 'en-US',
+      browserUserAgent:    navigator.userAgent,
+      browserJavaEnabled:  String(typeof (navigator as any).javaEnabled === 'function' && (navigator as any).javaEnabled()),
+      browserAcceptHeader: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      browserTZ:           String(new Date().getTimezoneOffset())
+    };
+  }
+
+  private assignToHostedPage(transaction: Transaction): void {
+    const httpParams: HttpParams = params(transaction.targetData);
+    const paramsPrefix: string = transaction.targetUrl?.includes('?') ? '&' : '?';
+    window.location.assign(`${transaction.targetUrl}${paramsPrefix}${httpParams.toString()}`);
+  }
+
+  private loadSdk(clientLibraryUrl: string, captureContextJwt: string): void {
+    this.removeSdkScript();
+    const script = document.createElement('script');
+    script.src = clientLibraryUrl;
+    script.crossOrigin = 'anonymous';
+    script.onload = () => this.waitForVAS()
+      .then(() => this.initPayment(captureContextJwt))
+      .catch(() => this.showResultError());
+    script.onerror = () => this.showResultError();
+    document.head.appendChild(script);
+    this.sdkScript = script;
+  }
+
+  private waitForVAS(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let attempts = 0;
+      const id = setInterval(() => {
+        const w = window as any;
+        if (typeof w.VAS !== 'undefined' && typeof w.VAS.UnifiedCheckout === 'function') {
+          clearInterval(id);
+          resolve();
+        } else if (++attempts > 60) {
+          clearInterval(id);
+          reject(new Error('Payment SDK did not load in time. Please try again.'));
+        }
+      }, 100);
+    });
+  }
+
+  private async initPayment(captureContextJwt: string): Promise<void> {
+    try {
+      const w = window as any;
+      const client = await w.VAS.UnifiedCheckout(captureContextJwt);
+      const checkout = await client.createCheckout({ autoProcessing: true });
+      this.checkoutClient = client;
+      this.checkoutInstance = checkout;
+      this.watchPaymentOptionsRendered();
+      const mountTarget = this.useEmbeddedCheckout
+        ? {
+            paymentSelection: '#cs-enbd-payment-selection',
+            paymentScreen: '#cs-enbd-payment-screen'
+          }
+        : '#cs-enbd-payment-container';
+      const resultJwt = await checkout.mount(mountTarget);
+      if (resultJwt) {
+        this.authorizePayment(resultJwt);
+      } else {
+        this.showResultError();
+      }
+    } catch {
+      this.showResultError();
+    }
+  }
+
+  private authorizePayment(transientToken: string): void {
+    this.clearCheckoutMount();
+    this.stopPaymentOptionsWatch();
+    this.sdkLoading = true;
+    this.http.post<any>(endpointUrl(Endpoints.CYBERSOURCE_ENBD_AUTHORIZE), {
+      transientToken
+    }).subscribe({
+      next: response => {
+        this.sdkLoading = false;
+        this.paymentId = response?.paymentId || '';
+        this.view = this.resultViewFromAuthorize(response);
+        this.destroyCheckout();
+      },
+      error: () => this.showResultError()
+    });
+  }
+
+  backToForm(): void {
+    this.view = 'FORM';
+    this.paymentId = '';
+    this.destroyCheckout();
+    this.removeSdkScript();
+    this.removeChallengeListener();
+    this.dismissStepUpModal();
+    this.safeStepUpUrl = null;
+    this.stepUpAccessToken = '';
+  }
+
+  onDone(): void {
+    this.completed.emit();
+  }
+
+  private resultViewFromAuthorize(response: any): View {
+    const psp = String(response?.pspStatus || '').toUpperCase();
+    const status = String(response?.paymentStatus || '').toUpperCase();
+    if (psp === 'PENDING' || status === 'PENDING_AT_PROVIDER') {
+      return 'PENDING';
+    }
+    if (status === 'ACCEPTED' || psp === 'AUTHORIZED') {
+      return 'SUCCESS';
+    }
+    return 'ERROR';
+  }
+
+  private showResultError(): void {
+    this.sdkLoading = false;
+    this.view = 'ERROR';
+    this.destroyCheckout();
+    this.removeChallengeListener();
+    this.closeStepUpModal();
+  }
+
+  private scrollStepIntoView(): void {
+    if (this.scrollTimer) {
+      clearTimeout(this.scrollTimer);
+    }
+    this.scrollTimer = setTimeout(() => {
+      this.scrollTimer = null;
+      this.alignCardDeposit();
+      requestAnimationFrame(() => this.alignCardDeposit());
+    });
+  }
+
+  private alignCardDeposit(): void {
+    const el = this.cardDeposit?.nativeElement;
+    if (!el) {
+      return;
+    }
+    const offset = el.getBoundingClientRect().top;
+    if (offset >= 0) {
+      return;
+    }
+    const top = Math.max(0, window.scrollY + offset - 24);
+    window.scrollTo(0, top);
+    document.documentElement.scrollTop = top;
+    document.body.scrollTop = top;
+  }
+
+  private watchPaymentOptionsRendered(): void {
+    this.stopPaymentOptionsWatch();
+    const rootId = this.useEmbeddedCheckout ? 'cs-enbd-payment-selection' : 'cs-enbd-payment-container';
+    const root = document.getElementById(rootId);
+    if (!root) {
+      return;
+    }
+    // Empty iframe is inserted before Card/GPay paint. Hide once that box has button height.
+    this.paymentOptionsResizeObserver = new ResizeObserver(() => {
+      if (this.view !== 'CHECKOUT' || root.getBoundingClientRect().height < 48) {
+        return;
+      }
+      this.stopPaymentOptionsWatch();
+      this.zone.run(() => {
+        if (this.view === 'CHECKOUT') {
+          this.sdkLoading = false;
+        }
+      });
+    });
+    this.paymentOptionsResizeObserver.observe(root);
+  }
+
+  private stopPaymentOptionsWatch(): void {
+    this.paymentOptionsResizeObserver?.disconnect();
+    this.paymentOptionsResizeObserver = null;
+  }
+
+  private clearCheckoutMount(): void {
+    ['cs-enbd-payment-container', 'cs-enbd-payment-selection', 'cs-enbd-payment-screen']
+      .forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerHTML = '';
+        }
+      });
+  }
+
+  private destroyCheckout(): void {
+    this.stopPaymentOptionsWatch();
+    try {
+      this.checkoutInstance?.destroy?.();
+      this.checkoutClient?.destroy?.();
+    } catch {
+      // SDK may already be torn down
+    }
+    this.checkoutInstance = null;
+    this.checkoutClient = null;
+    this.clearCheckoutMount();
+  }
+
+  private removeSdkScript(): void {
+    if (this.sdkScript) {
+      this.sdkScript.remove();
+      this.sdkScript = null;
+    }
+  }
+}
