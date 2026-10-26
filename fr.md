@@ -138,15 +138,9 @@
 
   <ng-template #stepUpModal>
     <div class="cs-enbd-stepup-modal">
-      <iframe id="enbd-stepup-frame" name="enbd-stepup-frame" class="cs-enbd-stepup-frame"
-        title="3-D Secure verification" (load)="onStepUpFrameLoad()"
-        sandbox="allow-forms allow-scripts allow-same-origin allow-pointer-lock allow-popups"
-        allow="payment *; publickey-credentials-get *; publickey-credentials-create *">
+      <iframe [id]="stepUpFrameName" [attr.name]="stepUpFrameName" class="cs-enbd-stepup-frame"
+        title="3-D Secure verification" (load)="onStepUpFrameLoad()">
       </iframe>
-      <form id="enbd-stepup-form" [action]="stepUpUrl" method="POST" target="enbd-stepup-frame" class="d-none">
-        <input type="hidden" name="JWT" [value]="stepUpAccessToken">
-        <input type="hidden" name="MD" [value]="stepUpCorrelationId">
-      </form>
     </div>
   </ng-template>
 </div>
