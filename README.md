@@ -14,6 +14,13 @@ import { DepositFormComponent } from '../deposit-form/deposit-form.component';
 
 type View = 'FORM' | 'CHECKOUT' | 'SUCCESS' | 'PENDING' | 'ERROR';
 
+interface ThreeDsMessage {
+  type?: unknown;
+  correlationId?: unknown;
+  MD?: unknown;
+  MessageType?: unknown;
+}
+
 interface ThreeDsNetworkDiagnostic {
   url: string;
   initiatorType: string;
@@ -32,6 +39,10 @@ interface ThreeDsNetworkDiagnostic {
 export class DebitCardDepositComponent implements OnInit, OnDestroy {
 
   @Input() account: Account;
+  /** Optional trusted deployment URL. Set only if the 3DS return page uses another
+   * origin/path. Must match the returnUrl configured on the backend; never take
+   * this value from postMessage or unverified JWT claims. Default: same-origin /3ds-callback. */
+  @Input() threeDsReturnUrl = '';
   @Output() completed = new EventEmitter<void>();
   /** Emitted when the issuer returns from the challenge; this is not the ACS button click itself. */
   @Output() threeDsSubmitted = new EventEmitter<void>();
@@ -66,6 +77,8 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   stepUpUrl = '';
   /** Random one-time value sent as CyberSource MD and echoed by the same-origin return page. */
   stepUpCorrelationId = '';
+  stepUpFrameName = '';
+  stepUpFormId = '';
 
   private storedTransactionId = '';
   private storedAuthTxnId = '';
@@ -76,6 +89,11 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   private storedUcafCollectionIndicator = '';
   private stepUpModalRef: NgbModalRef | null = null;
   private challengeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private challengeSubmitTimer: ReturnType<typeof setTimeout> | null = null;
+  private challengeFormSubmitted = false;
+  private challengeReturnOrigin = '';
+  private challengeReturnPath = '';
+  private challengeProviderOrigin = '';
   private stepUpCompletionStarted = false;
   private stepUpFrameLoadCount = 0;
   private lastSameOriginFramePath = '';
@@ -334,6 +352,9 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private showChallenge(stepUpUrl: string, accessToken: string): void {
+    // Retire the previous attempt before setting up new timers or accepting messages.
+    this.removeChallengeListener();
+    this.closeStepUpModal();
     this.sdkLoading = false;
     if (!this.isHttpsStepUpUrl(stepUpUrl) || !accessToken) {
       this.showResultError();
@@ -344,8 +365,25 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
     this.stepUpUrlForDiagnostics = this.sanitizeDiagnosticUrl(stepUpUrl);
     this.stepUpAccessToken = accessToken;
     this.stepUpCorrelationId = this.createStepUpCorrelationId();
+    this.stepUpFrameName = `enbd-stepup-${this.stepUpCorrelationId}`;
+    this.stepUpFormId = `${this.stepUpFrameName}-form`;
+    this.challengeFormSubmitted = false;
+    try {
+      const returnUrl = new URL(this.threeDsReturnUrl || '/3ds-callback', window.location.origin);
+      if (returnUrl.protocol !== 'https:' || returnUrl.username || returnUrl.password) {
+        throw new Error('The 3DS return URL must be a trusted HTTPS URL.');
+      }
+      this.challengeReturnOrigin = returnUrl.origin;
+      // Preserve the existing /prefix/3ds-callback fallback unless deployment
+      // configuration supplies an exact return URL.
+      this.challengeReturnPath = this.threeDsReturnUrl
+        ? returnUrl.pathname.replace(/\/+$/, '') || '/' : '';
+      this.challengeProviderOrigin = new URL(stepUpUrl).origin;
+    } catch {
+      this.showResultError();
+      return;
+    }
     this.stepUpCompletionStarted = false;
-    this.removeChallengeListener();
     this.stepUpFrameLoadCount = 0;
     this.lastSameOriginFramePath = '';
     this.challengeSawCrossOriginNavigation = false;
@@ -382,16 +420,25 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.challengeTimeout = setTimeout(() => {
-      this.recordThreeDsNetworkEntries();
-      this.reportThreeDsCallbackFailure('3ds-callback-timeout', 'Timed out waiting for the 3DS callback.');
-      this.zone.run(() => this.showResultError());
-    }, 5 * 60 * 1000);
+    const attempt = this.stepUpCorrelationId;
+    // A timeout only exits a stalled challenge; it never validates or authorizes.
+    this.zone.runOutsideAngular(() => {
+      this.challengeTimeout = setTimeout(() => {
+        if (!this.isActiveStepUpAttempt(attempt)) return;
+        try {
+          this.recordThreeDsNetworkEntries();
+          this.reportThreeDsCallbackFailure('3ds-callback-timeout', 'Timed out waiting for the 3DS callback.');
+        } catch (error) {
+          console.warn('[3DS] Timeout diagnostic failed', error);
+        } finally {
+          this.zone.run(() => this.showResultError());
+        }
+      }, 5 * 60 * 1000);
+    });
 
-    setTimeout(() => {
-      if (this.stepUpModalRef) {
-        this.submitStepUpForm();
-      }
+    this.challengeSubmitTimer = setTimeout(() => {
+      this.challengeSubmitTimer = null;
+      if (this.isActiveStepUpAttempt(attempt)) this.submitStepUpForm();
     });
   }
 
@@ -407,29 +454,51 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
 
   private startStepUpMessageListener(): void {
     this.removeStepUpMessageListener();
+    const attempt = this.stepUpCorrelationId;
     this.challengeMessageListener = (event: MessageEvent) => {
+      if (!this.isActiveStepUpAttempt(attempt) || !this.challengeFormSubmitted) return;
       const frame = this.getStepUpFrame();
-      const data = event.data as { type?: string; correlationId?: string } | null;
-      if (data?.type === 'cybs-3ds-return' || event.source === frame?.contentWindow) {
+      const sourceMatches = !!frame?.contentWindow && event.source === frame.contentWindow;
+      const data = this.parseStepUpMessage(event.data);
+      if (!data) return;
+      const correlation = data.correlationId ?? data.MD;
+      const correlationPresent = correlation !== undefined && correlation !== null;
+      const correlationMatches = correlation === attempt;
+      const returnOriginMatches = event.origin === this.challengeReturnOrigin;
+      if (sourceMatches || data.type === 'cybs-3ds-return' || data.type === '3DS_COMPLETE') {
         this.traceThreeDs('callback-message', {
-          expectedType: data?.type === 'cybs-3ds-return',
-          origin: event.origin,
-          originMatches: event.origin === window.location.origin,
-          sourceMatches: event.source === frame?.contentWindow,
-          correlationPresent: typeof data?.correlationId === 'string',
-          correlationMatches: data?.correlationId === this.stepUpCorrelationId
+          type: data.type, origin: event.origin, sourceMatches,
+          originMatches: returnOriginMatches, correlationPresent, correlationMatches
         });
       }
-      if (event.origin !== window.location.origin || event.source !== frame?.contentWindow) {
-        return;
-      }
-      if (data?.type !== 'cybs-3ds-return' || data.correlationId !== this.stepUpCorrelationId) {
-        return;
-      }
-      // The return page signal is not proof of authentication. Server-side validation follows.
-      this.zone.run(() => this.completeStepUpChallenge());
+      if (!sourceMatches) return;
+      if (correlationPresent && !correlationMatches) return;
+
+      // Modern return page: MD must correlate to this attempt. Legacy POC return
+      // pages use 3DS_COMPLETE without MD; accept only from the active frame and
+      // the configured return origin. Neither message means payment success.
+      const correlatedReturn = returnOriginMatches && data.type === 'cybs-3ds-return' && correlationMatches;
+      const legacyReturn = returnOriginMatches && data.type === '3DS_COMPLETE';
+      const providerReturn = event.origin === this.challengeProviderOrigin &&
+        data.MessageType === 'stepUp.completion';
+      if (correlatedReturn || legacyReturn || providerReturn) this.completeStepUpChallenge();
     };
     window.addEventListener('message', this.challengeMessageListener);
+  }
+
+  private parseStepUpMessage(value: unknown): ThreeDsMessage | null {
+    try {
+      const data = typeof value === 'string' ? JSON.parse(value) : value;
+      return data && typeof data === 'object' && !Array.isArray(data)
+        ? data as ThreeDsMessage : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private isActiveStepUpAttempt(attempt: string): boolean {
+    return !this.componentDestroying && !!this.stepUpModalRef &&
+      !this.stepUpCompletionStarted && !!attempt && this.stepUpCorrelationId === attempt;
   }
 
   private removeStepUpMessageListener(): void {
@@ -440,9 +509,16 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   onStepUpFrameLoad(): void {
+    if (!this.isActiveStepUpAttempt(this.stepUpCorrelationId)) return;
     this.stepUpFrameLoadCount++;
     const frame = this.getStepUpFrame();
     this.traceThreeDs('iframe-load', { count: this.stepUpFrameLoadCount, connected: frame?.isConnected });
+    this.checkStepUpReturn();
+  }
+
+  private checkStepUpReturn(): void {
+    if (!this.isActiveStepUpAttempt(this.stepUpCorrelationId) || !this.challengeFormSubmitted) return;
+    const frame = this.getStepUpFrame();
     if (!frame?.contentWindow) {
       this.challengeFrameAccessError = 'Step-up iframe or contentWindow is unavailable.';
       return;
@@ -452,25 +528,30 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       if (frameUrl.protocol === 'about:') {
         return;
       }
-      const path = frameUrl.pathname.replace(/\/+$/, '');
-      this.traceThreeDs('iframe-readable', { url: this.sanitizeDiagnosticUrl(frameUrl.href) });
+      const path = frameUrl.pathname.replace(/\/+$/, '') || '/';
+      if (path !== this.lastSameOriginFramePath) {
+        this.traceThreeDs('iframe-readable', { url: this.sanitizeDiagnosticUrl(frameUrl.href) });
+      }
       this.challengeFrameAccessError = '';
       if (frameUrl.origin === window.location.origin) {
         this.lastSameOriginFramePath = path;
-        // /3ds-callback must accept CyberSource's POST, persist TransactionId against
-        // this payment, then serve a same-origin page that postMessages
-        // { type: 'cybs-3ds-return', correlationId: MD } to the parent. The iframe
-        // load is only a fallback signal; the backend must validate the persisted ID.
-        if (path.endsWith('/3ds-callback')) {
+        // The iframe load event supplements postMessage. This only detects return;
+        // the existing validation endpoint still determines the 3DS result.
+        const callbackPathMatches = this.challengeReturnPath
+          ? path === this.challengeReturnPath : path.endsWith('/3ds-callback');
+        if (frameUrl.origin === this.challengeReturnOrigin && callbackPathMatches) {
           this.completeStepUpChallenge();
         }
       } else {
         this.challengeSawCrossOriginNavigation = true;
       }
     } catch (error) {
-      this.traceThreeDs('iframe-unreadable', {
-        errorName: error instanceof Error ? error.name : 'Unknown'
-      });
+      // Cross-origin access is expected while the issuer owns the frame.
+      if (!this.challengeFrameAccessError) {
+        this.traceThreeDs('iframe-unreadable', {
+          errorName: error instanceof Error ? error.name : 'Unknown'
+        });
+      }
       this.challengeSawCrossOriginNavigation = true;
       this.challengeFrameAccessError = error instanceof Error
         ? `${error.name}: ${error.message}`
@@ -485,6 +566,8 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
       online: navigator.onLine,
       secureContext: window.isSecureContext,
       pageOrigin: window.location.origin,
+      expectedReturnOrigin: this.challengeReturnOrigin,
+      expectedReturnPath: this.challengeReturnPath || '*/3ds-callback',
       viewport: `${window.innerWidth}x${window.innerHeight}`
     });
     if (this.threeDsDebug) {
@@ -608,20 +691,26 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private completeStepUpChallenge(): void {
-    if (this.stepUpCompletionStarted) {
-      return;
-    }
-    this.traceThreeDs('callback-accepted');
-    if (this.threeDsDebug) {
-      this.reportThreeDsCallbackFailure('3ds-debug-return', 'Diagnostic snapshot; challenge returned.');
-    }
+    if (!this.isActiveStepUpAttempt(this.stepUpCorrelationId) || !this.challengeFormSubmitted) return;
+    // Claim completion before diagnostics or callbacks so load and message
+    // events cannot submit validation/authorization more than once.
     this.stepUpCompletionStarted = true;
-    this.removeChallengeListener();
-    this.threeDsSubmitted.emit();
-    this.view = 'CHECKOUT';
-    this.sdkLoading = true;
-    this.closeStepUpModal();
-    this.storedValidate();
+    this.zone.run(() => {
+      this.traceThreeDs('callback-accepted');
+      if (this.threeDsDebug) {
+        try {
+          this.reportThreeDsCallbackFailure('3ds-debug-return', 'Diagnostic snapshot; challenge returned.');
+        } catch (error) {
+          console.warn('[3DS] Completion diagnostic failed', error);
+        }
+      }
+      this.removeChallengeListener();
+      this.view = 'CHECKOUT';
+      this.sdkLoading = true;
+      this.closeStepUpModal();
+      this.threeDsSubmitted.emit();
+      if (!this.componentDestroying && this.view === 'CHECKOUT') this.storedValidate();
+    });
   }
 
   private handleStepUpModalDismiss(): void {
@@ -692,32 +781,64 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
   }
 
   private submitStepUpForm(): void {
-    const form = document.getElementById('enbd-stepup-form') as HTMLFormElement | null;
-    if (!form) {
+    const attempt = this.stepUpCorrelationId;
+    if (!this.isActiveStepUpAttempt(attempt) || this.challengeFormSubmitted) return;
+    const frame = this.getStepUpFrame();
+    if (!frame?.isConnected) {
       this.showResultError();
       return;
     }
-    const frame = this.getStepUpFrame();
-    this.traceThreeDs('step-up-post', {
-      action: this.sanitizeDiagnosticUrl(form.action),
-      method: form.method,
-      target: form.target,
-      targetMatches: form.target === frame?.name,
-      frameCount: document.querySelectorAll('iframe[name="enbd-stepup-frame"]').length,
-      frameConnected: frame?.isConnected,
-      sandbox: frame?.getAttribute('sandbox'),
-      jwtInputMatches: form.querySelector<HTMLInputElement>('input[name="JWT"]')?.value === this.stepUpAccessToken,
-      jwtMetadata: this.stepUpJwtMetadata(this.stepUpAccessToken)
-    });
-    form.submit();
+    try {
+      // Submit from the initial same-origin iframe document. A parent form with
+      // a dynamic named target can open a tab if that browsing context is not
+      // resolved. _self here always navigates this existing modal iframe.
+      const frameDocument = frame.contentDocument;
+      if (!frameDocument?.body || !frame.contentWindow) {
+        this.showResultError();
+        return;
+      }
+      const form = frameDocument.createElement('form');
+      form.id = this.stepUpFormId;
+      form.method = 'POST';
+      form.action = this.stepUpUrl;
+      form.target = '_self';
+      form.hidden = true;
+      for (const [name, value] of [['JWT', this.stepUpAccessToken], ['MD', attempt]]) {
+        const input = frameDocument.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      }
+      frameDocument.body.appendChild(form);
+      this.traceThreeDs('step-up-post', {
+        action: this.sanitizeDiagnosticUrl(form.action),
+        method: form.method,
+        target: form.target,
+        formInsideFrame: form.ownerDocument === frameDocument,
+        frameConnected: frame.isConnected,
+        sandbox: frame.getAttribute('sandbox'),
+        jwtMetadata: this.stepUpJwtMetadata(this.stepUpAccessToken)
+      });
+      this.challengeFormSubmitted = true;
+      HTMLFormElement.prototype.submit.call(form);
+    } catch {
+      this.showResultError();
+    }
   }
 
   private getStepUpFrame(): HTMLIFrameElement | null {
-    return document.getElementById('enbd-stepup-frame') as HTMLIFrameElement | null;
+    return this.stepUpFrameName
+      ? document.getElementById(this.stepUpFrameName) as HTMLIFrameElement | null : null;
   }
 
   private removeChallengeListener(): void {
     this.removeStepUpMessageListener();
+    if (this.challengeSubmitTimer !== null) {
+      clearTimeout(this.challengeSubmitTimer);
+      this.challengeSubmitTimer = null;
+    }
+    this.challengeFormSubmitted = false;
     if (this.challengeTimeout) {
       clearTimeout(this.challengeTimeout);
       this.challengeTimeout = null;
@@ -773,6 +894,10 @@ export class DebitCardDepositComponent implements OnInit, OnDestroy {
           authenticationStatus: response?.authenticationStatus,
           cavvPresent: !!response?.cavv
         });
+        if (response?.success === false) {
+          this.showResultError();
+          return;
+        }
         this.storedCavv = response?.cavv || '';
         this.storedXid = response?.xid || '';
         this.storedDsTxnId = response?.directoryServerTransactionId || '';
