@@ -42,7 +42,6 @@
                   <span class="card-deposit__card-name">{{ card.cardType | titlecase }}</span>
                   <span class="card-deposit__card-meta">**** {{ card.maskedCardNumber.slice(-4) }}</span>
                 </span>
-                <!-- <span *ngIf="card.isDefaultCard" class="card-deposit__default-card" aria-label="Default card">★</span> -->
                 <span class="card-deposit__check" *ngIf="selectedCardId === card.id" aria-hidden="true"></span>
               </li>
               <li class="card-deposit__dropdown-item"
@@ -57,12 +56,8 @@
             </ul>
           </div>
 
-          <button
-            *ngIf="selectedCard"
-            type="button"
-            class="btn btn-link card-deposit__delete-link px-0"
-            [disabled]="deletingCardId !== null"
-            (click)="deleteCreditCardConfirm(selectedCard)"
+          <button *ngIf="selectedCard" type="button" class="btn btn-link card-deposit__delete-link px-0"
+            [disabled]="deletingCardId !== null" (click)="deleteCreditCardConfirm(selectedCard)"
             hasRole="CAN_DELETE_PAYMENT_METHODS">
             <fa-icon [icon]="deleteIcon"></fa-icon>
             <span translate="label.credit.card.delete.button"></span>
@@ -78,13 +73,8 @@
           <span class="card-deposit__step-title" translate="label.deposit.debitCard.step1"></span>
         </div>
 
-        <cp-deposit-form
-          [account]="account"
-          [currencies]="currencies"
-          [hidePromoCode]="true"
-          [hideSubmitButton]="true"
-          [emptyCurrencyDefault]="true"
-          (submit)="startTransaction($event)">
+        <cp-deposit-form [account]="account" [currencies]="currencies" [hidePromoCode]="true"
+          [hideSubmitButton]="true" [emptyCurrencyDefault]="true" (submit)="startTransaction($event)">
         </cp-deposit-form>
       </section>
 
@@ -95,7 +85,6 @@
 
       <button type="button" class="btn btn-success card-deposit__continue" translate="label.continue"
         [disabled]="!canContinue" (click)="onContinue()"></button>
-
       <p class="card-deposit__footnote xx-small" translate="label.deposit.thirdPartyFunding.note"></p>
     </ng-container>
 
@@ -110,14 +99,11 @@
           <div class="cs-enbd-spinner"></div>
           <p translate="label.processing.message"></p>
         </div>
-
         <ng-container *ngIf="useEmbeddedCheckout; else sidebarMount">
           <div id="cs-enbd-payment-selection" class="cs-enbd-selection"></div>
           <div id="cs-enbd-payment-screen" class="cs-enbd-screen"></div>
         </ng-container>
-        <ng-template #sidebarMount>
-          <div id="cs-enbd-payment-container" class="cs-enbd-container"></div>
-        </ng-template>
+        <ng-template #sidebarMount><div id="cs-enbd-payment-container" class="cs-enbd-container"></div></ng-template>
       </div>
     </ng-container>
 
@@ -125,9 +111,7 @@
       <div class="card-deposit__result">
         <img class="card-deposit__result-icon" src="assets/img/deposits/status-success.svg" alt="">
         <h5 class="card-deposit__result-title" translate="label.deposit.enbd.result.success"></h5>
-        <p *ngIf="paymentId" class="card-deposit__result-ref">
-          <span translate="label.deposit.enbd.reference"></span>: {{ paymentId }}
-        </p>
+        <p *ngIf="paymentId" class="card-deposit__result-ref"><span translate="label.deposit.enbd.reference"></span>: {{ paymentId }}</p>
         <button type="button" class="btn btn-success card-deposit__continue" translate="label.close" (click)="onDone()"></button>
       </div>
     </ng-container>
@@ -136,9 +120,7 @@
       <div class="card-deposit__result">
         <img class="card-deposit__result-icon" src="assets/img/deposits/status-pending.svg" alt="">
         <h5 class="card-deposit__result-title" translate="label.deposit.enbd.result.pending"></h5>
-        <p *ngIf="paymentId" class="card-deposit__result-ref">
-          <span translate="label.deposit.enbd.reference"></span>: {{ paymentId }}
-        </p>
+        <p *ngIf="paymentId" class="card-deposit__result-ref"><span translate="label.deposit.enbd.reference"></span>: {{ paymentId }}</p>
         <button type="button" class="btn btn-success card-deposit__continue" translate="label.close" (click)="onDone()"></button>
       </div>
     </ng-container>
@@ -147,9 +129,7 @@
       <div class="card-deposit__result">
         <img class="card-deposit__result-icon" src="assets/img/deposits/status-fail.svg" alt="">
         <h5 class="card-deposit__result-title" translate="label.deposit.enbd.result.failed"></h5>
-        <p *ngIf="paymentId" class="card-deposit__result-ref">
-          <span translate="label.deposit.enbd.reference"></span>: {{ paymentId }}
-        </p>
+        <p *ngIf="paymentId" class="card-deposit__result-ref"><span translate="label.deposit.enbd.reference"></span>: {{ paymentId }}</p>
         <button type="button" class="btn btn-success card-deposit__continue" translate="label.close" (click)="backToForm()"></button>
       </div>
     </ng-container>
@@ -157,19 +137,26 @@
   </ng-container>
 
   <ng-template #stepUpModal>
-    <div class="cs-enbd-stepup-modal">
-      <form id="enbd-stepup-form" [action]="safeStepUpUrl" method="POST" target="enbd-stepup-frame" class="d-none">
-        <input type="hidden" name="JWT" [value]="stepUpAccessToken">
-      </form>
-      <iframe
-        id="enbd-stepup-frame"
-        name="enbd-stepup-frame"
-        class="cs-enbd-stepup-frame"
-        title="3-D Secure verification"
-        (load)="onStepUpFrameLoad()"
+    <div class="cs-enbd-stepup-modal" role="dialog" aria-modal="true" aria-labelledby="enbd-stepup-title">
+      <div class="cs-enbd-stepup-modal__header">
+        <h5 id="enbd-stepup-title" translate="label.deposit.uae.cards.continue"></h5>
+        <p>Complete the verification with your bank. Keep this checkout page open.</p>
+      </div>
+      <iframe id="enbd-stepup-frame" name="enbd-stepup-frame" class="cs-enbd-stepup-frame"
+        title="3-D Secure verification" (load)="onStepUpFrameLoad()"
         sandbox="allow-forms allow-scripts allow-same-origin allow-pointer-lock allow-popups"
         allow="payment *; publickey-credentials-get *; publickey-credentials-create *">
       </iframe>
+      <div class="cs-enbd-stepup-modal__footer">
+        <span class="small text-muted">Authentication is handled securely by your card issuer.</span>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelStepUpChallenge()">
+          <span translate="label.cancel"></span>
+        </button>
+      </div>
+      <form id="enbd-stepup-form" [action]="stepUpUrl" method="POST" target="enbd-stepup-frame" class="d-none">
+        <input type="hidden" name="JWT" [value]="stepUpAccessToken">
+        <input type="hidden" name="MD" [value]="stepUpCorrelationId">
+      </form>
     </div>
   </ng-template>
 </div>
